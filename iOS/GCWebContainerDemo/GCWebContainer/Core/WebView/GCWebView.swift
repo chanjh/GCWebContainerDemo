@@ -15,11 +15,11 @@ class GCWebView: WebView {
     init(_ script: String? = nil) {
         let webViewConfiguration = WKWebViewConfiguration()
         let contentController = WKUserContentController()
-        let js = script ?? GCWebView._getBridgeScript()
-        let userScript = WKUserScript(source: js,
-                                      injectionTime: .atDocumentStart,
-                                      forMainFrameOnly: true)
-        contentController.addUserScript(userScript)
+//        let js = script ?? GCWebView._getBridgeScript()
+//        let userScript = WKUserScript(source: js,
+//                                      injectionTime: .atDocumentStart,
+//                                      forMainFrameOnly: true)
+//        contentController.addUserScript(userScript)
         webViewConfiguration.userContentController = contentController
         super.init(frame: .zero, configuration: webViewConfiguration)
         _initContext()

@@ -26,7 +26,7 @@ struct WebViewStr : UIViewRepresentable {
 struct GCWebContainerDemoApp: App {
     var body: some Scene {
         WindowGroup {
-            WebViewStr(request: URLRequest.init(url: URL(string: "https://baidu.com")!))
+            WebViewStr(request: URLRequest.init(url: URL(string: "http://localhost:8080")!))
         }
     }
 }

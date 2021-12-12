@@ -23,5 +23,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "example", "index.html")
     })
-  ]
+  ],
+  devtool: 'source-map',
+  watch: true,
 };

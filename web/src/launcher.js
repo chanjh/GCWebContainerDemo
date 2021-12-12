@@ -10,7 +10,6 @@ export default class Launcher {
     // 0. load all services
     const loader = new Loader();
     loader.loadAll();
-    // 1. inject each service info
   }
 
   registerGC() {
