@@ -1,9 +1,11 @@
-
+import ServiceWrapper from './wrap_service';
 import ContextMenuService from './services/contextMenu';
+import TestService from './services/test';
+
 export default class Loader {
   constructor() { }
   // TODO: auto input all services by webpack loader
-  static services = [ContextMenuService];
+  static services = [ContextMenuService, TestService];
   loadAll() {
     // 0. get all services
     // 1. inject service name in window.gc.bridge.name
@@ -12,7 +14,13 @@ export default class Loader {
       // todo: 2. wrap class, hook methods in class to `webkit.messageHandlers.invoke.postMessage()`
       // window.gc.bridge.contextMenu.set ->
       // window.webkit.messageHandlers.invoke.postMessage(data)
-      window.gc.bridge[name] = new s();
+      const wrapper = new ServiceWrapper({
+        name: s.name,
+        bridge: s._bridgeName,
+        methods: s._methods,
+        service: s
+      })
+      window.gc.bridge[name] = wrapper;
     });
   }
 

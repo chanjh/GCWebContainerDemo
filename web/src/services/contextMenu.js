@@ -5,7 +5,5 @@ export default class ContextMenuService extends Service {
     super()
   }
   static _bridgeName = 'util.contextMenu';
-  clear() {
-    console.log('clear');
-  }
+  static _methods = ['clear']
 }

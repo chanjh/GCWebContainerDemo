@@ -10,7 +10,7 @@ import WebKit
 
 class JSServiceManager: NSObject {
     weak var webView: WKWebView?
-    static let scriptMessageName = "readflow"
+    static let scriptMessageName = "invoke"
     private let handerQueue = DispatchQueue(label: "com.chanjh.readflow.jshandler.\(UUID().uuidString)")
     @ThreadSafe private(set) var handlers = [JSServiceHandler]()
     init(_ webView: WKWebView) {

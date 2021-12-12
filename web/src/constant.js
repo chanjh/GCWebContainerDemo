@@ -1,1 +1,1 @@
-export const bridgeName = 'readflow';
+export const bridgeName = 'invoke';
