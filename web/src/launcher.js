@@ -1,5 +1,6 @@
 import Global from './global'
-import Loader from './service_loader';
+import { global } from './constant'
+import loaderAll from './service_loader';
 import Bridge from './bridge'
 
 export default class Launcher {
@@ -8,14 +9,11 @@ export default class Launcher {
     this.registerGC()
 
     // 0. load all services
-    const loader = new Loader();
-    loader.loadAll();
+    loaderAll();
   }
 
   registerGC() {
-    window.gc = new Global();
-    window.gc.bridge = new Bridge();
+    window[global] = new Global();
+    window[global].bridge = new Bridge();
   }
 }
-
-// window.gc.bridge.contextMenu.set()
