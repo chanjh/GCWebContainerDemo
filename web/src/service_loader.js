@@ -9,6 +9,9 @@ export default class Loader {
     // 1. inject service name in window.gc.bridge.name
     Loader.services.forEach(s => {
       const name = this.bridgeName(s.name);
+      // todo: 2. wrap class, hook methods in class to `webkit.messageHandlers.invoke.postMessage()`
+      // window.gc.bridge.contextMenu.set ->
+      // window.webkit.messageHandlers.invoke.postMessage(data)
       window.gc.bridge[name] = new s();
     });
   }
