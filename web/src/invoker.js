@@ -6,5 +6,5 @@ export default async function invoker(action, params, callback) {
     params: params,
     callback: callback,
   };
-  await window.webkit.messageHandlers[bridgeName].postMessage(message);
+  await window.webkit.messageHandlers[bridgeName].postMessage(message)
 }
