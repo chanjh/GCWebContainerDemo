@@ -6,12 +6,27 @@
 //
 
 import SwiftUI
+import WebKit
+
+struct WebViewStr : UIViewRepresentable {
+    
+    let request: URLRequest
+    
+    func makeUIView(context: Context) -> WKWebView  {
+        return GCWebView()
+    }
+    
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        uiView.load(request)
+    }
+    
+}
 
 @main
 struct GCWebContainerDemoApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            WebViewStr(request: URLRequest.init(url: URL(string: "https://baidu.com")!))
         }
     }
 }

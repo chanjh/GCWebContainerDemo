@@ -25,6 +25,7 @@
 		0DD940E5275EE12D006865B6 /* JSServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD940E4275EE12D006865B6 /* JSServiceType.swift */; };
 		0DD940E8275EE17D006865B6 /* ContextMenuService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD940E7275EE17D006865B6 /* ContextMenuService.swift */; };
 		0DD940EA27618691006865B6 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD940E927618691006865B6 /* WebViewController.swift */; };
+		0DD940EE2762401F006865B6 /* jsbridge.js in Resources */ = {isa = PBXBuildFile; fileRef = 0DD940ED2762401F006865B6 /* jsbridge.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,7 @@
 		0DD940E4275EE12D006865B6 /* JSServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSServiceType.swift; sourceTree = "<group>"; };
 		0DD940E7275EE17D006865B6 /* ContextMenuService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextMenuService.swift; sourceTree = "<group>"; };
 		0DD940E927618691006865B6 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		0DD940ED2762401F006865B6 /* jsbridge.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsbridge.js; path = ../../../../../web/build/jsbridge.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 		0DD940D1275EDF00006865B6 /* GCWebContainer */ = {
 			isa = PBXGroup;
 			children = (
+				0DD940EB27624004006865B6 /* Resources */,
 				0DD940E6275EE17D006865B6 /* JSServices */,
 				0DD940DD275EDF9F006865B6 /* Util */,
 				0DD940D4275EDF88006865B6 /* Extension */,
@@ -163,6 +166,22 @@
 				0DD940E7275EE17D006865B6 /* ContextMenuService.swift */,
 			);
 			path = JSServices;
+			sourceTree = "<group>";
+		};
+		0DD940EB27624004006865B6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0DD940EC27624010006865B6 /* javascript */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		0DD940EC27624010006865B6 /* javascript */ = {
+			isa = PBXGroup;
+			children = (
+				0DD940ED2762401F006865B6 /* jsbridge.js */,
+			);
+			path = javascript;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -225,6 +244,7 @@
 			files = (
 				0DD940BB275EDEC0006865B6 /* Preview Assets.xcassets in Resources */,
 				0DD940B8275EDEC0006865B6 /* Assets.xcassets in Resources */,
+				0DD940EE2762401F006865B6 /* jsbridge.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
