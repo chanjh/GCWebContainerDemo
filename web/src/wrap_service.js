@@ -1,5 +1,4 @@
 import invoker from "./invoker";
-import { global } from './constant'
 import { bridgeName } from './service_loader'
 import Lock from "./lock";
 export default class ServiceWrapper {
@@ -32,6 +31,7 @@ export default class ServiceWrapper {
   _initCallback(callback) {
     const name = bridgeName(this.serviceInfo.name);
     const wrapFunction = function () {
+      const { global } = window.gc._config;
       const self = window[global].bridge[name];
       // 1. unlock
       // 2. send msg to wrapFunction on service
@@ -48,7 +48,10 @@ export default class ServiceWrapper {
   }
   get callback() {
     const { name } = this.serviceInfo;
-    const random = Math.floor(Math.random() * 10);
+    const max = 9999;
+    const min = 0;
+    const random = parseInt(Math.random() * (max - min + 1) + min, 10);
+    const { global } = window.gc._config;
     return `${global}_${name}_callback_func_${random}`;
   }
 }

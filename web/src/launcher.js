@@ -1,19 +1,19 @@
 import Global from './global'
-import { global } from './constant'
-import loaderAll from './service_loader';
+import loadAllServices from './service_loader';
 import Bridge from './bridge'
+import * as defaultConfig from "./config.default";
 
-export default class Launcher {
-  injectBridge() {
-    // 0. register gc on window
-    this.registerGC()
-
-    // 0. load all services
-    loaderAll();
+export default function launcher(config) {
+  let finalConfig = config;
+  if (!config) {
+    finalConfig = defaultConfig.default;
   }
+  const { global } = finalConfig;
+  // 0. register gc on window
+  window[`${global}`] = new Global();
+  window[`${global}`].bridge = new Bridge();
+  window.gc._config = finalConfig;
 
-  registerGC() {
-    window[global] = new Global();
-    window[global].bridge = new Bridge();
-  }
+  // 1. load all services
+  loadAllServices();
 }

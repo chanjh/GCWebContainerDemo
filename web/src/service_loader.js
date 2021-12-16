@@ -1,9 +1,8 @@
 import ServiceWrapper from './wrap_service';
-import { global } from './constant'
-import ContextMenuService from './services/contextMenu';
-import Test from './services/test';
+import ContextMenuService from './services/util/contextMenu';
+import Test from './services/util/test';
 
-export default function loaderAll() {
+export default function loadAllServices() {
   const services = [ContextMenuService, Test];
   services.forEach(s => {
     const name = bridgeName(s.name);
@@ -16,6 +15,7 @@ export default function loaderAll() {
       methods: s._methods,
       service: s
     })
+    const { global } = window.gc._config;
     window[global].bridge[name] = wrapper;
   });
 }

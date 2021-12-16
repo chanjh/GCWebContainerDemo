@@ -1,2 +1,3 @@
-import Launcher from '../src/launcher'
-(new Launcher()).injectBridge()
+import launcher from '../src/launcher'
+launcher();
+// (new Launcher()).injectBridge()

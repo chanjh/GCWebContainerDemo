@@ -1,5 +1,5 @@
-import Launcher from './launcher'
-(new Launcher()).injectBridge()
+import launcher from '../src/launcher'
+launcher();
 
 window.gc.bridge.contextMenu.clear().then(function (result) {
   console.log(`res: ${JSON.stringify(result)}`);
