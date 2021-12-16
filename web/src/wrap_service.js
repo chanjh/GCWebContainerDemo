@@ -5,7 +5,6 @@ export default class ServiceWrapper {
   constructor(serviceInfo) {
     this.serviceInfo = serviceInfo;
     this._initMethods();
-    this._initService();
   }
 
   _initMethods() {
@@ -30,9 +29,13 @@ export default class ServiceWrapper {
 
   _initCallback(callback) {
     const name = bridgeName(this.serviceInfo.name);
+    const { bridge } = this.serviceInfo;
     const wrapFunction = function () {
       const { global } = window.gc._config;
-      const self = window[global].bridge[name];
+      let self = window[global].bridge;
+      bridge.split('.').forEach(e => {
+        self = self[e]
+      });
       // 1. unlock
       // 2. send msg to wrapFunction on service
       self.lock.unlock(arguments[0])
@@ -42,10 +45,6 @@ export default class ServiceWrapper {
     window[callback] = wrapFunction
   }
 
-  _initService() {
-    const { service } = this.serviceInfo;
-    this.service = new service();
-  }
   get callback() {
     const { name } = this.serviceInfo;
     const max = 9999;

@@ -1,6 +1,6 @@
 import launcher from '../src/launcher'
 launcher();
 
-window.gc.bridge.contextMenu.clear().then(function (result) {
+window.gc.bridge.util.contextMenu.clear().then(function (result) {
   console.log(`res: ${JSON.stringify(result)}`);
 });
