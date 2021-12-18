@@ -10,6 +10,13 @@ import UIKit
 class GCBrowserViewController: UIViewController {
     let webView: GCWebView
     
+    lazy private var progressView: UIProgressView = {
+        self.progressView = UIProgressView.init(frame: CGRect(x: 0, y: 0,
+                                                              width: view.frame.width, height: 2))
+        self.progressView.tintColor = .blue
+        self.progressView.trackTintColor = .white
+        return self.progressView
+    }()
     init(webView: GCWebView? = nil) {
         if let wv = webView {
             self.webView = wv
@@ -27,11 +34,34 @@ class GCBrowserViewController: UIViewController {
         super.viewDidLoad()
         webView.frame = CGRect(origin: CGPoint.zero, size: view.frame.size)
         view.addSubview(webView)
+        view.addSubview(progressView)
         webView.load(URLRequest(url: URL(string: "https://baidu.com")!))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Menu",
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(didClickMenu(sender:)))
+
+        self.webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil);
+    }
+
+    // Observe value
+    override func observeValue(forKeyPath keyPath: String?,
+                               of object: Any?, change: [NSKeyValueChangeKey : Any]?,
+                               context: UnsafeMutableRawPointer?) {
+        if keyPath == "estimatedProgress" {
+            UIView.animate(withDuration: 0.3, delay: 0.1, options: .curveEaseOut, animations: {
+                self.progressView.progress = Float(self.webView.estimatedProgress);
+            })
+            if webView.estimatedProgress >= 1.0 {
+                UIView.animate(withDuration: 0.3, delay: 0.1, options: .curveEaseOut, animations: {
+                    self.progressView.alpha = 0
+                }, completion: { (finish) in
+                    self.progressView.setProgress(0.0, animated: false)
+                })
+            }
+        } else {
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+        }
     }
 }
 
