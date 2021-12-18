@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0D1F861C276CE19500D39CAF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D1F861B276CE19500D39CAF /* Main.storyboard */; };
 		0D1F861E276CE22400D39CAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F861D276CE22400D39CAF /* AppDelegate.swift */; };
 		0D1F8620276DC73600D39CAF /* GCDemoHomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F861F276DC73600D39CAF /* GCDemoHomeController.swift */; };
 		0D1F8622276DC83300D39CAF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F8621276DC83300D39CAF /* SceneDelegate.swift */; };
 		0D1F8625276DD3BB00D39CAF /* GCMultiTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F8624276DD3BB00D39CAF /* GCMultiTabController.swift */; };
 		0D1F8627276DD51A00D39CAF /* GCBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F8626276DD51A00D39CAF /* GCBrowserViewController.swift */; };
 		0D1F862A276DD75600D39CAF /* BrowserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F8629276DD75600D39CAF /* BrowserManager.swift */; };
+		0D1F862C276DE0EE00D39CAF /* BrowserMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F862B276DE0EE00D39CAF /* BrowserMenuController.swift */; };
 		0DD940B4275EDEBE006865B6 /* GCWebContainerDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD940B3275EDEBE006865B6 /* GCWebContainerDemoApp.swift */; };
 		0DD940B6275EDEBE006865B6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD940B5275EDEBE006865B6 /* ContentView.swift */; };
 		0DD940B8275EDEC0006865B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DD940B7275EDEC0006865B6 /* Assets.xcassets */; };
@@ -36,7 +36,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0D1F861B276CE19500D39CAF /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		0D1F861D276CE22400D39CAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0D1F861F276DC73600D39CAF /* GCDemoHomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDemoHomeController.swift; sourceTree = "<group>"; };
 		0D1F8621276DC83300D39CAF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -44,6 +43,7 @@
 		0D1F8624276DD3BB00D39CAF /* GCMultiTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCMultiTabController.swift; sourceTree = "<group>"; };
 		0D1F8626276DD51A00D39CAF /* GCBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCBrowserViewController.swift; sourceTree = "<group>"; };
 		0D1F8629276DD75600D39CAF /* BrowserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserManager.swift; sourceTree = "<group>"; };
+		0D1F862B276DE0EE00D39CAF /* BrowserMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserMenuController.swift; sourceTree = "<group>"; };
 		0DD940B0275EDEBE006865B6 /* GCWebContainerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GCWebContainerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DD940B3275EDEBE006865B6 /* GCWebContainerDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCWebContainerDemoApp.swift; sourceTree = "<group>"; };
 		0DD940B5275EDEBE006865B6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -83,6 +83,7 @@
 				0D1F861F276DC73600D39CAF /* GCDemoHomeController.swift */,
 				0D1F8624276DD3BB00D39CAF /* GCMultiTabController.swift */,
 				0D1F8626276DD51A00D39CAF /* GCBrowserViewController.swift */,
+				0D1F862B276DE0EE00D39CAF /* BrowserMenuController.swift */,
 				0DD940E927618691006865B6 /* WebViewController.swift */,
 			);
 			path = Pages;
@@ -115,7 +116,6 @@
 				0D1F8629276DD75600D39CAF /* BrowserManager.swift */,
 				0D1F861D276CE22400D39CAF /* AppDelegate.swift */,
 				0D1F8621276DC83300D39CAF /* SceneDelegate.swift */,
-				0D1F861B276CE19500D39CAF /* Main.storyboard */,
 				0DD940B7275EDEC0006865B6 /* Assets.xcassets */,
 				0DD940B9275EDEC0006865B6 /* Preview Content */,
 			);
@@ -276,7 +276,6 @@
 				0DD940BB275EDEC0006865B6 /* Preview Assets.xcassets in Resources */,
 				0DD940B8275EDEC0006865B6 /* Assets.xcassets in Resources */,
 				0DD940EE2762401F006865B6 /* jsbridge.js in Resources */,
-				0D1F861C276CE19500D39CAF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,6 +300,7 @@
 				0DD940B6275EDEBE006865B6 /* ContentView.swift in Sources */,
 				0D1F862A276DD75600D39CAF /* BrowserManager.swift in Sources */,
 				0DD940DA275EDF88006865B6 /* String+base64.swift in Sources */,
+				0D1F862C276DE0EE00D39CAF /* BrowserMenuController.swift in Sources */,
 				0DD940E0275EDF9F006865B6 /* ThreadSafe.swift in Sources */,
 				0DD940E5275EE12D006865B6 /* JSServiceType.swift in Sources */,
 				0DD940E8275EE17D006865B6 /* ContextMenuService.swift in Sources */,

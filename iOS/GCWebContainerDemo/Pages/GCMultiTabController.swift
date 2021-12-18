@@ -56,7 +56,7 @@ extension GCMultiTabController: UITableViewDataSource, UITableViewDelegate {
 extension GCMultiTabController {
     @objc
     func didClickAddBrowser() {
-        let browser = GCBrowserViewController()
+        let browser = GCBrowserViewController(webView: nil)
         navigationController?.pushViewController(browser, animated: true)
     }
 }

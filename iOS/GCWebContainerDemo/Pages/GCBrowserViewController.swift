@@ -28,5 +28,28 @@ class GCBrowserViewController: UIViewController {
         webView.frame = CGRect(origin: CGPoint.zero, size: view.frame.size)
         view.addSubview(webView)
         webView.load(URLRequest(url: URL(string: "https://baidu.com")!))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Menu",
+                                                            style: .plain,
+                                                            target: self,
+                                                            action: #selector(didClickMenu(sender:)))
+    }
+}
+
+extension GCBrowserViewController {
+    @objc func didClickMenu(sender: UIBarButtonItem) {
+        let menu = BrowserMenuController(browserId: webView.identifier!)
+        menu.delegate = self
+        menu.modalPresentationStyle = .popover
+        let pop = menu.popoverPresentationController
+        pop?.permittedArrowDirections = .up
+        // todo
+        pop?.sourceView = navigationController?.navigationBar
+        present(menu, animated: true, completion: nil)
+    }
+}
+
+extension GCBrowserViewController: BrowserMenuControllerDelegate {
+    func closeBrowser() {
+        navigationController?.popViewController(animated: true)
     }
 }

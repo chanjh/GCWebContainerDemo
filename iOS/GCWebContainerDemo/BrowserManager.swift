@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ObjectiveC
 
 class BrowserManager {
     private var pool: [GCWebView] = [];
@@ -18,6 +19,7 @@ class BrowserManager {
     
     func makeBrowser() -> GCWebView {
         let webView = GCWebView()
+        webView.identifier = UUID().uuidString
         pool.append(webView)
         return webView
     }
@@ -29,5 +31,23 @@ class BrowserManager {
     func browser(at index: Int) -> GCWebView? {
         return pool[index]
     }
+    
+    func remove(_ webView: GCWebView) {
+        pool.removeAll { $0 == webView }
+    }
+    func remove(_ identifier: String) {
+        pool.removeAll { $0.identifier == identifier }
+    }
 }
 
+private var kGCWebViewIDKey: UInt8 = 0
+extension GCWebView {
+    var identifier: String? {
+        get {
+            return objc_getAssociatedObject(self, &kGCWebViewIDKey) as? String
+        }
+        set(newValue) {
+            objc_setAssociatedObject(self, &kGCWebViewIDKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+}
