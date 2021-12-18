@@ -22,7 +22,7 @@ struct WebViewStr : UIViewRepresentable {
     
 }
 
-@main
+//@main
 struct GCWebContainerDemoApp: App {
     var body: some Scene {
         WindowGroup {

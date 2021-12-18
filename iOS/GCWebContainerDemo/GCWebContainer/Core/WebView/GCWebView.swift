@@ -12,7 +12,7 @@ class GCWebView: WebView {
     private(set) var jsServiceManager: JSServiceManager?
 
     // todo: 不在初始化时注入, 改在其他生命周期
-    init(_ script: String? = nil) {
+    init() {
         let webViewConfiguration = WKWebViewConfiguration()
         let contentController = WKUserContentController()
 //        let js = script ?? GCWebView._getBridgeScript()
@@ -32,6 +32,12 @@ class GCWebView: WebView {
     private func _initContext() {
         jsServiceManager = JSServiceManager(self)
         jsEngine = JSEngine(self)
+        // todo: delete
+        jsServiceManager?.register(handler: ContextMenuService(self))
+    }
+    
+    func addUserScript(userScript: WKUserScript) {
+        configuration.userContentController.addUserScript(userScript);
     }
 }
 

@@ -26,8 +26,3 @@ struct JSServiceType: Hashable, RawRepresentable {
         hasher.combine(rawValue)
     }
 }
-
-extension JSServiceType {
-    static let setContextMenu   = JSServiceType("util.contextMenu.set")
-    static let clearContextMenu = JSServiceType("util.contextMenu.clear")
-}

@@ -8,11 +8,14 @@
 
 import WebKit
 
+// JS --> Native
 class JSServiceManager: NSObject {
     weak var webView: WKWebView?
     static let scriptMessageName = "invoke"
+    static let kCallback = "callback";
     private let handerQueue = DispatchQueue(label: "com.chanjh.readflow.jshandler.\(UUID().uuidString)")
     @ThreadSafe private(set) var handlers = [JSServiceHandler]()
+    
     init(_ webView: WKWebView) {
         self.webView = webView
         super.init()
@@ -39,14 +42,15 @@ class JSServiceManager: NSObject {
 }
 
 extension JSServiceManager: WKScriptMessageHandler {
-    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        guard message.name == Self.scriptMessageName, let body = message.body as? [String: Any],
+    func userContentController(_ userContentController: WKUserContentController,
+                               didReceive message: WKScriptMessage) {
+        guard message.name == Self.scriptMessageName,
+                let body = message.body as? [String: Any],
             let method = body["action"] as? String,
             let agrs = body["params"] as? [String: Any] else {
-//                spaceAssertionFailure()
-//                DocsLogger.severe("cannot handle js request", extraInfo: ["message": message.description], error: nil, component: nil)
+                // todo: error
                 return
         }
-        handle(message: method, agrs, callback: body["callback"] as? String)
+        handle(message: method, agrs, callback: body[Self.kCallback] as? String)
     }
 }

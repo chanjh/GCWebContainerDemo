@@ -17,28 +17,23 @@ class ContextMenuService: BaseJSService, JSServiceHandler {
             _handleSetContextMenu(params: params, callback: callback)
         } else if serviceName == JSServiceType.clearContextMenu.rawValue {
 //            webView?.contextMenu.items = []
+            webView?.jsEngine?.callFunction(callback!, params: ["id": "sssss"], completion: nil)
         }
     }
 
     private func _handleSetContextMenu(params: [String: Any], callback: String?) {
-        guard let menus = params["menu"] as? [[String: String]], let webView = webView else { return }
-        var menuItems = [UIMenuItem]()
-        menus.forEach { (menu) in
-            guard let text = menu["text"], let id = menu["id"] else { return }
-            let action: () -> Void = { [weak self] () in
-                guard let self = self, let callback = callback else { return }
-//                self.webView?.jsEngine?.callFunction(callback, params: ["id": id], completion: nil)
-            }
-//            menuItems.append(webView.wkMenuItem(uid: id, title: text, action: action))
-        }
-//        webView.contextMenu.items = menuItems
+        
     }
 }
-
 
 extension ContextMenuService {
     struct MenuInfo {
         let text: String
         let id: String
     }
+}
+
+extension JSServiceType {
+    static let setContextMenu   = JSServiceType("util.contextMenu.set")
+    static let clearContextMenu = JSServiceType("util.contextMenu.clear")
 }
