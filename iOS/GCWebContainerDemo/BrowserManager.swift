@@ -32,6 +32,10 @@ class BrowserManager {
         return pool[index]
     }
     
+    func browser(at identifier: String) -> GCWebView? {
+        return pool.first { $0.identifier == identifier }
+    }
+    
     func remove(_ webView: GCWebView) {
         pool.removeAll { $0 == webView }
     }

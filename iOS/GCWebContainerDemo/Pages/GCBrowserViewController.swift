@@ -9,6 +9,7 @@ import UIKit
 
 class GCBrowserViewController: UIViewController {
     let webView: GCWebView
+    let url: URL?
     
     lazy private var progressView: UIProgressView = {
         self.progressView = UIProgressView.init(frame: CGRect(x: 0, y: 0,
@@ -17,7 +18,8 @@ class GCBrowserViewController: UIViewController {
         self.progressView.trackTintColor = .white
         return self.progressView
     }()
-    init(webView: GCWebView? = nil) {
+    init(webView: GCWebView? = nil, url: URL? = nil) {
+        self.url = url
         if let wv = webView {
             self.webView = wv
         } else {
@@ -35,7 +37,9 @@ class GCBrowserViewController: UIViewController {
         webView.frame = CGRect(origin: CGPoint.zero, size: view.frame.size)
         view.addSubview(webView)
         view.addSubview(progressView)
-        webView.load(URLRequest(url: URL(string: "https://baidu.com")!))
+        if webView.url == nil, let url = url {
+            webView.load(URLRequest(url: url))
+        }
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Menu",
                                                             style: .plain,
                                                             target: self,
@@ -62,6 +66,10 @@ class GCBrowserViewController: UIViewController {
         } else {
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
+    }
+    
+    deinit {
+        self.webView.removeObserver(self, forKeyPath: "estimatedProgress")
     }
 }
 

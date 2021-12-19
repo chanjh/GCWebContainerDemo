@@ -30,7 +30,7 @@ class BrowserMenuController: UIViewController {
         tableView.dataSource = self
         return tableView
     }()
-    let menu = [["id":"?????", "name":"??"],
+    let menu = [["id":"url", "name":"URL"],
                 ["id":"close", "name":"Close Browser"]]
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +56,19 @@ extension BrowserMenuController: UITableViewDataSource, UITableViewDelegate {
             dismiss(animated: true) { [weak self] in
                 self?.delegate?.closeBrowser()
             }
+        } else if menu[indexPath.row]["id"] == "url" {
+            let alert = UIAlertController(title: "URL", message: nil, preferredStyle: .alert)
+            alert.addTextField { [weak self] textField in
+                textField.text = BrowserManager.shared.browser(at: self?.browserId ?? "" )?.url?.absoluteString ?? ""
+            }
+            alert.addAction(UIAlertAction(title: "ok", style: .default, handler: { [weak self] _ in
+                if let url = URL(string: alert.textFields?.first?.text ?? "") {
+                    BrowserManager.shared.browser(at: self?.browserId ?? "" )?.load(URLRequest(url: url))
+                    self?.dismiss(animated: true, completion: nil)
+                }
+            }))
+            alert.addAction((UIAlertAction(title: "cancel", style: .cancel, handler: nil)))
+            present(alert, animated: true, completion: nil)
         }
     }
 }

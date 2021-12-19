@@ -56,7 +56,17 @@ extension GCMultiTabController: UITableViewDataSource, UITableViewDelegate {
 extension GCMultiTabController {
     @objc
     func didClickAddBrowser() {
-        let browser = GCBrowserViewController(webView: nil)
-        navigationController?.pushViewController(browser, animated: true)
+        let alert = UIAlertController(title: "URL", message: nil, preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.text = "https://baidu.com"
+        }
+        alert.addAction(UIAlertAction(title: "ok", style: .default, handler: { [weak self] _ in
+            if let url = URL(string: alert.textFields?.first?.text ?? "") {
+                let browser = GCBrowserViewController(webView: nil, url: url)
+                self?.navigationController?.pushViewController(browser, animated: true)
+            }
+        }))
+        alert.addAction((UIAlertAction(title: "cancel", style: .cancel, handler: nil)))
+        present(alert, animated: true, completion: nil)
     }
 }
