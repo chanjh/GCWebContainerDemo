@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WebKit
 
 class GCBrowserViewController: UIViewController {
     let webView: GCWebView
@@ -45,7 +46,7 @@ class GCBrowserViewController: UIViewController {
                                                             target: self,
                                                             action: #selector(didClickMenu(sender:)))
 
-        self.webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil);
+        webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
     }
 
     // Observe value

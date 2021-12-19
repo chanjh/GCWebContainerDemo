@@ -12,6 +12,7 @@ class BrowserManager {
     private var pool: [GCWebView] = [];
     
     static let shared = BrowserManager()
+    let pdManager = PDManager()
     
     var count: Int {
         return pool.count
@@ -21,6 +22,7 @@ class BrowserManager {
         let webView = GCWebView()
         webView.identifier = UUID().uuidString
         pool.append(webView)
+        pdManager.loadAll()
         return webView
     }
     
