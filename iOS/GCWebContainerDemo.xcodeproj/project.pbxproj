@@ -7,6 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D1F861E276CE22400D39CAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F861D276CE22400D39CAF /* AppDelegate.swift */; };
+		0D1F8620276DC73600D39CAF /* GCDemoHomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F861F276DC73600D39CAF /* GCDemoHomeController.swift */; };
+		0D1F8622276DC83300D39CAF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F8621276DC83300D39CAF /* SceneDelegate.swift */; };
+		0D1F8625276DD3BB00D39CAF /* GCMultiTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F8624276DD3BB00D39CAF /* GCMultiTabController.swift */; };
+		0D1F8627276DD51A00D39CAF /* GCBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F8626276DD51A00D39CAF /* GCBrowserViewController.swift */; };
+		0D1F862A276DD75600D39CAF /* BrowserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F8629276DD75600D39CAF /* BrowserManager.swift */; };
+		0D1F862C276DE0EE00D39CAF /* BrowserMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F862B276DE0EE00D39CAF /* BrowserMenuController.swift */; };
+		0D1F862E276E39C000D39CAF /* BookmarksManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F862D276E39C000D39CAF /* BookmarksManager.swift */; };
+		0D1F8640276F2BFD00D39CAF /* PDLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F863F276F2BFD00D39CAF /* PDLoader.swift */; };
+		0D1F8642276F2C2C00D39CAF /* PDRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F8641276F2C2C00D39CAF /* PDRunner.swift */; };
+		0D1F8644276F2C5100D39CAF /* PDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F8643276F2C5100D39CAF /* PDManager.swift */; };
+		0D1F8646276F2CFE00D39CAF /* Pandora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F8645276F2CFE00D39CAF /* Pandora.swift */; };
+		0D1F8648276F2FF600D39CAF /* PDManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F8647276F2FF600D39CAF /* PDManifest.swift */; };
+		0D1F864A276F346B00D39CAF /* Extensions.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0D1F8649276F346B00D39CAF /* Extensions.bundle */; };
 		0DD940B4275EDEBE006865B6 /* GCWebContainerDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD940B3275EDEBE006865B6 /* GCWebContainerDemoApp.swift */; };
 		0DD940B6275EDEBE006865B6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD940B5275EDEBE006865B6 /* ContentView.swift */; };
 		0DD940B8275EDEC0006865B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DD940B7275EDEC0006865B6 /* Assets.xcassets */; };
@@ -26,9 +40,25 @@
 		0DD940E8275EE17D006865B6 /* ContextMenuService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD940E7275EE17D006865B6 /* ContextMenuService.swift */; };
 		0DD940EA27618691006865B6 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD940E927618691006865B6 /* WebViewController.swift */; };
 		0DD940EE2762401F006865B6 /* jsbridge.js in Resources */ = {isa = PBXBuildFile; fileRef = 0DD940ED2762401F006865B6 /* jsbridge.js */; };
+		5AC30482C2310221284B84BB /* Pods_GCWebContainerDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4A451F770A9FC2F4D81C871 /* Pods_GCWebContainerDemo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D1F861D276CE22400D39CAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		0D1F861F276DC73600D39CAF /* GCDemoHomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDemoHomeController.swift; sourceTree = "<group>"; };
+		0D1F8621276DC83300D39CAF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		0D1F8623276DC88200D39CAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		0D1F8624276DD3BB00D39CAF /* GCMultiTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCMultiTabController.swift; sourceTree = "<group>"; };
+		0D1F8626276DD51A00D39CAF /* GCBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCBrowserViewController.swift; sourceTree = "<group>"; };
+		0D1F8629276DD75600D39CAF /* BrowserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserManager.swift; sourceTree = "<group>"; };
+		0D1F862B276DE0EE00D39CAF /* BrowserMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserMenuController.swift; sourceTree = "<group>"; };
+		0D1F862D276E39C000D39CAF /* BookmarksManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksManager.swift; sourceTree = "<group>"; };
+		0D1F863F276F2BFD00D39CAF /* PDLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDLoader.swift; sourceTree = "<group>"; };
+		0D1F8641276F2C2C00D39CAF /* PDRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDRunner.swift; sourceTree = "<group>"; };
+		0D1F8643276F2C5100D39CAF /* PDManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDManager.swift; sourceTree = "<group>"; };
+		0D1F8645276F2CFE00D39CAF /* Pandora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pandora.swift; sourceTree = "<group>"; };
+		0D1F8647276F2FF600D39CAF /* PDManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDManifest.swift; sourceTree = "<group>"; };
+		0D1F8649276F346B00D39CAF /* Extensions.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Extensions.bundle; sourceTree = "<group>"; };
 		0DD940B0275EDEBE006865B6 /* GCWebContainerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GCWebContainerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DD940B3275EDEBE006865B6 /* GCWebContainerDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCWebContainerDemoApp.swift; sourceTree = "<group>"; };
 		0DD940B5275EDEBE006865B6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -49,6 +79,9 @@
 		0DD940E7275EE17D006865B6 /* ContextMenuService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextMenuService.swift; sourceTree = "<group>"; };
 		0DD940E927618691006865B6 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		0DD940ED2762401F006865B6 /* jsbridge.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsbridge.js; path = ../../../../../web/build/jsbridge.js; sourceTree = "<group>"; };
+		8615C5107E5BE2A40D6A4391 /* Pods-GCWebContainerDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GCWebContainerDemo.release.xcconfig"; path = "Target Support Files/Pods-GCWebContainerDemo/Pods-GCWebContainerDemo.release.xcconfig"; sourceTree = "<group>"; };
+		B4A451F770A9FC2F4D81C871 /* Pods_GCWebContainerDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GCWebContainerDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E102F54D2C9F7CD1337B21D5 /* Pods-GCWebContainerDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GCWebContainerDemo.debug.xcconfig"; path = "Target Support Files/Pods-GCWebContainerDemo/Pods-GCWebContainerDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,17 +89,44 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5AC30482C2310221284B84BB /* Pods_GCWebContainerDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D1F8628276DD73600D39CAF /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+				0D1F861F276DC73600D39CAF /* GCDemoHomeController.swift */,
+				0D1F8624276DD3BB00D39CAF /* GCMultiTabController.swift */,
+				0D1F8626276DD51A00D39CAF /* GCBrowserViewController.swift */,
+				0D1F862B276DE0EE00D39CAF /* BrowserMenuController.swift */,
+				0DD940E927618691006865B6 /* WebViewController.swift */,
+			);
+			path = Pages;
+			sourceTree = "<group>";
+		};
+		0D1F863E276F2BE900D39CAF /* Pandora */ = {
+			isa = PBXGroup;
+			children = (
+				0D1F863F276F2BFD00D39CAF /* PDLoader.swift */,
+				0D1F8643276F2C5100D39CAF /* PDManager.swift */,
+				0D1F8641276F2C2C00D39CAF /* PDRunner.swift */,
+				0D1F8647276F2FF600D39CAF /* PDManifest.swift */,
+				0D1F8645276F2CFE00D39CAF /* Pandora.swift */,
+			);
+			path = Pandora;
+			sourceTree = "<group>";
+		};
 		0DD940A7275EDEBE006865B6 = {
 			isa = PBXGroup;
 			children = (
 				0DD940B2275EDEBE006865B6 /* GCWebContainerDemo */,
 				0DD940B1275EDEBE006865B6 /* Products */,
+				C84D711AC524720097936F22 /* Pods */,
+				B3F5D08A6E2A384ECA7680F0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -81,12 +141,19 @@
 		0DD940B2275EDEBE006865B6 /* GCWebContainerDemo */ = {
 			isa = PBXGroup;
 			children = (
+				0D1F863E276F2BE900D39CAF /* Pandora */,
+				0D1F8623276DC88200D39CAF /* Info.plist */,
 				0DD940D1275EDF00006865B6 /* GCWebContainer */,
+				0D1F8628276DD73600D39CAF /* Pages */,
 				0DD940B3275EDEBE006865B6 /* GCWebContainerDemoApp.swift */,
 				0DD940B5275EDEBE006865B6 /* ContentView.swift */,
-				0DD940E927618691006865B6 /* WebViewController.swift */,
+				0D1F8629276DD75600D39CAF /* BrowserManager.swift */,
+				0D1F862D276E39C000D39CAF /* BookmarksManager.swift */,
+				0D1F861D276CE22400D39CAF /* AppDelegate.swift */,
+				0D1F8621276DC83300D39CAF /* SceneDelegate.swift */,
 				0DD940B7275EDEC0006865B6 /* Assets.xcassets */,
 				0DD940B9275EDEC0006865B6 /* Preview Content */,
+				0D1F8649276F346B00D39CAF /* Extensions.bundle */,
 			);
 			path = GCWebContainerDemo;
 			sourceTree = "<group>";
@@ -184,6 +251,24 @@
 			path = javascript;
 			sourceTree = "<group>";
 		};
+		B3F5D08A6E2A384ECA7680F0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B4A451F770A9FC2F4D81C871 /* Pods_GCWebContainerDemo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C84D711AC524720097936F22 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E102F54D2C9F7CD1337B21D5 /* Pods-GCWebContainerDemo.debug.xcconfig */,
+				8615C5107E5BE2A40D6A4391 /* Pods-GCWebContainerDemo.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -191,9 +276,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0DD940BE275EDEC0006865B6 /* Build configuration list for PBXNativeTarget "GCWebContainerDemo" */;
 			buildPhases = (
+				18DB98329EC403BBC7EEE27A /* [CP] Check Pods Manifest.lock */,
 				0DD940AC275EDEBE006865B6 /* Sources */,
 				0DD940AD275EDEBE006865B6 /* Frameworks */,
 				0DD940AE275EDEBE006865B6 /* Resources */,
+				2FF236BBD325EDE9D8FE3CF2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -243,12 +330,55 @@
 			buildActionMask = 2147483647;
 			files = (
 				0DD940BB275EDEC0006865B6 /* Preview Assets.xcassets in Resources */,
+				0D1F864A276F346B00D39CAF /* Extensions.bundle in Resources */,
 				0DD940B8275EDEC0006865B6 /* Assets.xcassets in Resources */,
 				0DD940EE2762401F006865B6 /* jsbridge.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		18DB98329EC403BBC7EEE27A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GCWebContainerDemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2FF236BBD325EDE9D8FE3CF2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GCWebContainerDemo/Pods-GCWebContainerDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GCWebContainerDemo/Pods-GCWebContainerDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GCWebContainerDemo/Pods-GCWebContainerDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0DD940AC275EDEBE006865B6 /* Sources */ = {
@@ -258,19 +388,32 @@
 				0DD940E1275EDF9F006865B6 /* JSServiceUtil.swift in Sources */,
 				0DD940CD275EDED5006865B6 /* JSServiceHandler.swift in Sources */,
 				0DD940CB275EDED5006865B6 /* JSEngine.swift in Sources */,
+				0D1F8644276F2C5100D39CAF /* PDManager.swift in Sources */,
 				0DD940CA275EDED5006865B6 /* JSServiceManager.swift in Sources */,
 				0DD940CF275EDED5006865B6 /* GCWebView.swift in Sources */,
+				0D1F862E276E39C000D39CAF /* BookmarksManager.swift in Sources */,
+				0D1F8625276DD3BB00D39CAF /* GCMultiTabController.swift in Sources */,
 				0DD940DC275EDF88006865B6 /* PrivateFoundationExtension.swift in Sources */,
 				0DD940DB275EDF88006865B6 /* URL+scheme.swift in Sources */,
+				0D1F8640276F2BFD00D39CAF /* PDLoader.swift in Sources */,
 				0DD940D9275EDF88006865B6 /* Dictionary+String.swift in Sources */,
+				0D1F8627276DD51A00D39CAF /* GCBrowserViewController.swift in Sources */,
+				0D1F8646276F2CFE00D39CAF /* Pandora.swift in Sources */,
 				0DD940D0275EDED5006865B6 /* WebView.swift in Sources */,
 				0DD940B6275EDEBE006865B6 /* ContentView.swift in Sources */,
+				0D1F862A276DD75600D39CAF /* BrowserManager.swift in Sources */,
 				0DD940DA275EDF88006865B6 /* String+base64.swift in Sources */,
+				0D1F862C276DE0EE00D39CAF /* BrowserMenuController.swift in Sources */,
 				0DD940E0275EDF9F006865B6 /* ThreadSafe.swift in Sources */,
 				0DD940E5275EE12D006865B6 /* JSServiceType.swift in Sources */,
 				0DD940E8275EE17D006865B6 /* ContextMenuService.swift in Sources */,
 				0DD940B4275EDEBE006865B6 /* GCWebContainerDemoApp.swift in Sources */,
+				0D1F8620276DC73600D39CAF /* GCDemoHomeController.swift in Sources */,
+				0D1F8622276DC83300D39CAF /* SceneDelegate.swift in Sources */,
+				0D1F861E276CE22400D39CAF /* AppDelegate.swift in Sources */,
 				0DD940EA27618691006865B6 /* WebViewController.swift in Sources */,
+				0D1F8642276F2C2C00D39CAF /* PDRunner.swift in Sources */,
+				0D1F8648276F2FF600D39CAF /* PDManifest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,6 +538,7 @@
 		};
 		0DD940BF275EDEC0006865B6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E102F54D2C9F7CD1337B21D5 /* Pods-GCWebContainerDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -404,7 +548,7 @@
 				DEVELOPMENT_TEAM = 93MHT7HTF3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = GCWebContainerDemo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -424,6 +568,7 @@
 		};
 		0DD940C0275EDEC0006865B6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8615C5107E5BE2A40D6A4391 /* Pods-GCWebContainerDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -433,7 +578,7 @@
 				DEVELOPMENT_TEAM = 93MHT7HTF3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = GCWebContainerDemo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

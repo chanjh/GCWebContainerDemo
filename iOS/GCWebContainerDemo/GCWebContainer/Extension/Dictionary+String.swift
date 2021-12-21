@@ -18,7 +18,7 @@ public extension PrivateFoundationExtension {
             let jsonData = try JSONSerialization.data(withJSONObject: base, options: [])
             return String(data: jsonData, encoding: .utf8)
         } catch {
-//            spaceAssertionFailure()
+            assertionFailure()
         }
         return nil
     }

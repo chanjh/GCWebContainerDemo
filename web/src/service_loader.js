@@ -1,22 +1,34 @@
+import ServiceWrapper from './wrap_service';
 
-import ContextMenuService from './services/contextMenu';
-export default class Loader {
-  constructor() { }
-  // TODO: auto input all services by webpack loader
-  static services = [ContextMenuService];
-  loadAll() {
-    // 0. get all services
-    // 1. inject service name in window.gc.bridge.name
-    Loader.services.forEach(s => {
-      const name = this.bridgeName(s.name);
-      // todo: 2. wrap class, hook methods in class to `webkit.messageHandlers.invoke.postMessage()`
-      // window.gc.bridge.contextMenu.set ->
-      // window.webkit.messageHandlers.invoke.postMessage(data)
-      window.gc.bridge[name] = new s();
-    });
-  }
+export default function loadAllServices() {
+  const { services } = window.gc._config;
+  const { global } = window.gc._config;
+  const host = window[global].bridge;
+  parseService(services, '', host);
 
-  bridgeName(service) {
-    return service[0].toLowerCase() + service.substring(1);
+  function parseService(service, namespace, host) {
+    if (Array.isArray(service)) {
+      return service
+    }
+    Object.keys(service).map(name => {
+      const newNamespace = namespace.length == 0 ? name : `${namespace}.${name}`;
+      host[name] = Object()
+      const methods = parseService(service[name], newNamespace, host[name])
+      if (methods) {
+        // wrap class, hook methods in class to `webkit.messageHandlers.invoke.postMessage()`
+        // window.gc.bridge.contextMenu.set equal to =>
+        // window.webkit.messageHandlers.invoke.postMessage(data)
+        const wrapper = new ServiceWrapper({
+          name,
+          bridge: newNamespace,
+          methods: methods,
+        })
+        host[name] = wrapper
+      }
+    })
   }
+}
+
+export function bridgeName(service) {
+  return service[0].toLowerCase() + service.substring(1).split('Service')[0];
 }

@@ -8,6 +8,7 @@
 
 import WebKit
 
+// Native --> JS
 class JSEngine: NSObject {
     let webView: GCWebView
     init(_ webView: GCWebView) {
