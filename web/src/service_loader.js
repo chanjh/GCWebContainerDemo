@@ -30,37 +30,39 @@ export default function loadAllServices() {
   }
 }
 
-export function bridgeName(service) {
+function bridgeName(service) {
   return service[0].toLowerCase() + service.substring(1).split('Service')[0];
 }
 
-export function loadDefaultServices() {
+function loadDefaultServices() {
   var req = require.context("./services", true, /\.js$/);
-  const { global } = window.gc._config;
   req.keys().forEach(function (key) {
     const js = req(key);
-    console.log(js);
-    if (js.__esModule) {
-      const namespace = js.default.namespace;
-      let point = window[global].bridge;
-      namespace.split('.').forEach(name => {
-        if (!point[name]) {
-          point[name] = Object()
-        } else {
-          point = point[name]
-        }
-      })
-      const methods = Object.getOwnPropertyNames(js.default.prototype);
-      methods.forEach(m => {
-        if (m !== 'constructor') {
-          point[m] = function (arg) {
-            // todo: service cache
-            const service = (new js.default())
-            const fn = service[m]
-            return fn(arg)
-          }
-        }
-      })
-    }
+    injectService(js);
   });
+}
+
+export function injectService(service) {
+  if (service.__esModule) {
+    const namespace = service.default.namespace;
+    const { global } = window.gc._config;
+    let point = window[global].bridge;
+    namespace.split('.').forEach(name => {
+      if (!point[name]) {
+        point[name] = Object()
+      }
+      point = point[name]
+    })
+    const methods = Object.getOwnPropertyNames(service.default.prototype);
+    methods.forEach(m => {
+      if (m !== 'constructor') {
+        point[m] = function (arg) {
+          // todo: service cache
+          const serviceIns = (new service.default())
+          const fn = serviceIns[m]
+          return fn(arg)
+        }
+      }
+    })
+  }
 }

@@ -1,5 +1,4 @@
 import invoker from "./invoker";
-// import { bridgeName } from './service_loader'
 import Lock from "./lock";
 
 export function wrapFunction(name, bridge, method) {
