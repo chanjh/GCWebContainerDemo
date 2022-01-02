@@ -15,5 +15,5 @@ export default function launcher(config) {
   window.gc._config = finalConfig;
 
   // 1. load all services
-  loadAllServices();
+  // loadAllServices();
 }

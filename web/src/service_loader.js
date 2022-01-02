@@ -49,18 +49,19 @@ export function injectService(service) {
     let point = window[global].bridge;
     namespace.split('.').forEach(name => {
       if (!point[name]) {
-        point[name] = Object()
+        point[name] = new Object()
       }
       point = point[name]
     })
+    // point = new (service.default()) // todo: 深拷贝
     const methods = Object.getOwnPropertyNames(service.default.prototype);
     methods.forEach(m => {
-      if (m !== 'constructor') {
+      if (m !== 'constructor' && !m.startsWith('native_')) {
+        // return point[m](arg)
         point[m] = function (arg) {
           // todo: service cache
           const serviceIns = (new service.default())
-          const fn = serviceIns[m]
-          return fn(arg)
+          return serviceIns[m](arg)
         }
       }
     })
