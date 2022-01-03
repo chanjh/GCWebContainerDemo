@@ -21,6 +21,9 @@
 		0D1F8646276F2CFE00D39CAF /* Pandora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F8645276F2CFE00D39CAF /* Pandora.swift */; };
 		0D1F8648276F2FF600D39CAF /* PDManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F8647276F2FF600D39CAF /* PDManifest.swift */; };
 		0D1F864A276F346B00D39CAF /* Extensions.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0D1F8649276F346B00D39CAF /* Extensions.bundle */; };
+		0D84542C27773E8600E18BDE /* chrome.js in Resources */ = {isa = PBXBuildFile; fileRef = 0D84542B27773E8600E18BDE /* chrome.js */; };
+		0D84542E2781974900E18BDE /* TabsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D84542D2781974900E18BDE /* TabsService.swift */; };
+		0D8454302781982100E18BDE /* PandoraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D84542F2781982100E18BDE /* PandoraService.swift */; };
 		0DD940B4275EDEBE006865B6 /* GCWebContainerDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD940B3275EDEBE006865B6 /* GCWebContainerDemoApp.swift */; };
 		0DD940B6275EDEBE006865B6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD940B5275EDEBE006865B6 /* ContentView.swift */; };
 		0DD940B8275EDEC0006865B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DD940B7275EDEC0006865B6 /* Assets.xcassets */; };
@@ -59,6 +62,9 @@
 		0D1F8645276F2CFE00D39CAF /* Pandora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pandora.swift; sourceTree = "<group>"; };
 		0D1F8647276F2FF600D39CAF /* PDManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDManifest.swift; sourceTree = "<group>"; };
 		0D1F8649276F346B00D39CAF /* Extensions.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Extensions.bundle; sourceTree = "<group>"; };
+		0D84542B27773E8600E18BDE /* chrome.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = chrome.js; path = ../../../../../web/build/chrome.js; sourceTree = "<group>"; };
+		0D84542D2781974900E18BDE /* TabsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsService.swift; sourceTree = "<group>"; };
+		0D84542F2781982100E18BDE /* PandoraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PandoraService.swift; sourceTree = "<group>"; };
 		0DD940B0275EDEBE006865B6 /* GCWebContainerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GCWebContainerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DD940B3275EDEBE006865B6 /* GCWebContainerDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCWebContainerDemoApp.swift; sourceTree = "<group>"; };
 		0DD940B5275EDEBE006865B6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -231,6 +237,8 @@
 			isa = PBXGroup;
 			children = (
 				0DD940E7275EE17D006865B6 /* ContextMenuService.swift */,
+				0D84542D2781974900E18BDE /* TabsService.swift */,
+				0D84542F2781982100E18BDE /* PandoraService.swift */,
 			);
 			path = JSServices;
 			sourceTree = "<group>";
@@ -246,6 +254,7 @@
 		0DD940EC27624010006865B6 /* javascript */ = {
 			isa = PBXGroup;
 			children = (
+				0D84542B27773E8600E18BDE /* chrome.js */,
 				0DD940ED2762401F006865B6 /* jsbridge.js */,
 			);
 			path = javascript;
@@ -265,7 +274,6 @@
 				E102F54D2C9F7CD1337B21D5 /* Pods-GCWebContainerDemo.debug.xcconfig */,
 				8615C5107E5BE2A40D6A4391 /* Pods-GCWebContainerDemo.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -331,6 +339,7 @@
 			files = (
 				0DD940BB275EDEC0006865B6 /* Preview Assets.xcassets in Resources */,
 				0D1F864A276F346B00D39CAF /* Extensions.bundle in Resources */,
+				0D84542C27773E8600E18BDE /* chrome.js in Resources */,
 				0DD940B8275EDEC0006865B6 /* Assets.xcassets in Resources */,
 				0DD940EE2762401F006865B6 /* jsbridge.js in Resources */,
 			);
@@ -407,7 +416,9 @@
 				0DD940E0275EDF9F006865B6 /* ThreadSafe.swift in Sources */,
 				0DD940E5275EE12D006865B6 /* JSServiceType.swift in Sources */,
 				0DD940E8275EE17D006865B6 /* ContextMenuService.swift in Sources */,
+				0D8454302781982100E18BDE /* PandoraService.swift in Sources */,
 				0DD940B4275EDEBE006865B6 /* GCWebContainerDemoApp.swift in Sources */,
+				0D84542E2781974900E18BDE /* TabsService.swift in Sources */,
 				0D1F8620276DC73600D39CAF /* GCDemoHomeController.swift in Sources */,
 				0D1F8622276DC83300D39CAF /* SceneDelegate.swift in Sources */,
 				0D1F861E276CE22400D39CAF /* AppDelegate.swift in Sources */,

@@ -48,6 +48,14 @@ class GCBrowserViewController: UIViewController {
 
         webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let pandora = BrowserManager.shared.pdManager.pandoras.first {
+            let runner = PDRunner(pandora: pandora)
+            runner.run();
+        }
+    }
 
     // Observe value
     override func observeValue(forKeyPath keyPath: String?,

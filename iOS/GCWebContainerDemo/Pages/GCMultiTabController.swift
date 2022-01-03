@@ -58,7 +58,7 @@ extension GCMultiTabController {
     func didClickAddBrowser() {
         let alert = UIAlertController(title: "URL", message: nil, preferredStyle: .alert)
         alert.addTextField { textField in
-            textField.text = "http://localhost:8080" //"https://baidu.com"
+            textField.text = "https://baidu.com"
         }
         alert.addAction(UIAlertAction(title: "ok", style: .default, handler: { [weak self] _ in
             if let url = URL(string: alert.textFields?.first?.text ?? "") {

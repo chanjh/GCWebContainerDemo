@@ -11,12 +11,21 @@ struct Pandora {
     let pdName: String;
     let pdPath: URL;
     let manifest: PDManifest;
+    private var pdId: String?
+    var id: String? {
+        return pdId;
+    }
+    
     var background: String? {
         if let worker = manifest.background?.worker,
            let data = FileManager.default.contents(atPath: pdPath.appendingPathComponent(worker).relativePath) {
             return String(data: data, encoding: .utf8)
         }
         return nil
+    }
+    
+    mutating func run() {
+        self.pdId = UUID().uuidString
     }
     
     init?(_ path: URL) {
