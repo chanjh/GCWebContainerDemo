@@ -22,8 +22,12 @@ export async function jsbridge(action, params, callback) {
       const { global } = window.gc._config;
       // 1. unlock
       // 2. send msg to wrapFunction on service
-      const res = await callback(arguments[0])
-      lock.unlock(res)
+      if (callback) {
+        const res = await callback(arguments[0])
+        lock.unlock(res);
+      } else {
+        lock.unlock(arguments[0])
+      }
       // 3. remove callback
       delete window[callbackName];
     }
@@ -37,6 +41,6 @@ export async function jsbridge(action, params, callback) {
   // callback, need to be a function name but not a obj in window
   lock = new Lock();
   lock.lock();
-  await invoker(`${action}`, params, callbackName);
+  await invoker(action, params, callbackName);
   return await lock.status
 }
