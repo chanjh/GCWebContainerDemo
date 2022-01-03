@@ -13,7 +13,8 @@ export default function launcher(config) {
   window[`${global}`] = new Global();
   window[`${global}`].bridge = new Bridge();
   window.gc._config = finalConfig;
-
+  // 1. add event center
+  require('./event_center');
   // 1. load all services
-  loadAllServices();
+  // loadAllServices();
 }

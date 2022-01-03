@@ -1,14 +1,12 @@
 import invoker from "./invoker";
 import Lock from "./lock";
-
-// wrapFunction("runtime", "chrome.runtime", "getURL")
-export function wrapFunction(name, bridge, method) {
+export default function callback(bridge) {
   let callbackFunc = function () {
     const max = 9999;
     const min = 0;
     const random = parseInt(Math.random() * (max - min + 1) + min, 10);
     const { global } = window.gc._config;
-    return `${global}_${name}_callback_func_${random}`;
+    return `${global}_${bridge.replaceAll(".")}_callback_func_${random}`;
   }
   function _initCallback(callback) {
     window[callback] = function () {
@@ -28,25 +26,7 @@ export function wrapFunction(name, bridge, method) {
     // callback, need to be a function name but not a obj in window
     lock = new Lock();
     lock.lock();
-    await invoker(`${bridge}.${method}`, params, callback);
+    await invoker(`${bridge}`, params, callback);
     return await lock.status
-  }
-}
-
-export default class ServiceWrapper {
-  constructor(serviceInfo) {
-    this.serviceInfo = serviceInfo;
-    this._initMethods();
-  }
-
-  _initMethods() {
-    const constructorFunc = "constructor";
-    const { methods } = this.serviceInfo;
-    methods.forEach(m => {
-      if (m !== constructorFunc) {
-        const { name, bridge } = this.serviceInfo;
-        this[m] = wrapFunction(name, bridge, m)
-      }
-    });
   }
 }

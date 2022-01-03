@@ -11,6 +11,10 @@ import Zip
 class PDManager {
     private var pandoraList: [Pandora] = [];
     
+    var pandoras: [Pandora] {
+        return pandoraList
+    }
+    
     func loadAll() {
         if let bundlePath = Bundle.main.path(forResource: "Extensions", ofType: "bundle"),
            let bundle = Bundle(path: bundlePath),

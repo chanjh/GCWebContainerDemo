@@ -12,7 +12,7 @@ class GCWebView: WebView {
     private(set) var jsServiceManager: JSServiceManager?
 
     // todo: 不在初始化时注入, 改在其他生命周期
-    init() {
+    init(frame: CGRect = .zero) {
         let webViewConfiguration = WKWebViewConfiguration()
         let contentController = WKUserContentController()
 //        let js = script ?? GCWebView._getBridgeScript()
@@ -21,7 +21,7 @@ class GCWebView: WebView {
 //                                      forMainFrameOnly: true)
 //        contentController.addUserScript(userScript)
         webViewConfiguration.userContentController = contentController
-        super.init(frame: .zero, configuration: webViewConfiguration)
+        super.init(frame: frame, configuration: webViewConfiguration)
         _initContext()
     }
 
@@ -34,6 +34,7 @@ class GCWebView: WebView {
         jsEngine = JSEngine(self)
         // todo: delete
         jsServiceManager?.register(handler: ContextMenuService(self))
+        jsServiceManager?.register(handler: TabsService(self))
     }
     
     func addUserScript(userScript: WKUserScript) {

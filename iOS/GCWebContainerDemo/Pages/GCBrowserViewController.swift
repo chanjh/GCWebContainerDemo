@@ -11,6 +11,7 @@ import WebKit
 class GCBrowserViewController: UIViewController {
     let webView: GCWebView
     let url: URL?
+    var runner: PDRunner?
     
     lazy private var progressView: UIProgressView = {
         self.progressView = UIProgressView.init(frame: CGRect(x: 0, y: 0,
@@ -47,6 +48,14 @@ class GCBrowserViewController: UIViewController {
                                                             action: #selector(didClickMenu(sender:)))
 
         webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let pandora = BrowserManager.shared.pdManager.pandoras.first {
+            runner = PDRunner(pandora: pandora)
+            runner?.run();
+        }
     }
 
     // Observe value
