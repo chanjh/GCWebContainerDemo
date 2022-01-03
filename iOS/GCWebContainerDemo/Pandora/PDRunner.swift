@@ -8,7 +8,7 @@
 import Foundation
 import WebKit
 
-class PDRunner: NSObject, WKNavigationDelegate {
+class PDRunner: NSObject {
     var pandora: Pandora
     private var bgRunner: GCWebView?
     init(pandora: Pandora) {
@@ -33,14 +33,13 @@ class PDRunner: NSObject, WKNavigationDelegate {
         bgWebView.navigationDelegate = self
         // todo
         UIApplication.shared.keyWindow?.addSubview(bgWebView)
-        
         bgRunner?.loadHTMLString("<html></html>", baseURL: nil)
     }
     
     func runContentScript(_ script: String) {
         
     }
-    
+      
     func runPageAction() {
         
     }
@@ -52,19 +51,12 @@ class PDRunner: NSObject, WKNavigationDelegate {
 
 extension PDRunner: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        print("didfinish")
-        DispatchQueue.main.asyncAfter(deadline: .now()+2) { [weak self] in
-            // todo
-            let data = ["type": "BACKGROUND", "id": "12222"];
-            let injectInfoScript = "window.chrome.__loader__";
-            self?.bgRunner?.jsEngine?.callFunction(injectInfoScript, params: data, completion: { info, error in
-                print("completion")
-                print("\(info)")
-                print("\(error)")
-            })
-            let onInstalledScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_RUNTIME_ONINSTALLED', {});";
-            self?.bgRunner?.evaluateJavaScript(onInstalledScript, completionHandler: nil)
-        }
+        let data = ["type": "BACKGROUND", "id": pandora.id];
+        let injectInfoScript = "window.chrome.__loader__";
+        bgRunner?.jsEngine?.callFunction(injectInfoScript, params: data as [String : Any], completion: nil)
+        
+        let onInstalledScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_RUNTIME_ONINSTALLED');";
+        bgRunner?.evaluateJavaScript(onInstalledScript, completionHandler: nil)
     }
 }
 
