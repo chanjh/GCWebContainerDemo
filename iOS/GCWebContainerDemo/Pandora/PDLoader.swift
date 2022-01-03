@@ -19,6 +19,22 @@ class PDLoader {
     
     func loadSync() -> Pandora? { Pandora(path) }
     
+    var popupHTML: String? {
+        let pd = loadSync()
+        if let popup = pd?.manifest.action?["default_popup"] as? String {
+            return fileContent(at: popup)
+        }
+        return nil;
+    }
+    
+    var popupFilePath: String? {
+        let pd = loadSync()
+        if let popup = pd?.manifest.action?["default_popup"] as? String {
+            return filesInPath.first { $0 == popup }
+        }
+        return nil
+    }
+    
     var backgroundScript: String? {
         return fileContent(at: PDFileNameType.background.rawValue)
     }

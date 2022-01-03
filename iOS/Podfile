@@ -3,4 +3,5 @@
 target 'GCWebContainerDemo' do
   use_frameworks!
   pod 'Zip', '~> 2.1'
+  pod 'SnapKit', '~> 5.0.0'
 end

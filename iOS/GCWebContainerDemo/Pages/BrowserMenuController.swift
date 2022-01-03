@@ -9,6 +9,7 @@ import UIKit
 
 protocol BrowserMenuControllerDelegate: AnyObject{
     func closeBrowser()
+    func openPopup()
 }
 
 class BrowserMenuController: UIViewController {
@@ -31,6 +32,7 @@ class BrowserMenuController: UIViewController {
         return tableView
     }()
     let menu = [["id":"url", "name":"URL"],
+                ["id":"extension_popup", "name":"Popup Demo"],
                 ["id":"close", "name":"Close Browser"]]
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,12 +53,13 @@ extension BrowserMenuController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView,
                    didSelectRowAt indexPath: IndexPath) {
-        if menu[indexPath.row]["id"] == "close" {
+        let id = menu[indexPath.row]["id"]
+        if id == "close" {
             BrowserManager.shared.remove(browserId)
             dismiss(animated: true) { [weak self] in
                 self?.delegate?.closeBrowser()
             }
-        } else if menu[indexPath.row]["id"] == "url" {
+        } else if id == "url" {
             let alert = UIAlertController(title: "URL", message: nil, preferredStyle: .alert)
             alert.addTextField { [weak self] textField in
                 textField.text = BrowserManager.shared.browser(at: self?.browserId ?? "" )?.url?.absoluteString ?? ""
@@ -69,6 +72,8 @@ extension BrowserMenuController: UITableViewDataSource, UITableViewDelegate {
             }))
             alert.addAction((UIAlertAction(title: "cancel", style: .cancel, handler: nil)))
             present(alert, animated: true, completion: nil)
+        } else if id == "extension_popup" {
+            delegate?.openPopup()
         }
     }
 }

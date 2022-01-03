@@ -39,9 +39,14 @@ class PDRunner: NSObject {
     func runContentScript(_ script: String) {
         
     }
-      
-    func runPageAction() {
-        
+    
+    func runPageAction() -> GCWebView {
+        let bgWebView = GCWebView()
+        bgWebView.pd_addChromeBridge()
+        bgWebView.navigationDelegate = self
+        bgRunner = bgWebView
+        return bgWebView;
+//        bgRunner?.loadHTMLString(pandora.manifest.action?["default_popup"], baseURL: Bundle.main.bundleURL)
     }
     
     func runBrowserAction() {

@@ -103,3 +103,16 @@ enum PDRunAtType: String {
     case start = "document_start"
     case end = "document_end"
 }
+
+//"default_icon": {              // optional
+//  "16": "images/icon16.png",   // optional
+//  "24": "images/icon24.png",   // optional
+//  "32": "images/icon32.png"    // optional
+//},
+//"default_title": "Click Me",   // optional, shown in tooltip
+//"default_popup": "popup.html"  // optional
+struct PDActionInfo {
+    let title: String?
+    let popup: String?
+    let icon: String?
+}

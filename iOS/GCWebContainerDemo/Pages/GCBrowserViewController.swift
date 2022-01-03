@@ -7,6 +7,7 @@
 
 import UIKit
 import WebKit
+import SnapKit
 
 class GCBrowserViewController: UIViewController {
     let webView: GCWebView
@@ -99,5 +100,26 @@ extension GCBrowserViewController {
 extension GCBrowserViewController: BrowserMenuControllerDelegate {
     func closeBrowser() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    func openPopup() {
+        if let presentedVC = self.presentedViewController {
+            presentedVC.dismiss(animated: false, completion: nil)
+        }
+        if let popupPage = runner?.runPageAction(),
+            let url = runner?.pandora.popupFilePath {
+            let vc = UIViewController()
+            vc.view.addSubview(popupPage)
+            popupPage.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+            vc.modalPresentationStyle = .popover
+            let pop = vc.popoverPresentationController
+            pop?.permittedArrowDirections = .up
+            // todo
+            pop?.sourceView = navigationController?.navigationBar
+            popupPage.loadFileURL(url, allowingReadAccessTo: url)
+            present(vc, animated: true, completion: nil)
+        }
     }
 }

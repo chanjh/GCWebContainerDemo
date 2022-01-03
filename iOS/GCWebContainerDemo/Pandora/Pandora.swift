@@ -13,7 +13,7 @@ struct Pandora {
     let manifest: PDManifest;
     private var pdId: String?
     var id: String? {
-        return pdId;
+        return pdId
     }
     
     var background: String? {
@@ -24,8 +24,18 @@ struct Pandora {
         return nil
     }
     
+    var popupFilePath: URL? {
+        if let popup = manifest.action?["default_popup"] as? String,
+           let filesInPath = (try? FileManager.default.contentsOfDirectory(atPath: pdPath.relativePath)),
+           filesInPath.contains(where: { $0 == popup }) {
+            return URL(string: "file://" + pdPath.relativePath + "/" + popup)
+        }
+        return nil
+    }
+    
     mutating func run() {
         self.pdId = UUID().uuidString
+        // todo: unzip
     }
     
     init?(_ path: URL) {
