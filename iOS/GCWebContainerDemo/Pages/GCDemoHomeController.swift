@@ -39,6 +39,9 @@ extension GCDemoHomeController: UITableViewDelegate, UITableViewDataSource {
         if (indexPath.row == 0) {
             let controller = GCMultiTabController()
             navigationController?.pushViewController(controller, animated: true)
+        } else if (indexPath.row == 2) {
+            let controller = GCExtensionController()
+            navigationController?.pushViewController(controller, animated: true)
         }
     }
 }

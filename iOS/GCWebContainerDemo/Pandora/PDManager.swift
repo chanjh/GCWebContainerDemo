@@ -16,16 +16,25 @@ class PDManager {
     }
     
     func loadAll() {
+        let files = PDFileManager.getAllUnZipApps()
+        files.forEach { filePath in
+            if let url = URL(string: filePath),
+               let pandora = PDLoader(url, id: url.lastPathComponent).loadSync() {
+                pandoraList.append(pandora)
+            }
+        }
+    }
+    
+    func setupAll() {
+        _loadInnerExtension()
+    }
+    
+    private func _loadInnerExtension() {
         if let bundlePath = Bundle.main.path(forResource: "Extensions", ofType: "bundle"),
            let bundle = Bundle(path: bundlePath),
            let files = files(in: bundle.bundleURL) {
             files.forEach { fileName in
-                if fileName.hasSuffix(".zip"),
-                   let filePath = bundle.url(forResource: fileName, withExtension: nil),
-                   let unzipDirectory = try? Zip.quickUnzipFile(filePath),
-                   let pandora = PDLoader(unzipDirectory).loadSync() {
-                    pandoraList.append(pandora)
-                }
+                PDFileManager.setupPandora(zipPath: bundle.url(forResource: fileName, withExtension: nil))
             }
         }
     }

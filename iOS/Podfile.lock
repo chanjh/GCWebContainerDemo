@@ -1,16 +1,24 @@
 PODS:
+  - SnapKit (5.0.1)
+  - Tiercel (3.2.5)
   - Zip (2.1.1)
 
 DEPENDENCIES:
+  - SnapKit (~> 5.0.0)
+  - Tiercel
   - Zip (~> 2.1)
 
 SPEC REPOS:
   trunk:
+    - SnapKit
+    - Tiercel
     - Zip
 
 SPEC CHECKSUMS:
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  Tiercel: c0a73f876a72800333b15f4e7e48791f4ad21e90
   Zip: 414f59909701fda9a84ab774ebe0f5449b1082cc
 
-PODFILE CHECKSUM: 36870161583c3ea88432bf4768ed4da1fc3c6690
+PODFILE CHECKSUM: 23ab4e6728df6788712ea2d6d2fadc8eb5662040
 
 COCOAPODS: 1.11.2

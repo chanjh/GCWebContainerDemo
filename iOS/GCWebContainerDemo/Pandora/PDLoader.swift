@@ -10,14 +10,16 @@ import Zip
 
 class PDLoader {
     let path: URL
+    let id: String
     private let filesInPath: [String]
     
-    init(_ path: URL) {
+    init(_ path: URL, id: String) {
         self.path = path
+        self.id = id
         self.filesInPath = (try? FileManager.default.contentsOfDirectory(atPath: path.relativePath)) ?? []
     }
     
-    func loadSync() -> Pandora? { Pandora(path) }
+    func loadSync() -> Pandora? { Pandora(path, id: id) }
     
     var popupHTML: String? {
         let pd = loadSync()

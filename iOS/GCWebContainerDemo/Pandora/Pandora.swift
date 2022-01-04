@@ -32,13 +32,12 @@ struct Pandora {
         }
         return nil
     }
-    
-    mutating func run() {
-        self.pdId = UUID().uuidString
-        // todo: unzip
-    }
-    
-    init?(_ path: URL) {
+//
+//    mutating func run() {
+//        self.pdId = UUID().uuidString
+//    }
+//
+    init?(_ path: URL, id: String) {
         var tPath = path
         tPath.appendPathComponent("manifest.json")
         if let data = FileManager.default.contents(atPath: tPath.relativePath),
@@ -47,6 +46,7 @@ struct Pandora {
             self.pdName = path.lastPathComponent
             self.pdPath = path
             self.manifest = manifest
+            self.pdId = id
             return
         }
         return nil

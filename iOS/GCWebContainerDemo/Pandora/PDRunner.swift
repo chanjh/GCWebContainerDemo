@@ -16,7 +16,7 @@ class PDRunner: NSObject {
     }
     
     func run() {
-        pandora.run()
+//        pandora.run()
         if let backgroundScript = pandora.background {
             runBackgroundScript(backgroundScript)
         }
@@ -36,7 +36,11 @@ class PDRunner: NSObject {
         bgRunner?.loadHTMLString("<html></html>", baseURL: nil)
     }
     
-    func runContentScript(_ script: String) {
+    func runContentScript(target: GCWebView?) {
+        guard let target = target else {
+            return
+        }
+        // find content script
         
     }
     
