@@ -19,7 +19,7 @@ class GCWebView: WebView {
 //        let userScript = WKUserScript(source: js,
 //                                      injectionTime: .atDocumentStart,
 //                                      forMainFrameOnly: true)
-//        contentController.addUserScript(userScript)
+//        contentController.addUserScript(userScript)w
         webViewConfiguration.userContentController = contentController
         super.init(frame: frame, configuration: webViewConfiguration)
         _initContext()

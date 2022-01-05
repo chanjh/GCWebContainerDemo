@@ -14,6 +14,7 @@ class PDFileManager {
 }
 // load
 extension PDFileManager {
+    // 查找所有已经解压的扩展路径
     static func getAllUnZipApps() -> [String] {
         let document = try? FileManager.default.url(for: .documentDirectory,
                                                           in: .userDomainMask,

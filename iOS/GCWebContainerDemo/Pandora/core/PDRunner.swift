@@ -22,6 +22,7 @@ class PDRunner: NSObject {
         }
     }
     
+    // todo: 判断是否符合运行条件
     func runBackgroundScript(_ script: String) {
         let bgWebView = GCWebView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
         bgWebView.pd_addChromeBridge()

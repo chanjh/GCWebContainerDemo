@@ -9,24 +9,29 @@ import Foundation
 import Zip
 
 class PDManager {
+    static let shared = PDManager();
     private var pandoraList: [Pandora] = [];
     
     var pandoras: [Pandora] {
         return pandoraList
     }
     
+    // 把所有已经解压的扩展，加载到内容里
     func loadAll() {
         let files = PDFileManager.getAllUnZipApps()
         files.forEach { filePath in
             if let url = URL(string: filePath),
                let pandora = PDLoader(url, id: url.lastPathComponent).loadSync() {
                 pandoraList.append(pandora)
+                PDRunner(pandora: pandora).run()
             }
         }
     }
     
-    func setupAll() {
+    func tryToSetupAll() {
+        // 从 IPA 中解压
         _loadInnerExtension()
+        // todo: 上次解压失败的，重新开始解压
     }
     
     private func _loadInnerExtension() {
