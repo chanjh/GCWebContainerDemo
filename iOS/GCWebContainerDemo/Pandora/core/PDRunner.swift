@@ -60,7 +60,7 @@ class PDRunner: NSObject {
 
 extension PDRunner: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        let data = ["type": "BACKGROUND", "id": pandora.id];
+        let data = ["type": "BACKGROUND", "id": pandora.id ?? "", "manifest": (pandora.manifest.raw ?? [:])] as [String : Any];
         let injectInfoScript = "window.chrome.__loader__";
         bgRunner?.jsEngine?.callFunction(injectInfoScript, params: data as [String : Any], completion: nil)
         

@@ -15,7 +15,7 @@ struct PDManifest {
     let background: PDBackgroundInfo?
     let action: Dictionary<String, Any>?
     let contentScripts: Array<PDContentScriptInfo>?
-    private let raw: Dictionary<String, Any>?
+    let raw: Dictionary<String, Any>?
     
     init?(_ fileContent: String) {
         if let data = fileContent.data(using: .utf8),

@@ -35,6 +35,7 @@ class GCWebView: WebView {
         // todo: delete
         jsServiceManager?.register(handler: ContextMenuService(self))
         jsServiceManager?.register(handler: TabsService(self))
+        jsServiceManager?.register(handler: RuntimeService(self))
     }
     
     func addUserScript(userScript: WKUserScript) {

@@ -1,8 +1,12 @@
 import Lock from "./lock";
 export default async function invoker(action, params, callback) {
+  let arg = params
+  if (!params) {
+    arg = {}
+  }
   var message = {
     action: action,
-    params: params,
+    params: arg,
     callback: callback,
   };
   const { bridgeName } = window.gc._config;
