@@ -36,17 +36,20 @@ class GCExtensionController: UIViewController {
 
 extension GCExtensionController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0;
+        return PDManager.shared.pandoras.count;
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+        let pandora = PDManager.shared.pandoras[indexPath.row]
+        cell.textLabel?.text = pandora.manifest.name
+        return cell
     }
 }
 
 extension GCExtensionController {
     @objc func downloadAction() {
-        let task = sessionManager.download("http://ksria.com/simpread/crx/2.2.0/simpread.zip")
+        let task = sessionManager.download("https://github.com/webclipper/web-clipper/releases/download/v1.31.0-alpha.14/web_clipper_chrome.zip")
         task?.progress(onMainQueue: true) { (task) in
             let progress = task.progress.fractionCompleted
             print("下载中, 进度：\(progress)")

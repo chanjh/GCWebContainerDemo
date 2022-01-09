@@ -7,51 +7,54 @@
 
 import WebKit
 
-class GCWebView: WebView {
+protocol GCWebViewInterface {
+    func onInit();
+    func willLoadRequest();
+}
+
+// todo delegate 系统
+class GCWebView: WebView, GCWebViewInterface {
     private(set) var jsEngine: JSEngine?
     private(set) var jsServiceManager: JSServiceManager?
+    private(set) var actionHandler: GCWebViewActionHandler!
 
-    // todo: 不在初始化时注入, 改在其他生命周期
     init(frame: CGRect = .zero) {
         let webViewConfiguration = WKWebViewConfiguration()
         let contentController = WKUserContentController()
-//        let js = script ?? GCWebView._getBridgeScript()
-//        let userScript = WKUserScript(source: js,
-//                                      injectionTime: .atDocumentStart,
-//                                      forMainFrameOnly: true)
-//        contentController.addUserScript(userScript)w
         webViewConfiguration.userContentController = contentController
         super.init(frame: frame, configuration: webViewConfiguration)
+        _initDelegates()
         _initContext()
+        onInit()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    private func _initDelegates() {
+        self.actionHandler = GCWebViewActionHandler(webView: self)
+        self.uiDelegate = actionHandler
+        self.navigationDelegate = actionHandler
+    }
 
     private func _initContext() {
         jsServiceManager = JSServiceManager(self)
         jsEngine = JSEngine(self)
-        // todo: delete
-        jsServiceManager?.register(handler: ContextMenuService(self))
-        jsServiceManager?.register(handler: TabsService(self))
-        jsServiceManager?.register(handler: RuntimeService(self))
     }
     
     func addUserScript(userScript: WKUserScript) {
         configuration.userContentController.addUserScript(userScript);
     }
+    
+    func onInit() { }
+    func willLoadRequest() { }
 }
 
 extension GCWebView {
-    static func _getBridgeScript() -> String {
-        guard let path = Bundle.main.path(forResource: "jsbridge", ofType: "js") else {
-            return ""
-        }
-        do {
-            return try String(contentsOfFile: path)
-        } catch {
-            return ""
-        }
+    override
+    func load(_ request: URLRequest) -> WKNavigation? {
+        willLoadRequest()
+        return super.load(request)
     }
 }

@@ -11,15 +11,17 @@ import Zip
 class PDLoader {
     let path: URL
     let id: String
+    let pandora: Pandora?
     private let filesInPath: [String]
     
     init(_ path: URL, id: String) {
         self.path = path
         self.id = id
         self.filesInPath = (try? FileManager.default.contentsOfDirectory(atPath: path.relativePath)) ?? []
+        self.pandora = Pandora(path, id: id)
     }
     
-    func loadSync() -> Pandora? { Pandora(path, id: id) }
+    func loadSync() -> Pandora? { return pandora }
     
     var popupHTML: String? {
         let pd = loadSync()
@@ -38,7 +40,25 @@ class PDLoader {
     }
     
     var backgroundScript: String? {
+        // todo: 从 manifest 里面拿
         return fileContent(at: PDFileNameType.background.rawValue)
+    }
+    
+    var contentScripts: [String]? {
+        let pd = loadSync()
+        if let contentScripts = pd?.manifest.contentScripts {
+            var scripts: [String] = []
+            contentScripts.forEach { scriptInfo in
+                scriptInfo.js?.forEach({ js in
+                    if let content = fileContent(at: js) {
+                        scripts.append(content)
+                    }
+                })
+            }
+            return scripts
+        }
+        
+        return nil
     }
     
     var manifest: String? {

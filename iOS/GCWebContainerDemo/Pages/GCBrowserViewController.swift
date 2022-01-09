@@ -10,7 +10,7 @@ import WebKit
 import SnapKit
 
 class GCBrowserViewController: UIViewController {
-    let webView: GCWebView
+    let webView: PDWebView
     let url: URL?
     var runner: PDRunner?
     
@@ -21,7 +21,8 @@ class GCBrowserViewController: UIViewController {
         self.progressView.trackTintColor = .white
         return self.progressView
     }()
-    init(webView: GCWebView? = nil, url: URL? = nil) {
+    
+    init(webView: PDWebView? = nil, url: URL? = nil) {
         self.url = url
         if let wv = webView {
             self.webView = wv

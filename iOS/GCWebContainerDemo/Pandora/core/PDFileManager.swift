@@ -46,7 +46,7 @@ extension PDFileManager {
                                 password: nil,
                                 progress: nil,
                                 fileOutputHandler: nil)) != nil) {
-            if let pandora = PDLoader(destination, id: uuid).loadSync() {
+            if let pandora = PDManager.shared.loadPandora(path: destination, id: uuid) {
                 _didCompleteSetup(uuid: uuid, pandora: pandora, source: filePath.path)
             } else {
                 try? FileManager.default.removeItem(atPath: destination.path)
@@ -55,20 +55,22 @@ extension PDFileManager {
     }
     
     private static func _findIfCompleteSetup(source: String) -> Bool {
-        let setuped = UserDefaults.standard.dictionary(forKey: setupedKey) as? Dictionary<String, Dictionary<String, String>> ?? [:]
-        return setuped.contains { $1["source"] == source }
+//        let setuped = UserDefaults.standard.dictionary(forKey: setupedKey) as? Dictionary<String, Dictionary<String, String>> ?? [:]
+//        return setuped.contains { $1["source"] == source }
+        return false
     }
-    
+    // FIXME: source path 在编译完了之后都会变化
     private static func _didCompleteSetup(uuid: String, pandora: Pandora, source: String) {
-        let info = [
-            uuid: [
-                "name": pandora.manifest.name,
-                "version": pandora.manifest.version,
-                "source": source,
-            ]
-        ] as Dictionary<String,Any>
-        let setuped = UserDefaults.standard.dictionary(forKey: setupedKey) ?? [:]
-        let current = setuped.merging(info) { (_, new) in new }
-        UserDefaults.standard.set(current, forKey: setupedKey)
+        try? FileManager.default.removeItem(atPath: source)
+//        let info = [
+//            uuid: [
+//                "name": pandora.manifest.name,
+//                "version": pandora.manifest.version,
+//                "source": source,
+//            ]
+//        ] as Dictionary<String,Any>
+//        let setuped = UserDefaults.standard.dictionary(forKey: setupedKey) ?? [:]
+//        let current = setuped.merging(info) { (_, new) in new }
+//        UserDefaults.standard.set(current, forKey: setupedKey)
     }
 }

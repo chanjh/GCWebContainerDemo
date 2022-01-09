@@ -9,7 +9,7 @@ import Foundation
 import ObjectiveC
 
 class BrowserManager {
-    private var pool: [GCWebView] = [];
+    private var pool: [PDWebView] = [];
     
     static let shared = BrowserManager()
     
@@ -17,8 +17,8 @@ class BrowserManager {
         return pool.count
     }
     
-    func makeBrowser() -> GCWebView {
-        let webView = GCWebView()
+    func makeBrowser() -> PDWebView {
+        let webView = PDWebView()
         webView.identifier = UUID().uuidString
         pool.append(webView)
         return webView
@@ -28,15 +28,15 @@ class BrowserManager {
         return "\(index)"
     }
     
-    func browser(at index: Int) -> GCWebView? {
+    func browser(at index: Int) -> PDWebView? {
         return pool[index]
     }
     
-    func browser(at identifier: String) -> GCWebView? {
+    func browser(at identifier: String) -> PDWebView? {
         return pool.first { $0.identifier == identifier }
     }
     
-    func remove(_ webView: GCWebView) {
+    func remove(_ webView: PDWebView) {
         pool.removeAll { $0 == webView }
     }
     func remove(_ identifier: String) {
@@ -45,7 +45,7 @@ class BrowserManager {
 }
 
 private var kGCWebViewIDKey: UInt8 = 0
-extension GCWebView {
+extension PDWebView {
     var identifier: String? {
         get {
             return objc_getAssociatedObject(self, &kGCWebViewIDKey) as? String
