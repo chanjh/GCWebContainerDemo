@@ -5,16 +5,18 @@
   "main": "./src/index.js",
   "scripts": {
     "dev": "webpack --mode development",
-    "start": "webpack-dev-server --mode development"
+    "start": "webpack-dev-server --mode development",
+    "clean": "tsc --build --clean",
+    "tsc": "tsc"
   },
   "author": "GillChan",
   "license": "ISC",
   "devDependencies": {
+    "@types/webpack-env": "^1.16.3",
     "html-webpack-plugin": "^5.5.0",
     "terser-webpack-plugin": "^5.2.5",
     "webpack": "^5.65.0",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.6.0"
-  },
-  "dependencies": {}
+  }
 }

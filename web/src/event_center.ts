@@ -1,18 +1,18 @@
 import register from './register';
 export default class EventCenter {
-  listeners = [];
+  listeners: { [key: string]: [Function]} = {};
 
-  subscribe(event, fn) {
+  subscribe(event: string, fn: Function) {
     const { listeners } = this;
     let listenersForEvent = listeners[event]
-    if (!listenersForEvent) {
-      listenersForEvent = []
-    }
+    // if (!listenersForEvent) {
+    //   listenersForEvent = {}
+    // }
     listenersForEvent.push(fn);
     listeners[event] = listenersForEvent;
   }
 
-  async publish(event, params) {
+  async publish(event: string, params: any) {
     const { listeners } = this;
     const listenersForEvent = listeners[event];
     if (listenersForEvent) {
