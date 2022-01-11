@@ -66,7 +66,7 @@ extension BrowserMenuController: UITableViewDataSource, UITableViewDelegate {
             }
             alert.addAction(UIAlertAction(title: "ok", style: .default, handler: { [weak self] _ in
                 if let url = URL(string: alert.textFields?.first?.text ?? "") {
-                    BrowserManager.shared.browser(at: self?.browserId ?? "" )?.load(URLRequest(url: url))
+                    _ = BrowserManager.shared.browser(at: self?.browserId ?? "" )?.load(URLRequest(url: url))
                     self?.dismiss(animated: true, completion: nil)
                 }
             }))

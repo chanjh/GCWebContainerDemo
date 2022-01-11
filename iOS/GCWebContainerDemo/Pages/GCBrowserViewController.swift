@@ -12,7 +12,7 @@ import SnapKit
 class GCBrowserViewController: UIViewController {
     let webView: PDWebView
     let url: URL?
-    var runner: PDRunner?
+//    var runner: PDRunner?
     
     lazy private var progressView: UIProgressView = {
         self.progressView = UIProgressView.init(frame: CGRect(x: 0, y: 0,
@@ -41,15 +41,31 @@ class GCBrowserViewController: UIViewController {
         webView.frame = CGRect(origin: CGPoint.zero, size: view.frame.size)
         view.addSubview(webView)
         view.addSubview(progressView)
-        if webView.url == nil, let url = url {
-            webView.load(URLRequest(url: url))
+        if let url = webView.url {
+            _ = webView.load(URLRequest(url: url))
         }
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Menu",
-                                                            style: .plain,
-                                                            target: self,
-                                                            action: #selector(didClickMenu(sender:)))
-
+        _addRightButton()
         webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
+    }
+    
+    private func _addRightButton() {
+        let menu = UIBarButtonItem(title: "Menu",
+                                   style: .plain,
+                                   target: self,
+                                   action: #selector(didClickMenu(sender:)))
+        var items = [menu]
+        PDManager.shared.pandoras.enumerated().forEach {
+            if $1.popupFilePath == nil {
+                return
+            }
+            let item = UIBarButtonItem(title: $1.manifest.name,
+                                       style: .plain,
+                                       target: self,
+                                       action: #selector(didClickExtension(sender:)))
+            item.tag = $0
+            items.append(item)
+        }
+        navigationItem.setRightBarButtonItems(items, animated: true)
     }
 
     // Observe value
@@ -88,19 +104,16 @@ extension GCBrowserViewController {
         pop?.sourceView = navigationController?.navigationBar
         present(menu, animated: true, completion: nil)
     }
-}
-
-extension GCBrowserViewController: BrowserMenuControllerDelegate {
-    func closeBrowser() {
-        navigationController?.popViewController(animated: true)
-    }
     
-    func openPopup() {
+    @objc func didClickExtension(sender: UIBarButtonItem) {
+        let index = sender.tag
+        let pandora = PDManager.shared.pandoras[index]
+        let runner = PDRunner(pandora: pandora)
         if let presentedVC = self.presentedViewController {
             presentedVC.dismiss(animated: false, completion: nil)
         }
-        if let popupPage = runner?.runPageAction(),
-            let url = runner?.pandora.popupFilePath {
+        let popupPage = runner.runPageAction()
+        if let url = pandora.popupFilePath {
             let vc = UIViewController()
             vc.view.addSubview(popupPage)
             popupPage.snp.makeConstraints { make in
@@ -113,6 +126,33 @@ extension GCBrowserViewController: BrowserMenuControllerDelegate {
             pop?.sourceView = navigationController?.navigationBar
             popupPage.loadFileURL(url, allowingReadAccessTo: url)
             present(vc, animated: true, completion: nil)
-        }
+        }   
+    }
+}
+
+extension GCBrowserViewController: BrowserMenuControllerDelegate {
+    func closeBrowser() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func openPopup() {
+//        if let presentedVC = self.presentedViewController {
+//            presentedVC.dismiss(animated: false, completion: nil)
+//        }
+//        if let popupPage = runner?.runPageAction(),
+//            let url = runner?.pandora.popupFilePath {
+//            let vc = UIViewController()
+//            vc.view.addSubview(popupPage)
+//            popupPage.snp.makeConstraints { make in
+//                make.edges.equalToSuperview()
+//            }
+//            vc.modalPresentationStyle = .popover
+//            let pop = vc.popoverPresentationController
+//            pop?.permittedArrowDirections = .up
+//            // todo
+//            pop?.sourceView = navigationController?.navigationBar
+//            popupPage.loadFileURL(url, allowingReadAccessTo: url)
+//            present(vc, animated: true, completion: nil)
+//        }
     }
 }

@@ -16,7 +16,6 @@ class PDRunner: NSObject {
     }
     
     func run() {
-//        pandora.run()
         if let backgroundScript = pandora.background {
             runBackgroundScript(backgroundScript)
         }
@@ -51,7 +50,6 @@ class PDRunner: NSObject {
         bgWebView.navigationDelegate = self
         bgRunner = bgWebView
         return bgWebView;
-//        bgRunner?.loadHTMLString(pandora.manifest.action?["default_popup"], baseURL: Bundle.main.bundleURL)
     }
     
     func runBrowserAction() {
