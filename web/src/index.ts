@@ -9,3 +9,4 @@ require('./launcher');
 require('./service_loader');
 require('./register');
 require('./callback');
+require('./global');

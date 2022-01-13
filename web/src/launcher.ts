@@ -3,7 +3,7 @@ import loadAllServices from './service_loader';
 import Bridge from './bridge'
 import * as defaultConfig from "./config.default";
 
-export default function launcher(config: any) {
+export default function launcher(config?: any) {
   let finalConfig = config;
   if (!config) {
     finalConfig = defaultConfig.default;

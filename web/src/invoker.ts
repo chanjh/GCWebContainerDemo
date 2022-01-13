@@ -1,5 +1,5 @@
 import Lock from "./lock";
-// import { Window } from "./window";
+
 export default async function invoker(action: string | undefined, params: {}, callback: string) {
   let arg = params
   if (!params) {
@@ -14,7 +14,7 @@ export default async function invoker(action: string | undefined, params: {}, ca
   await window.webkit.messageHandlers[bridgeName].postMessage(message)
 }
 
-export async function jsbridge(action: string, params: {}, callback: Function) {
+export async function jsbridge(action: string, params?: {}, callback?: Function) {
   let callbackFunc = function () {
     const max = 9999;
     const min = 0;
