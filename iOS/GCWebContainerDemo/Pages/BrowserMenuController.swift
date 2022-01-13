@@ -9,7 +9,6 @@ import UIKit
 
 protocol BrowserMenuControllerDelegate: AnyObject{
     func closeBrowser()
-    func openPopup()
 }
 
 class BrowserMenuController: UIViewController {
@@ -32,7 +31,7 @@ class BrowserMenuController: UIViewController {
         return tableView
     }()
     let menu = [["id":"url", "name":"URL"],
-                ["id":"extension_popup", "name":"Popup Demo"],
+//                ["id":"extension_popup", "name":"Popup Demo"],
                 ["id":"close", "name":"Close Browser"]]
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,8 +71,6 @@ extension BrowserMenuController: UITableViewDataSource, UITableViewDelegate {
             }))
             alert.addAction((UIAlertAction(title: "cancel", style: .cancel, handler: nil)))
             present(alert, animated: true, completion: nil)
-        } else if id == "extension_popup" {
-            delegate?.openPopup()
         }
     }
 }

@@ -10,7 +10,7 @@ import WebKit
 
 class PDRunner: NSObject {
     var pandora: Pandora
-    private var bgRunner: GCWebView?
+    private var bgRunner: PDWebView?
     init(pandora: Pandora) {
         self.pandora = pandora
     }
@@ -23,7 +23,7 @@ class PDRunner: NSObject {
     
     // todo: 判断是否符合运行条件
     func runBackgroundScript(_ script: String) {
-        let bgWebView = GCWebView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        let bgWebView = PDWebView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
         bgWebView.pd_addChromeBridge()
         let userScript = WKUserScript(source: script,
                                       injectionTime: .atDocumentStart,
@@ -36,7 +36,7 @@ class PDRunner: NSObject {
         bgRunner?.loadHTMLString("<html></html>", baseURL: nil)
     }
     
-    func runContentScript(target: GCWebView?) {
+    func runContentScript(target: PDWebView?) {
         guard let target = target else {
             return
         }
@@ -44,8 +44,8 @@ class PDRunner: NSObject {
         
     }
     
-    func runPageAction() -> GCWebView {
-        let bgWebView = GCWebView()
+    func runPageAction() -> PDWebView {
+        let bgWebView = PDWebView()
         bgWebView.pd_addChromeBridge()
         bgWebView.navigationDelegate = self
         bgRunner = bgWebView
