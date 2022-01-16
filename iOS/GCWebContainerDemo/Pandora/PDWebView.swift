@@ -2,12 +2,29 @@
 //  PDWebView.swift
 //  GCWebContainerDemo
 //
-//  Created by 陈嘉豪 on 2022/1/6.
+//  Created by 陈嘉豪 on 2022/1/6.self.type = type
 //
 
 import WebKit
 
+enum PDWebViewType {
+    case content;
+    case background(String);
+    case popup(String);
+}
+
 class PDWebView: GCWebView {
+    let type: PDWebViewType;
+    
+    init(frame: CGRect = .zero, type: PDWebViewType = .content) {
+        self.type = type
+        super.init(frame: frame)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func onInit() {
         super.onInit()
         _registerJSHandler()
@@ -18,6 +35,7 @@ class PDWebView: GCWebView {
         let contents = PDManager.shared.contentScripts
         contents?.forEach({
             // todo: inject time && main frame
+            // todo: 如果是 popup page，不需要注入
             let userScript = WKUserScript(source: $0, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
             addUserScript(userScript: userScript)
         })

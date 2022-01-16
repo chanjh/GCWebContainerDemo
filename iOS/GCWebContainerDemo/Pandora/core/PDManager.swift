@@ -17,6 +17,7 @@ class PDManager {
     }
     
     private var loaders: [PDLoader] = [];
+    private var runners: [PDRunner] = [];
     
     func loadPandora(path: URL, id: String) -> Pandora? {
         let loader = PDLoader(path, id: id)
@@ -36,7 +37,9 @@ class PDManager {
                 let loader = PDLoader(url, id: url.lastPathComponent)
                 loaders.append(loader)
                 if let pandora = loader.loadSync() {
-                    PDRunner(pandora: pandora).run()
+                    let runner = makeRunner(pandora)
+                    runners.append(runner)
+                    runner.run()
                 }
             }
         }
@@ -46,6 +49,15 @@ class PDManager {
         // 从 IPA 中解压
         _loadInnerExtension()
         // todo: 上次解压失败的，重新开始解压
+    }
+    
+    func makeRunner(_ pandora: Pandora) -> PDRunner {
+        if let runner = runners.first(where: { $0.pandora.id == pandora.id }) {
+            return runner
+        }
+        let runner = PDRunner(pandora: pandora)
+        runners.append(runner)
+        return runner
     }
     
     private func _loadInnerExtension() {

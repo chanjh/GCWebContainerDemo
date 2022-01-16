@@ -107,7 +107,7 @@ extension GCBrowserViewController {
     @objc func didClickExtension(sender: UIBarButtonItem) {
         let index = sender.tag
         let pandora = PDManager.shared.pandoras[index]
-        let runner = PDRunner(pandora: pandora)
+        let runner = PDManager.shared.makeRunner(pandora)
         if let presentedVC = self.presentedViewController {
             presentedVC.dismiss(animated: false, completion: nil)
         }
