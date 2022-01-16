@@ -13,7 +13,7 @@ struct Pandora {
     let manifest: PDManifest;
     private var pdId: String?
     var id: String? {
-        return pdId;
+        return pdId
     }
     
     var background: String? {
@@ -24,11 +24,20 @@ struct Pandora {
         return nil
     }
     
-    mutating func run() {
-        self.pdId = UUID().uuidString
+    var popupFilePath: URL? {
+        if let popup = manifest.action?["default_popup"] as? String,
+           let filesInPath = (try? FileManager.default.contentsOfDirectory(atPath: pdPath.relativePath)),
+           filesInPath.contains(where: { $0 == popup }) {
+            return URL(string: "file://" + pdPath.relativePath + "/" + popup)
+        }
+        return nil
     }
-    
-    init?(_ path: URL) {
+//
+//    mutating func run() {
+//        self.pdId = UUID().uuidString
+//    }
+//
+    init?(_ path: URL, id: String) {
         var tPath = path
         tPath.appendPathComponent("manifest.json")
         if let data = FileManager.default.contents(atPath: tPath.relativePath),
@@ -37,6 +46,7 @@ struct Pandora {
             self.pdName = path.lastPathComponent
             self.pdPath = path
             self.manifest = manifest
+            self.pdId = id
             return
         }
         return nil

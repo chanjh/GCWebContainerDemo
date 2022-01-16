@@ -7,11 +7,11 @@
 
 import UIKit
 import WebKit
+import SnapKit
 
 class GCBrowserViewController: UIViewController {
-    let webView: GCWebView
+    let webView: PDWebView
     let url: URL?
-    var runner: PDRunner?
     
     lazy private var progressView: UIProgressView = {
         self.progressView = UIProgressView.init(frame: CGRect(x: 0, y: 0,
@@ -20,7 +20,8 @@ class GCBrowserViewController: UIViewController {
         self.progressView.trackTintColor = .white
         return self.progressView
     }()
-    init(webView: GCWebView? = nil, url: URL? = nil) {
+    
+    init(webView: PDWebView? = nil, url: URL? = nil) {
         self.url = url
         if let wv = webView {
             self.webView = wv
@@ -39,23 +40,31 @@ class GCBrowserViewController: UIViewController {
         webView.frame = CGRect(origin: CGPoint.zero, size: view.frame.size)
         view.addSubview(webView)
         view.addSubview(progressView)
-        if webView.url == nil, let url = url {
-            webView.load(URLRequest(url: url))
+        if let url = webView.url {
+            _ = webView.load(URLRequest(url: url))
         }
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Menu",
-                                                            style: .plain,
-                                                            target: self,
-                                                            action: #selector(didClickMenu(sender:)))
-
+        _addRightButton()
         webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if let pandora = BrowserManager.shared.pdManager.pandoras.first {
-            runner = PDRunner(pandora: pandora)
-            runner?.run();
+    private func _addRightButton() {
+        let menu = UIBarButtonItem(title: "Menu",
+                                   style: .plain,
+                                   target: self,
+                                   action: #selector(didClickMenu(sender:)))
+        var items = [menu]
+        PDManager.shared.pandoras.enumerated().forEach {
+            if $1.popupFilePath == nil {
+                return
+            }
+            let item = UIBarButtonItem(title: $1.manifest.name,
+                                       style: .plain,
+                                       target: self,
+                                       action: #selector(didClickExtension(sender:)))
+            item.tag = $0
+            items.append(item)
         }
+        navigationItem.setRightBarButtonItems(items, animated: true)
     }
 
     // Observe value
@@ -93,6 +102,30 @@ extension GCBrowserViewController {
         // todo
         pop?.sourceView = navigationController?.navigationBar
         present(menu, animated: true, completion: nil)
+    }
+    
+    @objc func didClickExtension(sender: UIBarButtonItem) {
+        let index = sender.tag
+        let pandora = PDManager.shared.pandoras[index]
+        let runner = PDManager.shared.makeRunner(pandora)
+        if let presentedVC = self.presentedViewController {
+            presentedVC.dismiss(animated: false, completion: nil)
+        }
+        let popupPage = runner.runPageAction()
+        if let url = pandora.popupFilePath {
+            let vc = UIViewController()
+            vc.view.addSubview(popupPage)
+            popupPage.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+            vc.modalPresentationStyle = .popover
+            let pop = vc.popoverPresentationController
+            pop?.permittedArrowDirections = .up
+            // todo
+            pop?.sourceView = navigationController?.navigationBar
+            popupPage.loadFileURL(url, allowingReadAccessTo: url)
+            present(vc, animated: true, completion: nil)
+        }   
     }
 }
 

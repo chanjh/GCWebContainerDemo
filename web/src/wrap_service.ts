@@ -2,29 +2,29 @@ import invoker from "./invoker";
 import Lock from "./lock";
 
 // wrapFunction("runtime", "chrome.runtime", "getURL")
-export function wrapFunction(name, bridge, method) {
+export function wrapFunction(name: string, bridge: string, method: string) {
   let callbackFunc = function () {
     const max = 9999;
     const min = 0;
-    const random = parseInt(Math.random() * (max - min + 1) + min, 10);
+    const random = parseInt(`${Math.random() * (max - min + 1) + min}`, 10);
     const { global } = window.gc._config;
     return `${global}_${name}_callback_func_${random}`;
   }
-  function _initCallback(callback) {
-    window[callback] = function () {
+  function _initCallback(callback: string) {
+    (window as any)[callback] = function (...arg: any[]) {
       const { global } = window.gc._config;
       // 1. unlock
       // 2. send msg to wrapFunction on service
-      lock.unlock(arguments[0])
+      lock.unlock(arg[0])
       // 3. remove callback
-      delete window[callback];
+      delete (window as any)[callback];
     }
   }
   let lock = new Lock();
-  return async function () {
+  return async function (...arg: any[]) {
     const callback = callbackFunc();
     _initCallback(callback);
-    const params = JSON.parse(JSON.stringify(arguments));
+    const params = JSON.parse(JSON.stringify(arg));
     // callback, need to be a function name but not a obj in window
     lock = new Lock();
     lock.lock();
@@ -34,7 +34,8 @@ export function wrapFunction(name, bridge, method) {
 }
 
 export default class ServiceWrapper {
-  constructor(serviceInfo) {
+  serviceInfo: {methods: string[], name: string, bridge: string}
+  constructor(serviceInfo: {methods: string[], name: string, bridge: string}) {
     this.serviceInfo = serviceInfo;
     this._initMethods();
   }
@@ -45,7 +46,7 @@ export default class ServiceWrapper {
     methods.forEach(m => {
       if (m !== constructorFunc) {
         const { name, bridge } = this.serviceInfo;
-        this[m] = wrapFunction(name, bridge, m)
+        (this as any)[m] = wrapFunction(name, bridge, m)
       }
     });
   }

@@ -19,3 +19,5 @@ protocol JSServiceHandler {
     var handleServices: [JSServiceType] { get }
     func handle(params: [String: Any], serviceName: String, callback: String?)
 }
+
+//protocol JSService

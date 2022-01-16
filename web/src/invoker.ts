@@ -1,35 +1,40 @@
 import Lock from "./lock";
-export default async function invoker(action, params, callback) {
+
+export default async function invoker(action: string | undefined, params: {}, callback: string) {
+  let arg = params
+  if (!params) {
+    arg = {}
+  }
   var message = {
     action: action,
-    params: params,
+    params: arg,
     callback: callback,
   };
   const { bridgeName } = window.gc._config;
   await window.webkit.messageHandlers[bridgeName].postMessage(message)
 }
 
-export async function jsbridge(action, params, callback) {
+export async function jsbridge(action: string, params?: {}, callback?: Function) {
   let callbackFunc = function () {
     const max = 9999;
     const min = 0;
-    const random = parseInt(Math.random() * (max - min + 1) + min, 10);
+    const random = parseInt(`${Math.random() * (max - min + 1) + min}`, 10);
     const { global } = window.gc._config;
-    return `${global}_${action.replaceAll(".")}_callback_func_${random}`;
+    return `${global}_${action.replaceAll(".", "")}_callback_func_${random}`;
   }
-  function _initCallback(callbackName) {
-    window[callbackName] = async function () {
+  function _initCallback(callbackName: string) {
+    (window as any)[callbackName] = async function (...arg: any[]) {
       const { global } = window.gc._config;
       // 1. unlock
       // 2. send msg to wrapFunction on service
       if (callback) {
-        const res = await callback(arguments[0])
+        const res = await callback(arg[0])
         lock.unlock(res);
       } else {
-        lock.unlock(arguments[0])
+        lock.unlock(arg[0])
       }
       // 3. remove callback
-      delete window[callbackName];
+      delete (window as any)[callbackName];
     }
   }
   let lock = new Lock();

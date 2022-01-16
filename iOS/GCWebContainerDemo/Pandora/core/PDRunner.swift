@@ -10,20 +10,26 @@ import WebKit
 
 class PDRunner: NSObject {
     var pandora: Pandora
-    private var bgRunner: GCWebView?
+    private var bgRunner: PDWebView?
+    
+    var backgroundRunner: PDWebView? {
+        return bgRunner
+    }
+    
     init(pandora: Pandora) {
         self.pandora = pandora
     }
     
     func run() {
-        pandora.run()
         if let backgroundScript = pandora.background {
             runBackgroundScript(backgroundScript)
         }
     }
     
+    // todo: 判断是否符合运行条件
     func runBackgroundScript(_ script: String) {
-        let bgWebView = GCWebView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        let bgWebView = PDWebView(frame: CGRect(x: 0, y: 0, width: 1, height: 1),
+                                  type: .background(pandora.id ?? ""))
         bgWebView.pd_addChromeBridge()
         let userScript = WKUserScript(source: script,
                                       injectionTime: .atDocumentStart,
@@ -36,12 +42,21 @@ class PDRunner: NSObject {
         bgRunner?.loadHTMLString("<html></html>", baseURL: nil)
     }
     
-    func runContentScript(_ script: String) {
+    func runContentScript(target: PDWebView?) {
+        guard let target = target else {
+            return
+        }
+        // find content script
         
     }
-      
-    func runPageAction() {
-        
+    
+    func runPageAction() -> PDWebView {
+        let bgWebView = PDWebView(frame: .zero,
+                                  type: .popup(pandora.id ?? ""))
+        bgWebView.pd_addChromeBridge()
+        bgWebView.navigationDelegate = self
+        bgRunner = bgWebView
+        return bgWebView;
     }
     
     func runBrowserAction() {
@@ -51,7 +66,7 @@ class PDRunner: NSObject {
 
 extension PDRunner: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        let data = ["type": "BACKGROUND", "id": pandora.id];
+        let data = ["type": "BACKGROUND", "id": pandora.id ?? "", "manifest": (pandora.manifest.raw ?? [:])] as [String : Any];
         let injectInfoScript = "window.chrome.__loader__";
         bgRunner?.jsEngine?.callFunction(injectInfoScript, params: data as [String : Any], completion: nil)
         

@@ -3,15 +3,15 @@ import loadAllServices from './service_loader';
 import Bridge from './bridge'
 import * as defaultConfig from "./config.default";
 
-export default function launcher(config) {
+export default function launcher(config?: any) {
   let finalConfig = config;
   if (!config) {
     finalConfig = defaultConfig.default;
   }
   const { global } = finalConfig;
   // 0. register gc on window
-  window[`${global}`] = new Global();
-  window[`${global}`].bridge = new Bridge();
+  (window as any)[`${global}`] = new Global();
+  (window as any)[`${global}`].bridge = new Bridge();
   window.gc._config = finalConfig;
   // 1. add event center
   require('./event_center');

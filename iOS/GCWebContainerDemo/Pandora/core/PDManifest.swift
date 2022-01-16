@@ -8,14 +8,14 @@
 import Foundation
 
 struct PDManifest {
-    static let supportedVersion = 3
+    static let supportedVersion = 2
     let name: String
     let version: String
     let manifestVersion: Int
     let background: PDBackgroundInfo?
     let action: Dictionary<String, Any>?
     let contentScripts: Array<PDContentScriptInfo>?
-    private let raw: Dictionary<String, Any>?
+    let raw: Dictionary<String, Any>?
     
     init?(_ fileContent: String) {
         if let data = fileContent.data(using: .utf8),
@@ -24,7 +24,7 @@ struct PDManifest {
            let name = manifestContent["name"] as? String,
            let version = manifestContent["version"] as? String,
            let manifestVersion = manifestContent["manifest_version"] as? Int,
-           manifestVersion == Self.supportedVersion {
+           manifestVersion >= Self.supportedVersion {
             self.raw = manifestContent
             self.name = name
             self.version = version
@@ -34,14 +34,6 @@ struct PDManifest {
             let contents = manifestContent["content_scripts"] as? [Dictionary<String, Any>]
             self.contentScripts = contents?.compactMap({ PDContentScriptInfo($0) })
             return
-        }
-        return nil
-    }
-    
-    private static func fileContent(at path: String) -> Dictionary<String,Any>? {
-        if let data = FileManager.default.contents(atPath: path),
-           let json = try? JSONSerialization.jsonObject(with: data, options : .allowFragments) as? Dictionary<String,Any> {
-            return json
         }
         return nil
     }
@@ -60,24 +52,24 @@ struct PDManifest {
 //],
 // todo: 可选值等
 struct PDContentScriptInfo {
-    let matches: Array<String>
-    let excludeMatches: Array<String>
-    let includeGlobs: Array<String>
-    let excludeGlobs: Array<String>
-    let run_at: PDRunAtType
-    let css: Array<String>
-    let js: Array<String>
-    let allFrame: Bool
+    let matches: Array<String>?
+    let excludeMatches: Array<String>?
+    let includeGlobs: Array<String>?
+    let excludeGlobs: Array<String>?
+    let run_at: PDRunAtType?
+    let css: Array<String>?
+    let js: Array<String>?
+    let allFrame: Bool?
     
     init?(_ content: Dictionary<String, Any>?) {
-        self.matches = []
-        self.excludeMatches = []
-        self.includeGlobs = []
-        self.excludeGlobs = []
-        self.run_at = .idle
-        self.css = []
-        self.js = []
-        self.allFrame = true
+        self.matches = content?["matches"] as? [String]
+        self.excludeMatches = content?["exclude_matches"] as? [String]
+        self.includeGlobs = content?["include_globs"] as? [String]
+        self.excludeGlobs = content?["exclude_globs"] as? [String]
+        self.run_at = .idle // content?["run_at"]
+        self.css = content?["css"] as? [String]
+        self.js = content?["js"] as? [String]
+        self.allFrame =  (content?["all_frames"] as? Bool) ?? true
     }
 }
 
@@ -102,4 +94,17 @@ enum PDRunAtType: String {
     case idle = "document_idle"
     case start = "document_start"
     case end = "document_end"
+}
+
+//"default_icon": {              // optional
+//  "16": "images/icon16.png",   // optional
+//  "24": "images/icon24.png",   // optional
+//  "32": "images/icon32.png"    // optional
+//},
+//"default_title": "Click Me",   // optional, shown in tooltip
+//"default_popup": "popup.html"  // optional
+struct PDActionInfo {
+    let title: String?
+    let popup: String?
+    let icon: String?
 }
