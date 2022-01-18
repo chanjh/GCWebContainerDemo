@@ -17,6 +17,10 @@ class BrowserManager {
         return pool.count
     }
     
+    func makeBrowserController(url: URL?) -> BrowserViewController {
+        return BrowserViewController(url: url)
+    }
+    
     func makeBrowser() -> PDWebView {
         let webView = PDWebView()
         webView.identifier = UUID().uuidString

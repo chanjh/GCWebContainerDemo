@@ -12,7 +12,11 @@ class TabsService: BaseJSService, JSServiceHandler {
         return [.createTab]
     }
     func handle(params: [String : Any], serviceName: String, callback: String?) {
-//        webView?.jsEngine?.callFunction(callback!, params: ["id": "sssss"], completion: nil)
+//        if serviceName == JSServiceType.createTab.rawValue,
+//           let viewController = webView?.next as? UIViewController {
+//            let browserVC = BrowserManager.shared.makeBrowserController(url: URL(string: "https://qq.com"))
+//            viewController.navigationController?.pushViewController(browserVC, animated: true)
+//        }
     }
 
 }
