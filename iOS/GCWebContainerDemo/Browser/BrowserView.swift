@@ -37,6 +37,7 @@ class BrowserView: UIView {
         let textField = UITextField()
         textField.placeholder = "URL"
         textField.borderStyle = .line
+        textField.delegate = self
         return textField
     }()
     init(_ webView: GCWebView) {
@@ -74,14 +75,24 @@ class BrowserView: UIView {
     }
     
     public func load(url: URL) {
-        _ = webView?.load(URLRequest(url: url))
+        if url != webView?.url {
+            _ = webView?.load(URLRequest(url: url))
+        }
+        addressView.text = url.relativeString
     }
 }
 
 extension BrowserView: GCWebViewActionObserver {
     
 }
-extension BrowserView {
+extension BrowserView: UITextFieldDelegate {
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let url = URL(string: textField.text ?? "") {
+            load(url: url)
+        }
+    }
+    
     @objc func didClickTabs() {
         delegate?.didClickTabs()
     }

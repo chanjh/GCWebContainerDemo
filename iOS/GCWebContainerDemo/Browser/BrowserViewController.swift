@@ -94,7 +94,7 @@ extension BrowserViewController: BrowserViewDelegate, BrowserMenuControllerDeleg
     func didSelectWebView(_ webView: GCWebView, url: URL?) {
         browserView.removeFromSuperview()
         
-        self.url = url
+        self.url = url ?? webView.url
         self.browserView = BrowserView(webView)
         browserView.delegate = self
         
@@ -102,7 +102,7 @@ extension BrowserViewController: BrowserViewDelegate, BrowserMenuControllerDeleg
         browserView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        if let url = url {
+        if let url = self.url {
             browserView.load(url: url)
         }
     }

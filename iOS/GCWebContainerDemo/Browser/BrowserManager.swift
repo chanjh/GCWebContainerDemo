@@ -29,7 +29,7 @@ class BrowserManager {
     }
     
     func title(at index: Int) -> String? {
-        return "\(index)"
+        return pool[index].url?.relativeString ?? "\(index)"
     }
     
     func browser(at index: Int) -> PDWebView? {
