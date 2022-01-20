@@ -12,11 +12,10 @@ class TabsService: BaseJSService, JSServiceHandler {
         return [.createTab]
     }
     func handle(params: [String : Any], serviceName: String, callback: String?) {
-//        if serviceName == JSServiceType.createTab.rawValue,
-//           let viewController = webView?.next as? UIViewController {
-//            let browserVC = BrowserManager.shared.makeBrowserController(url: URL(string: "https://qq.com"))
-//            viewController.navigationController?.pushViewController(browserVC, animated: true)
-//        }
+        if serviceName == JSServiceType.createTab.rawValue,
+           let url = URL(string: params["url"] as? String ?? "") {
+            (model as? BrowserModelConfig)?.tabManager.addTab(url)
+        }
     }
 
 }

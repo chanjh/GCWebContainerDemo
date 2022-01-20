@@ -21,8 +21,9 @@ class BrowserManager {
         return BrowserViewController(url: url)
     }
     
-    func makeBrowser() -> PDWebView {
-        let webView = PDWebView()
+    func makeBrowser(model: WebContainerModelConfig? = nil,
+                     ui: WebContainerUIConfig? = nil) -> PDWebView {
+        let webView = PDWebView(frame: .zero, type: .content, model: model, ui: ui)
         webView.identifier = UUID().uuidString
         pool.append(webView)
         return webView

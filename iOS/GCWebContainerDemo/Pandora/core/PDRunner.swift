@@ -11,6 +11,7 @@ import WebKit
 class PDRunner: NSObject {
     var pandora: Pandora
     private var bgRunner: PDWebView?
+    private var serviceConfig: PDServiceConfigImpl?
     
     var backgroundRunner: PDWebView? {
         return bgRunner
@@ -30,6 +31,10 @@ class PDRunner: NSObject {
     func runBackgroundScript(_ script: String) {
         let bgWebView = PDWebView(frame: CGRect(x: 0, y: 0, width: 1, height: 1),
                                   type: .background(pandora.id ?? ""))
+        let serviceConfig = PDServiceConfigImpl(bgWebView)
+        self.serviceConfig = serviceConfig
+        bgWebView.model = serviceConfig
+        bgWebView.ui = serviceConfig
         bgWebView.actionHandler.addObserver(self)
         bgWebView.pd_addChromeBridge()
         let userScript = WKUserScript(source: script,
@@ -43,12 +48,16 @@ class PDRunner: NSObject {
     }
     
     func runPageAction() -> PDWebView {
-        let bgWebView = PDWebView(frame: .zero,
+        let pageWebView = PDWebView(frame: .zero,
                                   type: .popup(pandora.id ?? ""))
-        bgWebView.actionHandler.addObserver(self)
-        bgWebView.pd_addChromeBridge()
-        bgRunner = bgWebView
-        return bgWebView;
+        let serviceConfig = PDServiceConfigImpl(pageWebView)
+        self.serviceConfig = serviceConfig
+        pageWebView.model = serviceConfig
+        pageWebView.ui = serviceConfig
+        pageWebView.actionHandler.addObserver(self)
+        pageWebView.pd_addChromeBridge()
+        bgRunner = pageWebView
+        return pageWebView;
     }
     
     func runBrowserAction() {

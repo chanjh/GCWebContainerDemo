@@ -7,11 +7,21 @@
 //
 
 import Foundation
+protocol WebContainerModelConfig: AnyObject { }
+protocol WebContainerUIConfig: AnyObject {
+    var webView: GCWebView { get }
+}
 
 class BaseJSService {
     weak var webView: GCWebView?
-    init(_ webView: GCWebView) {
+    weak var ui: WebContainerUIConfig?
+    weak var model: WebContainerModelConfig?
+    init(_ webView: GCWebView,
+         ui: WebContainerUIConfig?,
+         model: WebContainerModelConfig?) {
         self.webView = webView
+        self.ui = ui
+        self.model = model
     }
 }
 

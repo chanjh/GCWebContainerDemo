@@ -6,15 +6,18 @@
 //
 
 import SnapKit
-protocol BrowserViewDelegate: NSObject {
+
+protocol BrowserViewToolBarDelegate: NSObject {
     func didClickTabs();
     func didClickMenu();
     func didClickExtension(sender: UIBarButtonItem);
 }
 
+protocol BrowserViewDelegate: BrowserViewToolBarDelegate {}
+
 class BrowserView: UIView {
-    weak var webView: GCWebView?
-    var delegate: BrowserViewDelegate?
+    var gcWebView: GCWebView?
+    weak var delegate: BrowserViewDelegate?
     lazy var toolBar: UIToolbar = {
         let tool = UIToolbar()
         var items = [UIBarButtonItem(title: "Tabs", style: .plain, target: self, action: #selector(didClickTabs)),
@@ -40,11 +43,14 @@ class BrowserView: UIView {
         textField.delegate = self
         return textField
     }()
-    init(_ webView: GCWebView) {
-        self.webView = webView
+    init(_ webView: GCWebView? = nil) {
+        self.gcWebView = webView
         super.init(frame: .zero)
-        webView.actionHandler.addObserver(self)
-        addSubview(webView)
+        webView?.browserView = self
+        webView?.actionHandler.addObserver(self)
+        if let wv = webView {
+            addSubview(wv)
+        }
         addSubview(addressView)
         addSubview(toolBar)
     }
@@ -63,7 +69,7 @@ class BrowserView: UIView {
             make.bottom.equalTo(self.safeAreaLayoutGuide)
             make.height.equalTo(60)
         }
-        webView?.snp.makeConstraints { make in
+        gcWebView?.snp.makeConstraints { make in
             make.top.equalTo(addressView.snp.bottom)
             make.bottom.equalTo(toolBar.snp.bottom)
             make.left.right.equalToSuperview()
@@ -75,18 +81,54 @@ class BrowserView: UIView {
     }
     
     public func load(url: URL) {
-        if url != webView?.url {
-            _ = webView?.load(URLRequest(url: url))
+        if url != gcWebView?.url {
+            _ = gcWebView?.load(URLRequest(url: url))
         }
         addressView.text = url.relativeString
+    }
+    
+    func reload(webView: GCWebView) {
+        gcWebView?.removeFromSuperview()
+        self.gcWebView = webView
+        webView.browserView = self
+        webView.actionHandler.addObserver(self)
+        addSubview(webView)
+        bringSubviewToFront(toolBar)
+        bringSubviewToFront(addressView)
+        
+        gcWebView?.snp.makeConstraints { make in
+            make.top.equalTo(addressView.snp.bottom)
+            make.bottom.equalTo(toolBar.snp.bottom)
+            make.left.right.equalToSuperview()
+        }
+        addressView.text = gcWebView?.url?.relativeString
     }
 }
 
 extension BrowserView: GCWebViewActionObserver {
     
 }
-extension BrowserView: UITextFieldDelegate {
+
+extension BrowserView: WebContainerUIConfig,
+                       BrowserModelConfig,
+                       BrowerTabManagerInterface {
+    var webView: GCWebView {
+        return self.gcWebView!
+    }
     
+    var tabManager: BrowerTabManagerInterface {
+        return self
+    }
+    
+    func addTab(_ url: URL?) {
+        let webView = BrowserManager.shared.makeBrowser(model: self, ui: self)
+        reload(webView: webView)
+        if let url = url {
+            load(url: url)
+        }
+    }
+}
+extension BrowserView: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let url = URL(string: textField.text ?? "") {
             load(url: url)

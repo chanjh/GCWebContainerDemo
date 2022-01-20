@@ -17,12 +17,27 @@ class GCWebView: WebView, GCWebViewInterface {
     private(set) var jsEngine: JSEngine?
     private(set) var jsServiceManager: JSServiceManager?
     private(set) var actionHandler: GCWebViewActionHandler!
-
-    init(frame: CGRect = .zero) {
+    
+    private weak var _ui: WebContainerUIConfig?
+    private weak var _model: WebContainerModelConfig?
+    var ui: WebContainerUIConfig? {
+        set { _onAddUIConfig(newValue) }
+        get { _ui }
+    }
+    var model: WebContainerModelConfig? {
+        set { _onAddModelConfig(newValue) }
+        get { _model }
+    }
+    
+    init(frame: CGRect = .zero,
+         model: WebContainerModelConfig? = nil,
+         ui: WebContainerUIConfig? = nil) {
         let webViewConfiguration = WKWebViewConfiguration()
         let contentController = WKUserContentController()
         webViewConfiguration.userContentController = contentController
         super.init(frame: frame, configuration: webViewConfiguration)
+        self.model = model
+        self.ui = ui
         _initDelegates()
         _initContext()
         onInit()
@@ -56,5 +71,27 @@ extension GCWebView {
     func load(_ request: URLRequest) -> WKNavigation? {
         willLoadRequest()
         return super.load(request)
+    }
+}
+
+extension GCWebView {
+    private func _onAddModelConfig(_ model: WebContainerModelConfig?) {
+        guard let model = model else { return }
+        _model = model
+        jsServiceManager?.handlers.forEach({
+            if let jsService = $0 as? BaseJSService {
+                jsService.model = model
+            }
+        })
+    }
+    
+    private func _onAddUIConfig(_ ui: WebContainerUIConfig?) {
+        guard let ui = ui else { return }
+        _ui = ui
+        jsServiceManager?.handlers.forEach({
+            if let jsService = $0 as? BaseJSService {
+                jsService.ui = ui
+            }
+        })
     }
 }

@@ -16,9 +16,19 @@ enum PDWebViewType {
 class PDWebView: GCWebView {
     let type: PDWebViewType;
     
-    init(frame: CGRect = .zero, type: PDWebViewType = .content) {
+    init(frame: CGRect = .zero,
+         type: PDWebViewType = .content,
+         model: WebContainerModelConfig? = nil,
+         ui: WebContainerUIConfig? = nil) {
         self.type = type
-        super.init(frame: frame)
+        super.init(frame: frame, model: model, ui: ui)
+    }
+    
+    init(frame: CGRect = .zero,
+         type: PDWebViewType = .content,
+         serviceConfig: PDServiceConfigImpl) {
+        self.type = type
+        super.init(frame: frame, model: serviceConfig, ui: serviceConfig)
     }
     
     required init?(coder: NSCoder) {
@@ -42,8 +52,8 @@ class PDWebView: GCWebView {
     }
     
     private func _registerJSHandler() {
-        jsServiceManager?.register(handler: TabsService(self))
-        jsServiceManager?.register(handler: RuntimeService(self))
+        jsServiceManager?.register(handler: TabsService(self, ui: ui, model: model))
+        jsServiceManager?.register(handler: RuntimeService(self, ui: ui, model: model))
     }
 }
 

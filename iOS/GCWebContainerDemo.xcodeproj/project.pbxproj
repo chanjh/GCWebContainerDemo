@@ -26,6 +26,9 @@
 		0D2D31F327945C7F00B84D80 /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2D31F227945C7F00B84D80 /* BrowserViewController.swift */; };
 		0D2D31F6279463C300B84D80 /* UIViewController+TopMost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2D31F5279463C300B84D80 /* UIViewController+TopMost.swift */; };
 		0D2D31F82794F92D00B84D80 /* TabsManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2D31F72794F92D00B84D80 /* TabsManagerViewController.swift */; };
+		0D2D31FA2796488000B84D80 /* GCWebView+Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2D31F92796488000B84D80 /* GCWebView+Browser.swift */; };
+		0D2D31FC27964E9700B84D80 /* BrowserBaseJSService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2D31FB27964E9700B84D80 /* BrowserBaseJSService.swift */; };
+		0D2D31FF2798E88700B84D80 /* PDServiceConfigImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2D31FE2798E88700B84D80 /* PDServiceConfigImpl.swift */; };
 		0D84542E2781974900E18BDE /* TabsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D84542D2781974900E18BDE /* TabsService.swift */; };
 		0D8454302781982100E18BDE /* RuntimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D84542F2781982100E18BDE /* RuntimeService.swift */; };
 		0DBE24F32786703E00D9FC6F /* PDWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE24F22786703E00D9FC6F /* PDWebView.swift */; };
@@ -75,6 +78,9 @@
 		0D2D31F227945C7F00B84D80 /* BrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
 		0D2D31F5279463C300B84D80 /* UIViewController+TopMost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+TopMost.swift"; sourceTree = "<group>"; };
 		0D2D31F72794F92D00B84D80 /* TabsManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsManagerViewController.swift; sourceTree = "<group>"; };
+		0D2D31F92796488000B84D80 /* GCWebView+Browser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GCWebView+Browser.swift"; sourceTree = "<group>"; };
+		0D2D31FB27964E9700B84D80 /* BrowserBaseJSService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserBaseJSService.swift; sourceTree = "<group>"; };
+		0D2D31FE2798E88700B84D80 /* PDServiceConfigImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDServiceConfigImpl.swift; sourceTree = "<group>"; };
 		0D84542D2781974900E18BDE /* TabsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsService.swift; sourceTree = "<group>"; };
 		0D84542F2781982100E18BDE /* RuntimeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeService.swift; sourceTree = "<group>"; };
 		0DBE24F22786703E00D9FC6F /* PDWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDWebView.swift; sourceTree = "<group>"; };
@@ -137,6 +143,7 @@
 				0DFE60A1278496E200ACD945 /* JSServices */,
 				0DFE60A0278496CE00ACD945 /* core */,
 				0DBE24F22786703E00D9FC6F /* PDWebView.swift */,
+				0D2D31FE2798E88700B84D80 /* PDServiceConfigImpl.swift */,
 			);
 			path = Pandora;
 			sourceTree = "<group>";
@@ -144,6 +151,7 @@
 		0D2D31EF279433A400B84D80 /* Browser */ = {
 			isa = PBXGroup;
 			children = (
+				0D2D31FD27964F2800B84D80 /* Extension */,
 				0D2D31F027945C6200B84D80 /* BrowserView.swift */,
 				0D2D31F227945C7F00B84D80 /* BrowserViewController.swift */,
 				0D2D31F72794F92D00B84D80 /* TabsManagerViewController.swift */,
@@ -157,6 +165,15 @@
 			isa = PBXGroup;
 			children = (
 				0D2D31F5279463C300B84D80 /* UIViewController+TopMost.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		0D2D31FD27964F2800B84D80 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				0D2D31F92796488000B84D80 /* GCWebView+Browser.swift */,
+				0D2D31FB27964E9700B84D80 /* BrowserBaseJSService.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -457,8 +474,10 @@
 				0D2D31F82794F92D00B84D80 /* TabsManagerViewController.swift in Sources */,
 				0DBE24F32786703E00D9FC6F /* PDWebView.swift in Sources */,
 				0D1F8644276F2C5100D39CAF /* PDManager.swift in Sources */,
+				0D2D31FF2798E88700B84D80 /* PDServiceConfigImpl.swift in Sources */,
 				0DCBC5312783CB6B00DF5A0E /* GCExtensionController.swift in Sources */,
 				0DD940CA275EDED5006865B6 /* JSServiceManager.swift in Sources */,
+				0D2D31FC27964E9700B84D80 /* BrowserBaseJSService.swift in Sources */,
 				0DD940CF275EDED5006865B6 /* GCWebView.swift in Sources */,
 				0D1F862E276E39C000D39CAF /* BookmarksManager.swift in Sources */,
 				0D1F8625276DD3BB00D39CAF /* GCMultiTabController.swift in Sources */,
@@ -484,6 +503,7 @@
 				0D1F8620276DC73600D39CAF /* GCDemoHomeController.swift in Sources */,
 				0D1F8622276DC83300D39CAF /* SceneDelegate.swift in Sources */,
 				0DBE24F52786782900D9FC6F /* GCWebViewActionHandler.swift in Sources */,
+				0D2D31FA2796488000B84D80 /* GCWebView+Browser.swift in Sources */,
 				0D1F861E276CE22400D39CAF /* AppDelegate.swift in Sources */,
 				0DD940EA27618691006865B6 /* WebViewController.swift in Sources */,
 				0DCBC52E27832B5D00DF5A0E /* PDFileManager.swift in Sources */,

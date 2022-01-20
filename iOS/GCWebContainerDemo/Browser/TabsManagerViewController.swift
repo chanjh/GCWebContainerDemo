@@ -8,7 +8,8 @@
 import SnapKit
 
 protocol TabsManagerViewControllerDelegate: NSObjectProtocol {
-    func didSelectWebView(_ webView: GCWebView, url: URL?)
+    func didSelectWebView(_ webView: GCWebView)
+    func didAddUrl(_ url: URL?)
 }
 
 class TabsManagerViewController: UIViewController {
@@ -52,7 +53,7 @@ extension TabsManagerViewController: UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView,
                    didSelectRowAt indexPath: IndexPath) {
         if let webView = BrowserManager.shared.browser(at: indexPath.row) {
-            delegate?.didSelectWebView(webView, url: nil)
+            delegate?.didSelectWebView(webView)
             dismiss(animated: true, completion: nil)
         }
     }
@@ -67,8 +68,7 @@ extension TabsManagerViewController {
         }
         alert.addAction(UIAlertAction(title: "ok", style: .default, handler: { [weak self] _ in
             if let url = URL(string: alert.textFields?.first?.text ?? "") {
-                let webView = BrowserManager.shared.makeBrowser()
-                self?.delegate?.didSelectWebView(webView, url: url)
+                self?.delegate?.didAddUrl(url)
                 self?.dismiss(animated: true, completion: nil)
             }
         }))

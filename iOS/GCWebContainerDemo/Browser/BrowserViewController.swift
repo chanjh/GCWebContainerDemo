@@ -12,17 +12,11 @@ class BrowserViewController: UIViewController {
     private var browserView: BrowserView
     private var url: URL?
     
-    init(webView: GCWebView) {
-        self.url = webView.url
-        self.browserView = BrowserView(webView)
-        super.init(nibName: nil, bundle: nil)
-        browserView.delegate = self
-    }
-    
     init(url: URL? = nil) {
         self.url = url
-        let webView = BrowserManager.shared.makeBrowser()
-        self.browserView = BrowserView(webView)
+        self.browserView = BrowserView()
+        let webView = BrowserManager.shared.makeBrowser(model: browserView, ui: browserView)
+        browserView.reload(webView: webView)
         super.init(nibName: nil, bundle: nil)
         browserView.delegate = self
     }
@@ -91,19 +85,30 @@ extension BrowserViewController: BrowserViewDelegate, BrowserMenuControllerDeleg
         
     }
     
-    func didSelectWebView(_ webView: GCWebView, url: URL?) {
-        browserView.removeFromSuperview()
-        
-        self.url = url ?? webView.url
-        self.browserView = BrowserView(webView)
-        browserView.delegate = self
-        
-        view.addSubview(browserView)
-        browserView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        if let url = self.url {
+    func didSelectWebView(_ webView: GCWebView) {
+        browserView.reload(webView: webView)
+    }
+    
+    func didAddUrl(_ url: URL?) {
+        let webView = BrowserManager.shared.makeBrowser(model: browserView, ui: browserView)
+        browserView.reload(webView: webView)
+        if let url = url {        
             browserView.load(url: url)
         }
     }
+    
+//    func didSelectWebView(_ webView: GCWebView, url: URL?) {
+//        browserView.removeFromSuperview()
+//        self.url = url ?? webView.url
+//        self.browserView = BrowserView(webView)
+//        browserView.delegate = self
+//
+//        view.addSubview(browserView)
+//        browserView.snp.makeConstraints { make in
+//            make.edges.equalToSuperview()
+//        }
+//        if let url = self.url {
+//            browserView.load(url: url)
+//        }
+//    }
 }
