@@ -18,12 +18,18 @@ class PDServiceConfigImpl: WebContainerUIConfig,
     
     var webView: GCWebView { pdWebView }
     
-    var tabManager: BrowerTabManagerInterface { self }
+    var tabManager: BrowerTabManagerInterface { self } 
     
     func addTab(_ url: URL?) {
         // todo
         let nav = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController
         let browser = nav?.topViewController as? BrowserViewController
         browser?.didAddUrl(url)
+    }
+    
+    func removeTabs(_ tabs: [String]) {
+        tabs.forEach { id in
+            BrowserManager.shared.remove(id)
+        }
     }
 }

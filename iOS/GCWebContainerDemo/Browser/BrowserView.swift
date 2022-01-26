@@ -127,6 +127,17 @@ extension BrowserView: WebContainerUIConfig,
             load(url: url)
         }
     }
+    
+    func removeTabs(_ tabs: [String]) {
+        tabs.forEach { id in
+            BrowserManager.shared.remove(id)
+        }
+        if tabs.contains(where: { (webView as? PDWebView)?.identifier == $0 })  {
+            if let web = BrowserManager.shared.browser(at: 0) {
+                reload(webView: web)
+            }
+        }
+    }
 }
 extension BrowserView: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {

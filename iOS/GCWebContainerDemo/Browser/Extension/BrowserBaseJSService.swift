@@ -9,6 +9,7 @@ import Foundation
 
 protocol BrowerTabManagerInterface {
     func addTab(_ url: URL?)
+    func removeTabs(_ tabs: [String])
 }
 
 protocol BrowserModelConfig: WebContainerModelConfig {
