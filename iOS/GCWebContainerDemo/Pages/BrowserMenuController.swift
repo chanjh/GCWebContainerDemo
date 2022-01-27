@@ -54,18 +54,18 @@ extension BrowserMenuController: UITableViewDataSource, UITableViewDelegate {
                    didSelectRowAt indexPath: IndexPath) {
         let id = menu[indexPath.row]["id"]
         if id == "close" {
-            BrowserManager.shared.remove(browserId)
+            TabsManager.shared.remove(browserId)
             dismiss(animated: true) { [weak self] in
                 self?.delegate?.closeBrowser()
             }
         } else if id == "url" {
             let alert = UIAlertController(title: "URL", message: nil, preferredStyle: .alert)
             alert.addTextField { [weak self] textField in
-                textField.text = BrowserManager.shared.browser(at: self?.browserId ?? "" )?.url?.absoluteString ?? ""
+                textField.text = TabsManager.shared.browser(at: self?.browserId ?? "" )?.url?.absoluteString ?? ""
             }
             alert.addAction(UIAlertAction(title: "ok", style: .default, handler: { [weak self] _ in
                 if let url = URL(string: alert.textFields?.first?.text ?? "") {
-                    _ = BrowserManager.shared.browser(at: self?.browserId ?? "" )?.load(URLRequest(url: url))
+                    _ = TabsManager.shared.browser(at: self?.browserId ?? "" )?.load(URLRequest(url: url))
                     self?.dismiss(animated: true, completion: nil)
                 }
             }))

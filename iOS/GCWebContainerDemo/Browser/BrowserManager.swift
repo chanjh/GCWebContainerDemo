@@ -9,17 +9,11 @@ import Foundation
 import ObjectiveC
 
 class BrowserManager {
-    private var pool: [PDWebView] = [];
-    
     static let shared = BrowserManager()
     
-    var count: Int {
-        return pool.count
-    }
+    private var pool: [PDWebView] = [];
     
-    func makeBrowserController(url: URL?) -> BrowserViewController {
-        return BrowserViewController(url: url)
-    }
+    var count: Int { return pool.count }
     
     func makeBrowser(model: WebContainerModelConfig? = nil,
                      ui: WebContainerUIConfig? = nil) -> PDWebView {
@@ -50,7 +44,7 @@ class BrowserManager {
 }
 
 private var kGCWebViewIDKey: UInt8 = 0
-extension PDWebView {
+extension GCWebView {
     var identifier: String? {
         get {
             return objc_getAssociatedObject(self, &kGCWebViewIDKey) as? String

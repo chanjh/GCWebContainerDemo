@@ -33,6 +33,8 @@
 		0D8454302781982100E18BDE /* RuntimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D84542F2781982100E18BDE /* RuntimeService.swift */; };
 		0DBE24F32786703E00D9FC6F /* PDWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE24F22786703E00D9FC6F /* PDWebView.swift */; };
 		0DBE24F52786782900D9FC6F /* GCWebViewActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE24F42786782900D9FC6F /* GCWebViewActionHandler.swift */; };
+		0DC52B4627A21FCF00EC35AB /* WeakObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC52B4527A21FCF00EC35AB /* WeakObject.swift */; };
+		0DC52B4827A2247B00EC35AB /* TabsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC52B4727A2247B00EC35AB /* TabsManager.swift */; };
 		0DCBC52E27832B5D00DF5A0E /* PDFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCBC52D27832B5D00DF5A0E /* PDFileManager.swift */; };
 		0DCBC5312783CB6B00DF5A0E /* GCExtensionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCBC5302783CB6B00DF5A0E /* GCExtensionController.swift */; };
 		0DD940B4275EDEBE006865B6 /* GCWebContainerDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD940B3275EDEBE006865B6 /* GCWebContainerDemoApp.swift */; };
@@ -85,6 +87,8 @@
 		0D84542F2781982100E18BDE /* RuntimeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeService.swift; sourceTree = "<group>"; };
 		0DBE24F22786703E00D9FC6F /* PDWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDWebView.swift; sourceTree = "<group>"; };
 		0DBE24F42786782900D9FC6F /* GCWebViewActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCWebViewActionHandler.swift; sourceTree = "<group>"; };
+		0DC52B4527A21FCF00EC35AB /* WeakObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakObject.swift; sourceTree = "<group>"; };
+		0DC52B4727A2247B00EC35AB /* TabsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsManager.swift; sourceTree = "<group>"; };
 		0DCBC52D27832B5D00DF5A0E /* PDFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFileManager.swift; sourceTree = "<group>"; };
 		0DCBC5302783CB6B00DF5A0E /* GCExtensionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCExtensionController.swift; sourceTree = "<group>"; };
 		0DD940B0275EDEBE006865B6 /* GCWebContainerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GCWebContainerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -156,6 +160,7 @@
 				0D2D31F227945C7F00B84D80 /* BrowserViewController.swift */,
 				0D2D31F72794F92D00B84D80 /* TabsManagerViewController.swift */,
 				0D1F8629276DD75600D39CAF /* BrowserManager.swift */,
+				0DC52B4727A2247B00EC35AB /* TabsManager.swift */,
 				0D1F862D276E39C000D39CAF /* BookmarksManager.swift */,
 			);
 			path = Browser;
@@ -271,6 +276,7 @@
 			isa = PBXGroup;
 			children = (
 				0DD940DE275EDF9F006865B6 /* ThreadSafe.swift */,
+				0DC52B4527A21FCF00EC35AB /* WeakObject.swift */,
 				0DD940DF275EDF9F006865B6 /* JSServiceUtil.swift */,
 			);
 			path = Util;
@@ -486,6 +492,7 @@
 				0DD940DB275EDF88006865B6 /* URL+scheme.swift in Sources */,
 				0D1F8640276F2BFD00D39CAF /* PDLoader.swift in Sources */,
 				0DD940D9275EDF88006865B6 /* Dictionary+String.swift in Sources */,
+				0DC52B4627A21FCF00EC35AB /* WeakObject.swift in Sources */,
 				0D1F8627276DD51A00D39CAF /* GCBrowserViewController.swift in Sources */,
 				0D2D31F327945C7F00B84D80 /* BrowserViewController.swift in Sources */,
 				0D1F8646276F2CFE00D39CAF /* Pandora.swift in Sources */,
@@ -499,6 +506,7 @@
 				0DD940E8275EE17D006865B6 /* ContextMenuService.swift in Sources */,
 				0D8454302781982100E18BDE /* RuntimeService.swift in Sources */,
 				0DD940B4275EDEBE006865B6 /* GCWebContainerDemoApp.swift in Sources */,
+				0DC52B4827A2247B00EC35AB /* TabsManager.swift in Sources */,
 				0D84542E2781974900E18BDE /* TabsService.swift in Sources */,
 				0D1F8620276DC73600D39CAF /* GCDemoHomeController.swift in Sources */,
 				0D1F8622276DC83300D39CAF /* SceneDelegate.swift in Sources */,
@@ -642,6 +650,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"GCWebContainerDemo/Preview Content\"";
 				DEVELOPMENT_TEAM = 93MHT7HTF3;
 				ENABLE_PREVIEWS = YES;
+				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GCWebContainerDemo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -653,6 +662,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chanjh.web.GCWebContainerDemo.GCWebContainerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

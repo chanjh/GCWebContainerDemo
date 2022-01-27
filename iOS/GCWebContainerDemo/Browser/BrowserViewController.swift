@@ -15,7 +15,7 @@ class BrowserViewController: UIViewController {
     init(url: URL? = nil) {
         self.url = url
         self.browserView = BrowserView()
-        let webView = BrowserManager.shared.makeBrowser(model: browserView, ui: browserView)
+        let webView = TabsManager.shared.makeBrowser(model: browserView, ui: browserView)
         browserView.reload(webView: webView)
         super.init(nibName: nil, bundle: nil)
         browserView.delegate = self
@@ -90,7 +90,7 @@ extension BrowserViewController: BrowserViewDelegate, BrowserMenuControllerDeleg
     }
     
     func didAddUrl(_ url: URL?) {
-        let webView = BrowserManager.shared.makeBrowser(model: browserView, ui: browserView)
+        let webView = TabsManager.shared.makeBrowser(model: browserView, ui: browserView)
         browserView.reload(webView: webView)
         if let url = url {        
             browserView.load(url: url)

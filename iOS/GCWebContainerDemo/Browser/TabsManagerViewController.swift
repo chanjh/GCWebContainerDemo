@@ -41,18 +41,18 @@ class TabsManagerViewController: UIViewController {
 
 extension TabsManagerViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return BrowserManager.shared.count
+        return TabsManager.shared.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
-        cell.textLabel?.text = BrowserManager.shared.title(at: indexPath.row)
+        cell.textLabel?.text = TabsManager.shared.title(at: indexPath.row)
         return cell
     }
 
     func tableView(_ tableView: UITableView,
                    didSelectRowAt indexPath: IndexPath) {
-        if let webView = BrowserManager.shared.browser(at: indexPath.row) {
+        if let webView = TabsManager.shared.browser(at: indexPath.row) {
             delegate?.didSelectWebView(webView)
             dismiss(animated: true, completion: nil)
         }
