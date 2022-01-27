@@ -65,6 +65,6 @@ class RuntimeService: BaseJSService, JSServiceHandler {
 extension JSServiceType {
     static let onPandoraInstalled = JSServiceType("runtime.onInstalled")
     static let runtimeSendMessage = JSServiceType("runtime.sendMessage")
-    static let runtimeSendResponse　 = JSServiceType("runtime.sendResponse") // todo: 是不是可以合并这个 JSAPI
+    static let runtimeSendResponse = JSServiceType("runtime.sendResponse") // todo: 是不是可以合并这个 JSAPI
     static let runtimeGetPlatformInfo = JSServiceType("runtime.getPlatformInfo")
 }

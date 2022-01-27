@@ -12,11 +12,21 @@ class TabsService: BaseJSService, JSServiceHandler {
         return [.createTab]
     }
     func handle(params: [String : Any], serviceName: String, callback: String?) {
-//        webView?.jsEngine?.callFunction(callback!, params: ["id": "sssss"], completion: nil)
+        if serviceName == JSServiceType.createTab.rawValue,
+           let url = URL(string: params["url"] as? String ?? "") {
+            (model as? BrowserModelConfig)?.tabManager.addTab(url)
+        } else if serviceName == JSServiceType.removeTab.rawValue {
+            if let tabId = params["tabIds"] as? Int {
+                (model as? BrowserModelConfig)?.tabManager.removeTabs(["\(tabId)"])
+            } else if let tabIds = params["tabIds"] as? [Int] {
+                (model as? BrowserModelConfig)?.tabManager.removeTabs(tabIds.map { "\($0)"})
+            }
+        }
     }
 
 }
 
 extension JSServiceType {
     static let createTab   = JSServiceType("runtime.tabs.create")
+    static let removeTab   = JSServiceType("runtime.tabs.remove")
 }

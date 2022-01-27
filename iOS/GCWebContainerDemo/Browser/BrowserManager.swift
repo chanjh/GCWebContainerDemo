@@ -17,15 +17,20 @@ class BrowserManager {
         return pool.count
     }
     
-    func makeBrowser() -> PDWebView {
-        let webView = PDWebView()
+    func makeBrowserController(url: URL?) -> BrowserViewController {
+        return BrowserViewController(url: url)
+    }
+    
+    func makeBrowser(model: WebContainerModelConfig? = nil,
+                     ui: WebContainerUIConfig? = nil) -> PDWebView {
+        let webView = PDWebView(frame: .zero, type: .content, model: model, ui: ui)
         webView.identifier = UUID().uuidString
         pool.append(webView)
         return webView
     }
     
     func title(at index: Int) -> String? {
-        return "\(index)"
+        return pool[index].url?.relativeString ?? "\(index)"
     }
     
     func browser(at index: Int) -> PDWebView? {

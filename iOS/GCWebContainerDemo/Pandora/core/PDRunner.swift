@@ -11,6 +11,7 @@ import WebKit
 class PDRunner: NSObject {
     var pandora: Pandora
     private var bgRunner: PDWebView?
+    private var serviceConfig: PDServiceConfigImpl?
     
     var backgroundRunner: PDWebView? {
         return bgRunner
@@ -30,33 +31,33 @@ class PDRunner: NSObject {
     func runBackgroundScript(_ script: String) {
         let bgWebView = PDWebView(frame: CGRect(x: 0, y: 0, width: 1, height: 1),
                                   type: .background(pandora.id ?? ""))
+        let serviceConfig = PDServiceConfigImpl(bgWebView)
+        self.serviceConfig = serviceConfig
+        bgWebView.model = serviceConfig
+        bgWebView.ui = serviceConfig
+        bgWebView.actionHandler.addObserver(self)
         bgWebView.pd_addChromeBridge()
         let userScript = WKUserScript(source: script,
                                       injectionTime: .atDocumentStart,
                                       forMainFrameOnly: true)
         bgWebView.addUserScript(userScript: userScript)
         bgRunner = bgWebView
-        bgWebView.navigationDelegate = self
         // todo
         UIApplication.shared.keyWindow?.addSubview(bgWebView)
         bgRunner?.loadHTMLString("<html></html>", baseURL: nil)
     }
     
-    func runContentScript(target: PDWebView?) {
-        guard let target = target else {
-            return
-        }
-        // find content script
-        
-    }
-    
     func runPageAction() -> PDWebView {
-        let bgWebView = PDWebView(frame: .zero,
+        let pageWebView = PDWebView(frame: .zero,
                                   type: .popup(pandora.id ?? ""))
-        bgWebView.pd_addChromeBridge()
-        bgWebView.navigationDelegate = self
-        bgRunner = bgWebView
-        return bgWebView;
+        let serviceConfig = PDServiceConfigImpl(pageWebView)
+        self.serviceConfig = serviceConfig
+        pageWebView.model = serviceConfig
+        pageWebView.ui = serviceConfig
+        pageWebView.actionHandler.addObserver(self)
+        pageWebView.pd_addChromeBridge()
+        bgRunner = pageWebView
+        return pageWebView;
     }
     
     func runBrowserAction() {
@@ -64,7 +65,7 @@ class PDRunner: NSObject {
     }
 }
 
-extension PDRunner: WKNavigationDelegate {
+extension PDRunner: GCWebViewActionObserver {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         let data = ["type": "BACKGROUND", "id": pandora.id ?? "", "manifest": (pandora.manifest.raw ?? [:])] as [String : Any];
         let injectInfoScript = "window.chrome.__loader__";

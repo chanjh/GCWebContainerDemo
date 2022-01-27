@@ -15,7 +15,7 @@ class GCDemoHomeController: UIViewController {
         table.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
         return table
     }()
-    let cellTitle: [String] = ["Multi-Tab Manage", "Bookmarks", "Extensions"]
+    let cellTitle: [String] = ["Multi-Tab Manage", "Bookmarks", "Extensions", "BrowserView"]
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -41,6 +41,9 @@ extension GCDemoHomeController: UITableViewDelegate, UITableViewDataSource {
             navigationController?.pushViewController(controller, animated: true)
         } else if (indexPath.row == 2) {
             let controller = GCExtensionController()
+            navigationController?.pushViewController(controller, animated: true)
+        } else if (indexPath.row == 3) {
+            let controller = BrowserViewController()
             navigationController?.pushViewController(controller, animated: true)
         }
     }
