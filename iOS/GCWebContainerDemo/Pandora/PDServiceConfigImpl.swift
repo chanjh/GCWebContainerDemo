@@ -27,7 +27,7 @@ class PDServiceConfigImpl: WebContainerUIConfig,
         browser?.didAddUrl(url)
     }
     
-    func removeTabs(_ tabs: [String]) {
+    func removeTabs(_ tabs: [Int]) {
         tabs.forEach { id in
             TabsManager.shared.remove(id)
         }

@@ -57,6 +57,20 @@ extension TabsManagerViewController: UITableViewDataSource, UITableViewDelegate 
             dismiss(animated: true, completion: nil)
         }
     }
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            // handle delete (by removing the data from your array and updating the tableview)
+            let index = indexPath.row
+            if let web = TabsManager.shared.browser(at: index) {            
+                TabsManager.shared.remove(web)
+                tableView.reloadData()
+            }
+        }
+    }
 }
 
 extension TabsManagerViewController {

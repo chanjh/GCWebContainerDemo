@@ -18,7 +18,7 @@ class BrowserManager {
     func makeBrowser(model: WebContainerModelConfig? = nil,
                      ui: WebContainerUIConfig? = nil) -> PDWebView {
         let webView = PDWebView(frame: .zero, type: .content, model: model, ui: ui)
-        webView.identifier = UUID().uuidString
+        webView.identifier = UUID().hashValue
         pool.append(webView)
         return webView
     }
@@ -31,23 +31,23 @@ class BrowserManager {
         return pool[index]
     }
     
-    func browser(at identifier: String) -> PDWebView? {
+    func browser(for identifier: Int) -> PDWebView? {
         return pool.first { $0.identifier == identifier }
     }
     
     func remove(_ webView: PDWebView) {
         pool.removeAll { $0 == webView }
     }
-    func remove(_ identifier: String) {
+    func remove(_ identifier: Int) {
         pool.removeAll { $0.identifier == identifier }
     }
 }
 
 private var kGCWebViewIDKey: UInt8 = 0
 extension GCWebView {
-    var identifier: String? {
+    var identifier: Int? {
         get {
-            return objc_getAssociatedObject(self, &kGCWebViewIDKey) as? String
+            return objc_getAssociatedObject(self, &kGCWebViewIDKey) as? Int
         }
         set(newValue) {
             objc_setAssociatedObject(self, &kGCWebViewIDKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)

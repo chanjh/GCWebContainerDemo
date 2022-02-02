@@ -17,9 +17,9 @@ class TabsService: BaseJSService, JSServiceHandler {
             (model as? BrowserModelConfig)?.tabManager.addTab(url)
         } else if serviceName == JSServiceType.removeTab.rawValue {
             if let tabId = params["tabIds"] as? Int {
-                (model as? BrowserModelConfig)?.tabManager.removeTabs(["\(tabId)"])
+                (model as? BrowserModelConfig)?.tabManager.removeTabs([tabId])
             } else if let tabIds = params["tabIds"] as? [Int] {
-                (model as? BrowserModelConfig)?.tabManager.removeTabs(tabIds.map { "\($0)"})
+                (model as? BrowserModelConfig)?.tabManager.removeTabs(tabIds)
             }
         }
     }

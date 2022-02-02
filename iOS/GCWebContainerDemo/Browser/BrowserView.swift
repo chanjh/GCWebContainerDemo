@@ -128,12 +128,12 @@ extension BrowserView: WebContainerUIConfig,
         }
     }
     
-    func removeTabs(_ tabs: [String]) {
+    func removeTabs(_ tabs: [Int]) {
         tabs.forEach { id in
             TabsManager.shared.remove(id)
         }
         if tabs.contains(where: { (webView as? PDWebView)?.identifier == $0 })  {
-            if let web = TabsManager.shared.browser(at: 0) {
+            if let web = TabsManager.shared.browser(for: 0) {
                 reload(webView: web)
             }
         }

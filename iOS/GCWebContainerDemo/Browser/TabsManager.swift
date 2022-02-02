@@ -71,7 +71,6 @@ class TabsManager {
         observers.remove(observer)
     }
     
-    
     func makeBrowser(model: WebContainerModelConfig? = nil,
                      ui: WebContainerUIConfig? = nil) -> GCWebView {
         let webView = BrowserManager.shared.makeBrowser(model: model, ui: ui)
@@ -87,14 +86,14 @@ class TabsManager {
         return pool[index]
     }
     
-    func browser(at identifier: String) -> GCWebView? {
+    func browser(for identifier: Int) -> GCWebView? {
         return pool.first { $0.identifier == identifier }
     }
     
     func remove(_ webView: GCWebView) {
         pool.removeAll { $0 == webView }
     }
-    func remove(_ identifier: String) {
+    func remove(_ identifier: Int) {
         pool.removeAll { $0.identifier == identifier }
     }
 }
