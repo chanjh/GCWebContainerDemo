@@ -121,19 +121,19 @@ extension BrowserView: WebContainerUIConfig,
     }
     
     func addTab(_ url: URL?) {
-        let webView = BrowserManager.shared.makeBrowser(model: self, ui: self)
+        let webView = TabsManager.shared.makeBrowser(model: self, ui: self)
         reload(webView: webView)
         if let url = url {
             load(url: url)
         }
     }
     
-    func removeTabs(_ tabs: [String]) {
+    func removeTabs(_ tabs: [Int]) {
         tabs.forEach { id in
-            BrowserManager.shared.remove(id)
+            TabsManager.shared.remove(id)
         }
         if tabs.contains(where: { (webView as? PDWebView)?.identifier == $0 })  {
-            if let web = BrowserManager.shared.browser(at: 0) {
+            if let web = TabsManager.shared.browser(for: 0) {
                 reload(webView: web)
             }
         }

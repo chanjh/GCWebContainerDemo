@@ -18,7 +18,7 @@ class PDServiceConfigImpl: WebContainerUIConfig,
     
     var webView: GCWebView { pdWebView }
     
-    var tabManager: BrowerTabManagerInterface { self } 
+    var tabManager: BrowerTabManagerInterface { self }
     
     func addTab(_ url: URL?) {
         // todo
@@ -27,9 +27,9 @@ class PDServiceConfigImpl: WebContainerUIConfig,
         browser?.didAddUrl(url)
     }
     
-    func removeTabs(_ tabs: [String]) {
+    func removeTabs(_ tabs: [Int]) {
         tabs.forEach { id in
-            BrowserManager.shared.remove(id)
+            TabsManager.shared.remove(id)
         }
     }
 }
