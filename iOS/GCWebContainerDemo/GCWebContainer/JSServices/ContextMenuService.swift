@@ -12,7 +12,10 @@ class ContextMenuService: BaseJSService, JSServiceHandler {
     var handleServices: [JSServiceType] {
         return [.setContextMenu, .clearContextMenu]
     }
-    func handle(params: [String : Any], serviceName: String, callback: String?) {
+    func handle(params: Any?, serviceName: String, callback: String?) {
+        guard let params = params as? [String: Any] else {
+            return
+        }
         if serviceName == JSServiceType.setContextMenu.rawValue {
             _handleSetContextMenu(params: params, callback: callback)
         } else if serviceName == JSServiceType.clearContextMenu.rawValue {

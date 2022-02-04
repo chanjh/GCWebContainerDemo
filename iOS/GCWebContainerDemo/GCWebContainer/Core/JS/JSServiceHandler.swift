@@ -27,8 +27,5 @@ class BaseJSService {
 
 protocol JSServiceHandler {
     var handleServices: [JSServiceType] { get }
-    // todo: params 支持 any 类型？
-    func handle(params: [String: Any], serviceName: String, callback: String?)
+    func handle(params: Any?, serviceName: String, callback: String?)
 }
-
-//protocol JSService
