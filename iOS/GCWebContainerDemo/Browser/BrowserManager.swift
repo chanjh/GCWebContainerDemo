@@ -18,8 +18,7 @@ class BrowserManager {
     func makeBrowser(model: WebContainerModelConfig? = nil,
                      ui: WebContainerUIConfig? = nil) -> PDWebView {
         let webView = PDWebView(frame: .zero, type: .content, model: model, ui: ui)
-        let jsMax = 9007199254740990
-        webView.identifier = Int(Int64.random(in: 0...jsMax))
+        webView.identifier = Int(Int64.random(in: 0...9007199254740990))
         print("BrowserManager Create Browser \(webView.identifier ?? 0)")
         pool.append(webView)
         return webView

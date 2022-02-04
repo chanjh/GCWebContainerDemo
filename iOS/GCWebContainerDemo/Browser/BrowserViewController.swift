@@ -35,10 +35,12 @@ class BrowserViewController: UIViewController {
         if let url = url {
             browserView.load(url: url)
         }
+        TabsManager.shared.addObserver(self)
     }
 }
 
 extension BrowserViewController: BrowserViewDelegate, BrowserMenuControllerDelegate, TabsManagerViewControllerDelegate {
+    // --- BrowserViewDelegate
     func didClickTabs() {
         let controller = TabsManagerViewController()
         let nav = UINavigationController(rootViewController: controller)
@@ -81,10 +83,11 @@ extension BrowserViewController: BrowserViewDelegate, BrowserMenuControllerDeleg
         }
     }
     
+    // --- BrowserMenuControllerDelegate
     func closeBrowser() {
         
     }
-    
+    // --- TabsManagerViewControllerDelegate
     func didSelectWebView(_ webView: GCWebView) {
         browserView.reload(webView: webView)
     }
@@ -111,4 +114,25 @@ extension BrowserViewController: BrowserViewDelegate, BrowserMenuControllerDeleg
 //            browserView.load(url: url)
 //        }
 //    }
+}
+
+extension BrowserViewController: TabsManagerListerner {
+    func onActivated(tabId: Int) {
+
+    }
+
+    func onUpdated(tabId: Int, changeInfo: TabChangeInfo) {
+
+    }
+    
+    func onRemoved(tabId: Int, removeInfo: TabRemoveInfo) {
+        if tabId == browserView.gcWebView?.identifier {
+           if let web = TabsManager.shared.browser(at: 0) {
+               browserView.reload(webView: web)
+           } else {
+               let web = TabsManager.shared.makeBrowser(model: browserView, ui: browserView)
+               browserView.reload(webView: web)
+           }
+        }
+    }
 }
