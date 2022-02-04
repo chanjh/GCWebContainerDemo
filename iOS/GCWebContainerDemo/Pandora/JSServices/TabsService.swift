@@ -9,7 +9,7 @@ import UIKit
 
 class TabsService: BaseJSService, JSServiceHandler {
     var handleServices: [JSServiceType] {
-        return [.createTab]
+        return [.createTab, .removeTab]
     }
     func handle(params: [String : Any], serviceName: String, callback: String?) {
         if serviceName == JSServiceType.createTab.rawValue,
