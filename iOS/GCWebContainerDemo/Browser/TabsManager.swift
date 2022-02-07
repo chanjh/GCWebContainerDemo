@@ -91,9 +91,14 @@ class TabsManager {
     }
     
     func remove(_ webView: GCWebView) {
-        pool.removeAll { $0 == webView }
+        if let identifier = webView.identifier {
+            remove(identifier)
+        }
     }
     func remove(_ identifier: Int) {
         pool.removeAll { $0.identifier == identifier }
+        observers.allObjects.forEach {
+            $0.onRemoved(tabId: identifier, removeInfo: TabRemoveInfo(isWindowClosing: false, windowId: true))
+        }
     }
 }

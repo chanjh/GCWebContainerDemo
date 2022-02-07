@@ -15,6 +15,14 @@ class JSEngine: NSObject {
         self.webView = webView
         super.init()
     }
+    
+    func callFunction(_ function: String,
+                      arguments: Any?,
+                      completion: ((_ info: Any?, _ error: Error?) -> Void)? = nil) {
+        let script = function + "(\(arguments ?? ""))"
+        callJsString(script, completionHandler: completion)
+    }
+    
     func callFunction(_ function: String,
                       params: [String: Any]? = nil,
                       completion: ((_ info: Any?, _ error: Error?) -> Void)? = nil) {

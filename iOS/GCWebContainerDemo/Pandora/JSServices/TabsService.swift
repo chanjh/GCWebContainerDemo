@@ -9,9 +9,13 @@ import UIKit
 
 class TabsService: BaseJSService, JSServiceHandler {
     var handleServices: [JSServiceType] {
-        return [.createTab]
+        return [.createTab, .removeTab]
     }
-    func handle(params: [String : Any], serviceName: String, callback: String?) {
+    func handle(params: Any?, serviceName: String, callback: String?) {
+        guard let params = params as? [String: Any] else {
+            return
+        }
+        
         if serviceName == JSServiceType.createTab.rawValue,
            let url = URL(string: params["url"] as? String ?? "") {
             (model as? BrowserModelConfig)?.tabManager.addTab(url)

@@ -14,7 +14,10 @@ class RuntimeService: BaseJSService, JSServiceHandler {
                 .runtimeSendMessage,
                 .runtimeSendResponse]
     }
-    func handle(params: [String : Any], serviceName: String, callback: String?) {
+    func handle(params: Any?, serviceName: String, callback: String?) {
+        guard let params = params as? [String: Any] else {
+            return
+        }
         if serviceName == JSServiceType.runtimeGetPlatformInfo.rawValue,
             let callback = callback {
             let platformInfo = [
