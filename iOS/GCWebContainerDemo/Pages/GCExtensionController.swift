@@ -49,15 +49,25 @@ extension GCExtensionController: UITableViewDelegate, UITableViewDataSource {
 
 extension GCExtensionController {
     @objc func downloadAction() {
-        let task = sessionManager.download("https://github.com/webclipper/web-clipper/releases/download/v1.31.0-alpha.14/web_clipper_chrome.zip")
-        task?.progress(onMainQueue: true) { (task) in
-            let progress = task.progress.fractionCompleted
-            print("下载中, 进度：\(progress)")
-        }.success { (task) in
-            PDFileManager.setupPandora(zipPath: URL(string:  task.filePath))
-            print("下载完成")
-        }.failure { (task) in
-            print("下载失败")
+        let alert = UIAlertController(title: "Download Extension", message: nil, preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.text = "https://github.com/webclipper/web-clipper/releases/download/v1.31.0-alpha.14/web_clipper_chrome.zip"
         }
+        alert.addAction(UIAlertAction(title: "ok", style: .default, handler: { [weak self] _ in
+            if let url = alert.textFields?.first?.text {
+                let task = self?.sessionManager.download(url)
+                task?.progress(onMainQueue: true) { (task) in
+                    let progress = task.progress.fractionCompleted
+                    print("下载中, 进度：\(progress)")
+                }.success { (task) in
+                    PDFileManager.setupPandora(zipPath: URL(string:  task.filePath))
+                    print("下载完成")
+                }.failure { (task) in
+                    print("下载失败")
+                }
+            }
+        }))
+        alert.addAction((UIAlertAction(title: "cancel", style: .cancel, handler: nil)))
+        present(alert, animated: true, completion: nil)
     }
 }

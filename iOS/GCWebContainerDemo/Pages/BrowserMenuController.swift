@@ -32,6 +32,7 @@ class BrowserMenuController: UIViewController {
     }()
     let menu = [["id":"url", "name":"URL"],
 //                ["id":"extension_popup", "name":"Popup Demo"],
+                ["id":"extension", "name":"Extension"],
                 ["id":"close", "name":"Close Browser"]]
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,6 +75,10 @@ extension BrowserMenuController: UITableViewDataSource, UITableViewDelegate {
             }))
             alert.addAction((UIAlertAction(title: "cancel", style: .cancel, handler: nil)))
             present(alert, animated: true, completion: nil)
+        } else if id == "extension" {
+            let controller = GCExtensionController()
+            let nav = UINavigationController(rootViewController: controller)
+            present(nav, animated: true, completion: nil)
         }
     }
 }
