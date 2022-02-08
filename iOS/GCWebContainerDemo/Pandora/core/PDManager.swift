@@ -33,7 +33,8 @@ class PDManager {
     func loadAll() {
         let files = PDFileManager.getAllUnZipApps()
         files.forEach { filePath in
-            if let url = URL(string: filePath) {
+            if let url = URL(string: filePath),
+                !loaders.contains(where: { $0.loadSync()?.id == url.lastPathComponent }) {
                 let loader = PDLoader(url, id: url.lastPathComponent)
                 loaders.append(loader)
                 if let pandora = loader.loadSync() {

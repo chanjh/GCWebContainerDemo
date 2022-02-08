@@ -76,7 +76,7 @@ extension PDRunner: GCWebViewActionObserver {
     }
 }
 
-private extension GCWebView {
+extension GCWebView {
     func pd_addChromeBridge() {
         if let path  = Bundle.main.path(forResource: "chrome", ofType: "js"),
            let chrome = try? String(contentsOfFile: path) {
