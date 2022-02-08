@@ -17,6 +17,9 @@ class BrowserViewController: UIViewController {
         self.browserView = BrowserView()
         let webView = TabsManager.shared.makeBrowser(model: browserView, ui: browserView)
         browserView.reload(webView: webView)
+        if let url = url {        
+            browserView.load(url: url)
+        }
         super.init(nibName: nil, bundle: nil)
         browserView.delegate = self
     }

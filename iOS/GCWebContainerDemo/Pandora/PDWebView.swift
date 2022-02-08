@@ -42,6 +42,7 @@ class PDWebView: GCWebView {
     }
     
     private func _injectAllContentJS() {
+        pd_addChromeBridge()
         let contents = PDManager.shared.contentScripts
         contents?.forEach({
             // todo: inject time && main frame
