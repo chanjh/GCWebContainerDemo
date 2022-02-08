@@ -1,3 +1,4 @@
 web/node_modules
 web/package-lock.json
 iOS/Pods/**/*
+iOS/GCWebContainerDemo.xcworkspace/xcuserdata/**/*
