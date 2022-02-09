@@ -37,6 +37,7 @@ class PDWebView: GCWebView {
     
     override func onInit() {
         super.onInit()
+        actionHandler.addObserver(self)
         _registerJSHandler()
         _injectAllContentJS()
     }
@@ -58,7 +59,16 @@ class PDWebView: GCWebView {
     }
 }
 
-extension PDWebView {
+extension PDWebView: GCWebViewActionObserver {
+    // todo
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+//        let data = ["type": "BACKGROUND", "id": pandora.id ?? "", "manifest": (pandora.manifest.raw ?? [:])] as [String : Any];
+//        let injectInfoScript = "window.chrome.__loader__";
+//        bgRunner?.jsEngine?.callFunction(injectInfoScript, params: data as [String : Any], completion: nil)
+//
+//        let onInstalledScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_RUNTIME_ONINSTALLED');";
+//        bgRunner?.evaluateJavaScript(onInstalledScript, completionHandler: nil)
+    }
 }
 // todo: 这里需要感知一些生命周期
 // 注入 contant js

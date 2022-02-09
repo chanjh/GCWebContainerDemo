@@ -10,8 +10,8 @@ import WebKit
 
 class PDRunner: NSObject {
     var pandora: Pandora
-    private var bgRunner: PDWebView?
-    private var serviceConfig: PDServiceConfigImpl?
+    private(set) var bgRunner: PDWebView?
+    private weak var serviceConfig: PDServiceConfigImpl?
     
     var backgroundRunner: PDWebView? {
         return bgRunner

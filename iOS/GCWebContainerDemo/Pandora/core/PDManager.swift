@@ -16,8 +16,8 @@ class PDManager {
         return loaders.compactMap { return $0.pandora }
     }
     
-    private var loaders: [PDLoader] = [];
-    private var runners: [PDRunner] = [];
+    private(set) var loaders: [PDLoader] = [];
+    private(set) var runners: [PDRunner] = [];
     
     func loadPandora(path: URL, id: String) -> Pandora? {
         let loader = PDLoader(path, id: id)
@@ -39,7 +39,7 @@ class PDManager {
                 loaders.append(loader)
                 if let pandora = loader.loadSync() {
                     let runner = makeRunner(pandora)
-                    runners.append(runner)
+//                    runners.append(runner)
                     runner.run()
                 }
             }
@@ -53,12 +53,18 @@ class PDManager {
     }
     
     func makeRunner(_ pandora: Pandora) -> PDRunner {
-        if let runner = runners.first(where: { $0.pandora.id == pandora.id }) {
-            return runner
-        }
+//        if let runner = runners.first(where: { $0.pandora.id == pandora.id }) {
+//            return runner
+//        }
         let runner = PDRunner(pandora: pandora)
         runners.append(runner)
         return runner
+    }
+    
+    func removeRunner(_ runner: PDRunner) {
+        runners.removeAll {
+            $0 == runner
+        }
     }
     
     private func _loadInnerExtension() {
