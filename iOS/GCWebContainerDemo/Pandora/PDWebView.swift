@@ -66,5 +66,18 @@ extension PDWebView: GCWebViewActionObserver {
 //        bgRunner?.evaluateJavaScript(onInstalledScript, completionHandler: nil)
     }
 }
+
+extension GCWebView {
+    func pd_addChromeBridge() {
+        if let path  = Bundle.main.path(forResource: "chrome", ofType: "js"),
+           let chrome = try? String(contentsOfFile: path) {
+            let userScript = WKUserScript(source: chrome,
+                                          injectionTime: .atDocumentStart,
+                                          forMainFrameOnly: true)
+            configuration.userContentController.addUserScript(userScript)
+        }
+    }
+}
+
 // todo: 这里需要感知一些生命周期
 // 注入 contant js

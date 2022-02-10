@@ -28,39 +28,43 @@ class RuntimeService: BaseJSService, JSServiceHandler {
             webView?.jsEngine?.callFunction(callback, params: platformInfo, completion: nil)
         } else if serviceName == JSServiceType.runtimeSendMessage.rawValue {
             let extensionId = params["extensionId"] as? String
-            if let pandora = PDManager.shared.pandoras.first(where: { $0.id == extensionId }),
-               let runner = PDManager.shared.findRunner(pandora) {
-                
-                // todo: senderid
-                let pdWebView = (webView as? PDWebView)
-                var senderId = ""
-                switch pdWebView?.type {
-                case .popup(let id):
-                    senderId = id
-                case .background(let id):
-                    senderId = id
-                case .content, .none:
-                    ()
+            if let pandora = PDManager.shared.pandoras.first(where: { $0.id == extensionId }) {
+                let runners = PDManager.shared.findPandoraRunner(pandora)
+                runners.forEach {
+                    // todo: senderid
+                    let pdWebView = (webView as? PDWebView)
+                    var senderId = ""
+                    switch pdWebView?.type {
+                    case .popup(let id):
+                        senderId = id
+                    case .background(let id):
+                        senderId = id
+                    case .content:
+                        senderId = "\(webView?.identifier ?? 0)"
+                    case .none:
+                        ()
+                    }
+                    // todo: 是 param 还是 message
+                    let data: [String: Any] = ["param": params, "callback": callback ?? "", "senderId": senderId]
+                    let paramsStrBeforeFix = data.ext.toString()
+                    let paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
+                    let onInstalledScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_RUNTIME_ONMESSAGE', \(paramsStr));";
+                    
+                    $0.evaluateJavaScript(onInstalledScript, completionHandler: nil)
                 }
-                // todo: 是 param 还是 message
-                let data: [String: Any] = ["param": params, "callback": callback ?? "", "senderId": senderId]
-                let paramsStrBeforeFix = data.ext.toString()
-                let paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
-                let onInstalledScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_RUNTIME_ONMESSAGE', \(paramsStr));";
-                
-                runner.backgroundRunner?.evaluateJavaScript(onInstalledScript, completionHandler: nil)
             }
         } else if serviceName == JSServiceType.runtimeSendResponse.rawValue {
             let extensionId = params["extensionId"] as? String
-            if let pandora = PDManager.shared.pandoras.first(where: { $0.id == extensionId }),
-               let runner = PDManager.shared.findRunner(pandora) {
-                
-                let data: [String: Any] = ["param": params]
-                let paramsStrBeforeFix = data.ext.toString()
-                let paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
-                let onInstalledScript = "\(callback ?? "")(\(paramsStr));";
-                
-                runner.backgroundRunner?.evaluateJavaScript(onInstalledScript, completionHandler: nil)
+            if let pandora = PDManager.shared.pandoras.first(where: { $0.id == extensionId }) {
+                let runners = PDManager.shared.findPandoraRunner(pandora)
+                runners.forEach {
+                    let data: [String: Any] = ["param": params]
+                    let paramsStrBeforeFix = data.ext.toString()
+                    let paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
+                    let onInstalledScript = "\(callback ?? "")(\(paramsStr));";
+                    
+                    $0.evaluateJavaScript(onInstalledScript, completionHandler: nil)
+                }
             }
         }
     }

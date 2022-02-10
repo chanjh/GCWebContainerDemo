@@ -26,7 +26,7 @@ class TabsService: BaseJSService, JSServiceHandler {
                 (model as? BrowserModelConfig)?.tabManager.removeTabs(tabIds)
             }
         } else if serviceName == JSServiceType.tabSendMessage.rawValue {
-            guard let tabId = params["tabIds"] as? Int else {
+            guard let tabId = params["tabId"] as? Int else {
                 return
             }
             
@@ -47,7 +47,7 @@ class TabsService: BaseJSService, JSServiceHandler {
                     case .none:
                         ()
                     }
-                    let data: [String: Any] = ["param": message ?? {}, "callback": callback ?? "", senderId: senderId]
+                    let data: [String: Any] = ["param": message ?? {}, "callback": callback ?? "", "senderId": senderId]
                     let paramsStrBeforeFix = data.ext.toString()
                     let paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
                     let onInstalledScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_RUNTIME_ONMESSAGE', \(paramsStr));";

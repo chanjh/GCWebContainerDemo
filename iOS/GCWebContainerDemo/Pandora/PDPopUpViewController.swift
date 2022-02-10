@@ -9,7 +9,7 @@ import SnapKit
 
 class PDPopUpViewController: UIViewController {
     let pandora: Pandora
-    private weak var runner: PDRunner?
+    private(set) weak var runner: PDPopUpRunner?
     
     init(_ pandora: Pandora) {
         self.pandora = pandora
@@ -23,8 +23,8 @@ class PDPopUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        runner = PDManager.shared.makeRunner(pandora)
-        if let popupPage = runner?.runPageAction(),
+        runner = PDManager.shared.makePopUpRunner(pandora)
+        if let popupPage = runner?.run(),
            let url = pandora.popupFilePath {
             view.addSubview(popupPage)
             popupPage.snp.makeConstraints { make in
@@ -38,7 +38,7 @@ class PDPopUpViewController: UIViewController {
         super.viewDidDisappear(animated)
         if let runner = runner {
 //            runner.bgRunner?.removeFromSuperview()
-            PDManager.shared.removeRunner(runner)
+            PDManager.shared.removePopUpRunner(runner)
         }
     }
 }
