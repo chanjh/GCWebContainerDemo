@@ -28,8 +28,8 @@ class RuntimeService: BaseJSService, JSServiceHandler {
             webView?.jsEngine?.callFunction(callback, params: platformInfo, completion: nil)
         } else if serviceName == JSServiceType.runtimeSendMessage.rawValue {
             let extensionId = params["extensionId"] as? String
-            if let pandora = PDManager.shared.pandoras.first(where: { $0.id == extensionId }) {
-                let runner = PDManager.shared.makeRunner(pandora)
+            if let pandora = PDManager.shared.pandoras.first(where: { $0.id == extensionId }),
+               let runner = PDManager.shared.findRunner(pandora) {
                 
                 // todo: senderid
                 let pdWebView = (webView as? PDWebView)
@@ -42,6 +42,7 @@ class RuntimeService: BaseJSService, JSServiceHandler {
                 case .content, .none:
                     ()
                 }
+                // todo: 是 param 还是 message
                 let data: [String: Any] = ["param": params, "callback": callback ?? "", "senderId": senderId]
                 let paramsStrBeforeFix = data.ext.toString()
                 let paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
@@ -51,8 +52,8 @@ class RuntimeService: BaseJSService, JSServiceHandler {
             }
         } else if serviceName == JSServiceType.runtimeSendResponse.rawValue {
             let extensionId = params["extensionId"] as? String
-            if let pandora = PDManager.shared.pandoras.first(where: { $0.id == extensionId }) {
-                let runner = PDManager.shared.makeRunner(pandora)
+            if let pandora = PDManager.shared.pandoras.first(where: { $0.id == extensionId }),
+               let runner = PDManager.shared.findRunner(pandora) {
                 
                 let data: [String: Any] = ["param": params]
                 let paramsStrBeforeFix = data.ext.toString()

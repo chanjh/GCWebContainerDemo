@@ -9,7 +9,7 @@ import UIKit
 
 class TabsService: BaseJSService, JSServiceHandler {
     var handleServices: [JSServiceType] {
-        return [.createTab, .removeTab]
+        return [.createTab, .removeTab, .tabSendMessage]
     }
     func handle(params: Any?, serviceName: String, callback: String?) {
         guard let params = params as? [String: Any] else {
@@ -25,6 +25,36 @@ class TabsService: BaseJSService, JSServiceHandler {
             } else if let tabIds = params["tabIds"] as? [Int] {
                 (model as? BrowserModelConfig)?.tabManager.removeTabs(tabIds)
             }
+        } else if serviceName == JSServiceType.tabSendMessage.rawValue {
+            guard let tabId = params["tabIds"] as? Int else {
+                return
+            }
+            
+            let runners = PDManager.shared.contentScriptRunners
+            runners.forEach {
+                if let id = $0.webView?.identifier, tabId == id {
+                    let message = params["message"]
+                    
+                    let pdWebView = (webView as? PDWebView)
+                    var senderId = ""
+                    switch pdWebView?.type {
+                    case .popup(let id):
+                        senderId = id
+                    case .background(let id):
+                        senderId = id
+                    case .content:
+                        senderId = "\(webView?.identifier ?? 0)"
+                    case .none:
+                        ()
+                    }
+                    let data: [String: Any] = ["param": message ?? {}, "callback": callback ?? "", senderId: senderId]
+                    let paramsStrBeforeFix = data.ext.toString()
+                    let paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
+                    let onInstalledScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_RUNTIME_ONMESSAGE', \(paramsStr));";
+                    
+                    $0.webView?.evaluateJavaScript(onInstalledScript, completionHandler: nil)
+                }
+            }
         }
     }
 
@@ -33,4 +63,5 @@ class TabsService: BaseJSService, JSServiceHandler {
 extension JSServiceType {
     static let createTab   = JSServiceType("runtime.tabs.create")
     static let removeTab   = JSServiceType("runtime.tabs.remove")
+    static let tabSendMessage   = JSServiceType("runtime.tabs.sendMessage")
 }

@@ -15,6 +15,7 @@ enum PDWebViewType {
 
 class PDWebView: GCWebView {
     let type: PDWebViewType;
+    private(set) var contentScriptRunner: PDContentRunner?
     
     init(frame: CGRect = .zero,
          type: PDWebViewType = .content,
@@ -44,13 +45,8 @@ class PDWebView: GCWebView {
     
     private func _injectAllContentJS() {
         pd_addChromeBridge()
-        let contents = PDManager.shared.contentScripts
-        contents?.forEach({
-            // todo: inject time && main frame
-            // todo: 如果是 popup page，不需要注入
-            let userScript = WKUserScript(source: $0, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
-            addUserScript(userScript: userScript)
-        })
+        contentScriptRunner = PDManager.shared.makeContentRunner(self)
+        contentScriptRunner?.run()
     }
     
     private func _registerJSHandler() {

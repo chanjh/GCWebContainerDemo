@@ -18,6 +18,7 @@ class PDManager {
     
     private(set) var loaders: [PDLoader] = [];
     private(set) var runners: [PDRunner] = [];
+    private(set) var contentScriptRunners: [PDContentRunner] = [];
     
     func loadPandora(path: URL, id: String) -> Pandora? {
         let loader = PDLoader(path, id: id)
@@ -59,6 +60,16 @@ class PDManager {
         let runner = PDRunner(pandora: pandora)
         runners.append(runner)
         return runner
+    }
+    
+    func makeContentRunner(_ webView: GCWebView) -> PDContentRunner {
+        let runner = PDContentRunner(webView)
+        contentScriptRunners.append(runner)
+        return runner
+    }
+    
+    func findRunner(_ pandora: Pandora) -> PDRunner? {
+        return runners.first(where: { $0.pandora.id == pandora.id })
     }
     
     func removeRunner(_ runner: PDRunner) {

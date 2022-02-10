@@ -21,6 +21,7 @@ class PDRunner: NSObject {
         self.pandora = pandora
     }
     
+    // run background script
     func run() {
         if let backgroundScript = pandora.background {
             runBackgroundScript(backgroundScript)
