@@ -82,7 +82,8 @@ class RuntimeService: BaseJSService, JSServiceHandler {
                 let optionURL = pandora.optionPageFilePath {
                 // todo: open_in_tab
                 ui?.navigator?.openURL(OpenURLOptions(url: optionURL))
-                if let callback = callback {                
+                if let callback = callback {
+                    // todo: if error
                     webView?.jsEngine?.callFunction(callback, params: nil, completion: nil)
                 }
             }

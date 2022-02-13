@@ -45,7 +45,7 @@ class PDWebView: GCWebView {
     
     private func _injectAllContentJS() {
         pd_addChromeBridge()
-        if case .popup(_) = type {
+        if case .content = type {
             contentScriptRunner = PDManager.shared.makeContentRunner(self)
             contentScriptRunner?.run()
         }
@@ -54,6 +54,8 @@ class PDWebView: GCWebView {
     private func _registerJSHandler() {
         jsServiceManager?.register(handler: TabsService(self, ui: ui, model: model))
         jsServiceManager?.register(handler: RuntimeService(self, ui: ui, model: model))
+        jsServiceManager?.register(handler: LocalStorageService(self, ui: ui, model: model))
+        jsServiceManager?.register(handler: BookmarkService(self, ui: ui, model: model))
     }
 }
 
