@@ -22,7 +22,7 @@ struct OpenURLOptions {
     let popup: Bool = false
 }
 
-class BaseJSService {
+class BaseJSService: NSObject {
     weak var webView: GCWebView?
     weak var ui: WebContainerUIConfig?
     weak var model: WebContainerModelConfig?

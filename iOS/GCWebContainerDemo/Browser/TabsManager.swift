@@ -19,6 +19,9 @@ class TabRemoveInfo: NSObject {
         self.windowId = windowId
         super.init()
     }
+    func toString() -> String {
+        return "{}"
+    }
 }
 class TabChangeInfo: NSObject {
     let audible: Bool? = nil
