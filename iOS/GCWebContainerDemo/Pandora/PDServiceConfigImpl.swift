@@ -8,17 +8,12 @@
 import Foundation
 import UIKit
 
-class PDServiceConfigImpl: WebContainerUIConfig,
-                           BrowserModelConfig,
-                           BrowerTabManagerInterface {
+class PDServiceConfigImpl: BrowerTabManagerInterface {
+    
     private let pdWebView: PDWebView
     init(_ webView: PDWebView) {
         self.pdWebView = webView
     }
-    
-    var webView: GCWebView { pdWebView }
-    
-    var tabManager: BrowerTabManagerInterface { self }
     
     func addTab(_ url: URL?) {
         // todo
@@ -30,6 +25,21 @@ class PDServiceConfigImpl: WebContainerUIConfig,
     func removeTabs(_ tabs: [Int]) {
         tabs.forEach { id in
             TabsManager.shared.remove(id)
+        }
+    }
+}
+
+extension PDServiceConfigImpl: WebContainerUIConfig,
+                               BrowserModelConfig {
+    var webView: GCWebView { pdWebView }
+    var tabManager: BrowerTabManagerInterface { self }
+    var navigator: WebContainerNavigator? { self }
+}
+
+extension PDServiceConfigImpl: WebContainerNavigator {
+    func openURL(_ options: OpenURLOptions) {
+        if options.newTab {
+            addTab(options.url)
         }
     }
 }

@@ -10,13 +10,14 @@ import WebKit
 class PDPopUpRunner: NSObject {
     private(set) var pandora: Pandora
     private(set) var webView: PDWebView?
-    private(set) weak var serviceConfig: PDServiceConfigImpl?
+    private(set) var serviceConfig: PDServiceConfigImpl?
     
     init(pandora: Pandora) {
         self.pandora = pandora
     }
     
     func run() -> PDWebView {
+        // todo 这里 UI model 是空
         let pageWebView = PDWebView(frame: .zero,
                                     type: .popup(pandora.id ?? ""))
         let serviceConfig = PDServiceConfigImpl(pageWebView)

@@ -16,6 +16,7 @@ struct PDManifest {
     let action: Dictionary<String, Any>?
     let contentScripts: Array<PDContentScriptInfo>?
     let raw: Dictionary<String, Any>?
+    let option: PDOptionsInfo?
     
     init?(_ fileContent: String) {
         if let data = fileContent.data(using: .utf8),
@@ -31,6 +32,14 @@ struct PDManifest {
             self.manifestVersion = manifestVersion
             self.background = PDBackgroundInfo(manifestContent["background"] as? Dictionary<String, Any>)
             self.action = manifestContent["action"] as? Dictionary<String, Any>
+            // options page
+            if let opInfo = manifestContent["options_ui"] as? Dictionary<String, Any> {
+                self.option = PDOptionsInfo(opInfo)
+            } else if let opInfo = manifestContent["options_page"] as? String {
+                self.option = PDOptionsInfo(opInfo)
+            } else {
+                self.option = nil
+            }
             let contents = manifestContent["content_scripts"] as? [Dictionary<String, Any>]
             self.contentScripts = contents?.compactMap({ PDContentScriptInfo($0) })
             return
@@ -107,4 +116,23 @@ struct PDActionInfo {
     let title: String?
     let popup: String?
     let icon: String?
+}
+
+
+struct PDOptionsInfo {
+    let page: String
+    let openInTab: Bool?
+    init(_ v1: String) {
+        self.page = v1
+        self.openInTab = nil
+    }
+    
+    init?(_ v2: Dictionary<String, Any>) {
+        if let page = v2["page"] as? String {
+            self.page = page
+            self.openInTab = v2["open_in_tab"] as? Bool
+            return
+        }
+        return nil
+    }
 }

@@ -32,11 +32,17 @@ struct Pandora {
         }
         return nil
     }
-//
-//    mutating func run() {
-//        self.pdId = UUID().uuidString
-//    }
-//
+    
+    var optionPageFilePath: URL? {
+        if let page = manifest.option?.page,
+           let filesInPath = (try? FileManager.default.contentsOfDirectory(atPath: pdPath.relativePath)),
+           // todo: 支持 page 为 ./options/options.html 这种格式
+           filesInPath.contains(where: { $0 == page }) {
+            return URL(string: "file://" + pdPath.relativePath + "/" + page)
+        }
+        return nil
+    }
+
     init?(_ path: URL, id: String) {
         var tPath = path
         tPath.appendPathComponent("manifest.json")

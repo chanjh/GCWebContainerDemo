@@ -45,8 +45,10 @@ class PDWebView: GCWebView {
     
     private func _injectAllContentJS() {
         pd_addChromeBridge()
-        contentScriptRunner = PDManager.shared.makeContentRunner(self)
-        contentScriptRunner?.run()
+        if case .popup(_) = type {
+            contentScriptRunner = PDManager.shared.makeContentRunner(self)
+            contentScriptRunner?.run()
+        }
     }
     
     private func _registerJSHandler() {

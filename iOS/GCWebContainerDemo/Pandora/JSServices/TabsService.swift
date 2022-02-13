@@ -50,9 +50,9 @@ class TabsService: BaseJSService, JSServiceHandler {
                     let data: [String: Any] = ["param": message ?? {}, "callback": callback ?? "", "senderId": senderId]
                     let paramsStrBeforeFix = data.ext.toString()
                     let paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
-                    let onInstalledScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_RUNTIME_ONMESSAGE', \(paramsStr));";
+                    let onMsgScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_RUNTIME_ONMESSAGE', \(paramsStr));";
                     
-                    $0.webView?.evaluateJavaScript(onInstalledScript, completionHandler: nil)
+                    $0.webView?.evaluateJavaScript(onMsgScript, completionHandler: nil)
                 }
             }
         }

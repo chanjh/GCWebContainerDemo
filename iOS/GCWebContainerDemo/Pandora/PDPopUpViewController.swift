@@ -37,7 +37,6 @@ class PDPopUpViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         if let runner = runner {
-//            runner.bgRunner?.removeFromSuperview()
             PDManager.shared.removePopUpRunner(runner)
         }
     }
