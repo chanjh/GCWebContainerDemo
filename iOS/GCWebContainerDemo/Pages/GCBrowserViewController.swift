@@ -105,27 +105,27 @@ extension GCBrowserViewController {
     }
     
     @objc func didClickExtension(sender: UIBarButtonItem) {
-        let index = sender.tag
-        let pandora = PDManager.shared.pandoras[index]
-        let runner = PDManager.shared.makeRunner(pandora)
-        if let presentedVC = self.presentedViewController {
-            presentedVC.dismiss(animated: false, completion: nil)
-        }
-        let popupPage = runner.runPageAction()
-        if let url = pandora.popupFilePath {
-            let vc = UIViewController()
-            vc.view.addSubview(popupPage)
-            popupPage.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
-            vc.modalPresentationStyle = .popover
-            let pop = vc.popoverPresentationController
-            pop?.permittedArrowDirections = .up
-            // todo
-            pop?.sourceView = navigationController?.navigationBar
-            popupPage.loadFileURL(url, allowingReadAccessTo: url)
-            present(vc, animated: true, completion: nil)
-        }   
+//        let index = sender.tag
+//        let pandora = PDManager.shared.pandoras[index]
+//        let runner = PDManager.shared.makeRunner(pandora)
+//        if let presentedVC = self.presentedViewController {
+//            presentedVC.dismiss(animated: false, completion: nil)
+//        }
+//        let popupPage = runner.runPageAction()
+//        if let url = pandora.popupFilePath {
+//            let vc = UIViewController()
+//            vc.view.addSubview(popupPage)
+//            popupPage.snp.makeConstraints { make in
+//                make.edges.equalToSuperview()
+//            }
+//            vc.modalPresentationStyle = .popover
+//            let pop = vc.popoverPresentationController
+//            pop?.permittedArrowDirections = .up
+//            // todo
+//            pop?.sourceView = navigationController?.navigationBar
+//            popupPage.loadFileURL(url, allowingReadAccessTo: url)
+//            present(vc, animated: true, completion: nil)
+//        }   
     }
 }
 

@@ -16,7 +16,6 @@
 		0D1F862C276DE0EE00D39CAF /* BrowserMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F862B276DE0EE00D39CAF /* BrowserMenuController.swift */; };
 		0D1F862E276E39C000D39CAF /* BookmarksManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F862D276E39C000D39CAF /* BookmarksManager.swift */; };
 		0D1F8640276F2BFD00D39CAF /* PDLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F863F276F2BFD00D39CAF /* PDLoader.swift */; };
-		0D1F8642276F2C2C00D39CAF /* PDRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F8641276F2C2C00D39CAF /* PDRunner.swift */; };
 		0D1F8644276F2C5100D39CAF /* PDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F8643276F2C5100D39CAF /* PDManager.swift */; };
 		0D1F8646276F2CFE00D39CAF /* Pandora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F8645276F2CFE00D39CAF /* Pandora.swift */; };
 		0D1F8648276F2FF600D39CAF /* PDManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F8647276F2FF600D39CAF /* PDManifest.swift */; };
@@ -34,6 +33,11 @@
 		0D830A2E27AD782A0017EFF0 /* BookmarkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D830A2D27AD782A0017EFF0 /* BookmarkService.swift */; };
 		0D84542E2781974900E18BDE /* TabsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D84542D2781974900E18BDE /* TabsService.swift */; };
 		0D8454302781982100E18BDE /* RuntimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D84542F2781982100E18BDE /* RuntimeService.swift */; };
+		0DA967E227B9DBAB0056E372 /* PDManifestV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA967E127B9DBAB0056E372 /* PDManifestV2.swift */; };
+		0DACA72D27B3403300C628FE /* PDPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DACA72C27B3403300C628FE /* PDPopUpViewController.swift */; };
+		0DACA72F27B4971200C628FE /* PDContentRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DACA72E27B4971200C628FE /* PDContentRunner.swift */; };
+		0DACA73227B5487B00C628FE /* PDBackgroundRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DACA73127B5487B00C628FE /* PDBackgroundRunner.swift */; };
+		0DACA73427B5488F00C628FE /* PDPopUpRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DACA73327B5488F00C628FE /* PDPopUpRunner.swift */; };
 		0DBE24F32786703E00D9FC6F /* PDWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE24F22786703E00D9FC6F /* PDWebView.swift */; };
 		0DBE24F52786782900D9FC6F /* GCWebViewActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE24F42786782900D9FC6F /* GCWebViewActionHandler.swift */; };
 		0DC52B4627A21FCF00EC35AB /* WeakObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC52B4527A21FCF00EC35AB /* WeakObject.swift */; };
@@ -73,7 +77,6 @@
 		0D1F862B276DE0EE00D39CAF /* BrowserMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserMenuController.swift; sourceTree = "<group>"; };
 		0D1F862D276E39C000D39CAF /* BookmarksManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksManager.swift; sourceTree = "<group>"; };
 		0D1F863F276F2BFD00D39CAF /* PDLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDLoader.swift; sourceTree = "<group>"; };
-		0D1F8641276F2C2C00D39CAF /* PDRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDRunner.swift; sourceTree = "<group>"; };
 		0D1F8643276F2C5100D39CAF /* PDManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDManager.swift; sourceTree = "<group>"; };
 		0D1F8645276F2CFE00D39CAF /* Pandora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pandora.swift; sourceTree = "<group>"; };
 		0D1F8647276F2FF600D39CAF /* PDManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDManifest.swift; sourceTree = "<group>"; };
@@ -91,6 +94,11 @@
 		0D830A2D27AD782A0017EFF0 /* BookmarkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkService.swift; sourceTree = "<group>"; };
 		0D84542D2781974900E18BDE /* TabsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsService.swift; sourceTree = "<group>"; };
 		0D84542F2781982100E18BDE /* RuntimeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeService.swift; sourceTree = "<group>"; };
+		0DA967E127B9DBAB0056E372 /* PDManifestV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDManifestV2.swift; sourceTree = "<group>"; };
+		0DACA72C27B3403300C628FE /* PDPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDPopUpViewController.swift; sourceTree = "<group>"; };
+		0DACA72E27B4971200C628FE /* PDContentRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDContentRunner.swift; sourceTree = "<group>"; };
+		0DACA73127B5487B00C628FE /* PDBackgroundRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDBackgroundRunner.swift; sourceTree = "<group>"; };
+		0DACA73327B5488F00C628FE /* PDPopUpRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDPopUpRunner.swift; sourceTree = "<group>"; };
 		0DBE24F22786703E00D9FC6F /* PDWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDWebView.swift; sourceTree = "<group>"; };
 		0DBE24F42786782900D9FC6F /* GCWebViewActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCWebViewActionHandler.swift; sourceTree = "<group>"; };
 		0DC52B4527A21FCF00EC35AB /* WeakObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakObject.swift; sourceTree = "<group>"; };
@@ -155,6 +163,7 @@
 				0DBE24F22786703E00D9FC6F /* PDWebView.swift */,
 				0D2D31FE2798E88700B84D80 /* PDServiceConfigImpl.swift */,
 				0D830A2B27AD2C600017EFF0 /* LocalStorage.swift */,
+				0DACA72C27B3403300C628FE /* PDPopUpViewController.swift */,
 			);
 			path = Pandora;
 			sourceTree = "<group>";
@@ -188,6 +197,16 @@
 				0D2D31FB27964E9700B84D80 /* BrowserBaseJSService.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		0DACA73027B5486200C628FE /* Runner */ = {
+			isa = PBXGroup;
+			children = (
+				0DACA73127B5487B00C628FE /* PDBackgroundRunner.swift */,
+				0DACA73327B5488F00C628FE /* PDPopUpRunner.swift */,
+				0DACA72E27B4971200C628FE /* PDContentRunner.swift */,
+			);
+			path = Runner;
 			sourceTree = "<group>";
 		};
 		0DD940A7275EDEBE006865B6 = {
@@ -330,8 +349,9 @@
 				0DCBC52D27832B5D00DF5A0E /* PDFileManager.swift */,
 				0D1F863F276F2BFD00D39CAF /* PDLoader.swift */,
 				0D1F8643276F2C5100D39CAF /* PDManager.swift */,
-				0D1F8641276F2C2C00D39CAF /* PDRunner.swift */,
+				0DACA73027B5486200C628FE /* Runner */,
 				0D1F8647276F2FF600D39CAF /* PDManifest.swift */,
+				0DA967E127B9DBAB0056E372 /* PDManifestV2.swift */,
 				0D1F8645276F2CFE00D39CAF /* Pandora.swift */,
 			);
 			path = core;
@@ -487,6 +507,7 @@
 				0D2D31F6279463C300B84D80 /* UIViewController+TopMost.swift in Sources */,
 				0DD940CD275EDED5006865B6 /* JSServiceHandler.swift in Sources */,
 				0DD940CB275EDED5006865B6 /* JSEngine.swift in Sources */,
+				0DACA72F27B4971200C628FE /* PDContentRunner.swift in Sources */,
 				0D2D31F82794F92D00B84D80 /* TabsManagerViewController.swift in Sources */,
 				0DBE24F32786703E00D9FC6F /* PDWebView.swift in Sources */,
 				0D1F8644276F2C5100D39CAF /* PDManager.swift in Sources */,
@@ -511,13 +532,16 @@
 				0D1F862A276DD75600D39CAF /* BrowserManager.swift in Sources */,
 				0DD940DA275EDF88006865B6 /* String+base64.swift in Sources */,
 				0D1F862C276DE0EE00D39CAF /* BrowserMenuController.swift in Sources */,
+				0DACA72D27B3403300C628FE /* PDPopUpViewController.swift in Sources */,
 				0D830A2A27AD287E0017EFF0 /* LocalStorageService.swift in Sources */,
+				0DACA73427B5488F00C628FE /* PDPopUpRunner.swift in Sources */,
 				0DD940E0275EDF9F006865B6 /* ThreadSafe.swift in Sources */,
 				0DD940E5275EE12D006865B6 /* JSServiceType.swift in Sources */,
 				0DD940E8275EE17D006865B6 /* ContextMenuService.swift in Sources */,
 				0D8454302781982100E18BDE /* RuntimeService.swift in Sources */,
 				0D830A2C27AD2C600017EFF0 /* LocalStorage.swift in Sources */,
 				0DD940B4275EDEBE006865B6 /* GCWebContainerDemoApp.swift in Sources */,
+				0DA967E227B9DBAB0056E372 /* PDManifestV2.swift in Sources */,
 				0DC52B4827A2247B00EC35AB /* TabsManager.swift in Sources */,
 				0D84542E2781974900E18BDE /* TabsService.swift in Sources */,
 				0D1F8620276DC73600D39CAF /* GCDemoHomeController.swift in Sources */,
@@ -527,7 +551,7 @@
 				0D1F861E276CE22400D39CAF /* AppDelegate.swift in Sources */,
 				0DD940EA27618691006865B6 /* WebViewController.swift in Sources */,
 				0DCBC52E27832B5D00DF5A0E /* PDFileManager.swift in Sources */,
-				0D1F8642276F2C2C00D39CAF /* PDRunner.swift in Sources */,
+				0DACA73227B5487B00C628FE /* PDBackgroundRunner.swift in Sources */,
 				0D1F8648276F2FF600D39CAF /* PDManifest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

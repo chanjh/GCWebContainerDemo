@@ -16,8 +16,10 @@ class PDManager {
         return loaders.compactMap { return $0.pandora }
     }
     
-    private var loaders: [PDLoader] = [];
-    private var runners: [PDRunner] = [];
+    private(set) var loaders: [PDLoader] = [];
+    private(set) var contentScriptRunners: [PDContentRunner] = [];
+    private(set) var popupRunners: [PDPopUpRunner] = [];
+    private(set) var backgroundRunners: [PDBackgroundRunner] = [];
     
     func loadPandora(path: URL, id: String) -> Pandora? {
         let loader = PDLoader(path, id: id)
@@ -38,8 +40,7 @@ class PDManager {
                 let loader = PDLoader(url, id: url.lastPathComponent)
                 loaders.append(loader)
                 if let pandora = loader.loadSync() {
-                    let runner = makeRunner(pandora)
-                    runners.append(runner)
+                    let runner = makeBackgroundRunner(pandora)
                     runner.run()
                 }
             }
@@ -52,13 +53,48 @@ class PDManager {
         // todo: 上次解压失败的，重新开始解压
     }
     
-    func makeRunner(_ pandora: Pandora) -> PDRunner {
-        if let runner = runners.first(where: { $0.pandora.id == pandora.id }) {
-            return runner
-        }
-        let runner = PDRunner(pandora: pandora)
-        runners.append(runner)
+    func makeBackgroundRunner(_ pandora: Pandora) -> PDBackgroundRunner {
+//        if let runner = runners.first(where: { $0.pandora.id == pandora.id }) {
+//            return runner
+//        }
+        let runner = PDBackgroundRunner(pandora: pandora)
+        backgroundRunners.append(runner)
         return runner
+    }
+    
+    func makePopUpRunner(_ pandora: Pandora) -> PDPopUpRunner {
+//        if let runner = runners.first(where: { $0.pandora.id == pandora.id }) {
+//            return runner
+//        }
+        let runner = PDPopUpRunner(pandora: pandora)
+        popupRunners.append(runner)
+        return runner
+    }
+    
+    func makeContentRunner(_ webView: GCWebView) -> PDContentRunner {
+        let runner = PDContentRunner(webView)
+        contentScriptRunners.append(runner)
+        return runner
+    }
+
+    func findBackgroundRunner(_ pandora: Pandora) -> PDBackgroundRunner? {
+        return backgroundRunners.first(where: { $0.pandora.id == pandora.id })
+    }
+    
+    // return Popup Runner and Background Runner
+    func findPandoraRunner(_ pandora: Pandora) -> [PDWebView] {
+        var res: [PDWebView] = []
+        let bg = backgroundRunners.filter { $0.pandora.id == pandora.id }
+        let pop = popupRunners.filter { $0.pandora.id == pandora.id }
+        bg.forEach { res.append(contentsOf: $0.webView) }
+        res.append(contentsOf: pop.compactMap({ $0.webView }))
+        return res
+    }
+    
+    func removePopUpRunner(_ runner: PDPopUpRunner) {
+        popupRunners.removeAll {
+            $0 == runner
+        }
     }
     
     private func _loadInnerExtension() {

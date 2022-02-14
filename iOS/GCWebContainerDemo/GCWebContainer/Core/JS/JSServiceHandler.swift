@@ -10,9 +10,19 @@ import Foundation
 protocol WebContainerModelConfig: AnyObject { }
 protocol WebContainerUIConfig: AnyObject {
     var webView: GCWebView { get }
+    var navigator: WebContainerNavigator? { get }
+}
+protocol WebContainerNavigator {
+    func openURL(_ options: OpenURLOptions)
 }
 
-class BaseJSService {
+struct OpenURLOptions {
+    let url: URL
+    let newTab: Bool = true
+    let popup: Bool = false
+}
+
+class BaseJSService: NSObject {
     weak var webView: GCWebView?
     weak var ui: WebContainerUIConfig?
     weak var model: WebContainerModelConfig?

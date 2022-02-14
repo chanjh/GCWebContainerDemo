@@ -13,8 +13,9 @@ class LocalStorage {
     private static let key: String = "Pandora_"
     
     func set(_ object: Any, forKey key: String) {
-        UserDefaults.standard.set(object, forKey: "\(LocalStorage.key)\(key)")
-        save(key)
+        let realKey = "\(LocalStorage.key)\(key)"
+        UserDefaults.standard.set(object, forKey: realKey)
+        save(realKey)
     }
     
     func object(forKey key: String) -> Any? {
@@ -33,11 +34,10 @@ class LocalStorage {
     
     private func save(_ key: String) {
         let allkey = "\(LocalStorage.key)allKeys"
-        if var list = UserDefaults.standard.array(forKey: allkey) as? [String] {
-            if !list.contains(key) {
-                list.append(key)
-                UserDefaults.standard.set(list, forKey: allkey)
-            }
+        var list = UserDefaults.standard.array(forKey: allkey) as? [String] ?? []
+        if !list.contains(key) {
+            list.append(key)
+            UserDefaults.standard.set(list, forKey: allkey)
         }
     }
 }

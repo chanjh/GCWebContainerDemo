@@ -9,10 +9,10 @@ import Foundation
 
 class RuntimeService: BaseJSService, JSServiceHandler {
     var handleServices: [JSServiceType] {
-        return [.onPandoraInstalled,
-                .runtimeGetPlatformInfo,
+        return [.runtimeGetPlatformInfo,
                 .runtimeSendMessage,
-                .runtimeSendResponse]
+                .runtimeSendResponse,
+                .runtimeOpenOptionsPage]
     }
     func handle(params: Any?, serviceName: String, callback: String?) {
         guard let params = params as? [String: Any] else {
@@ -29,45 +29,71 @@ class RuntimeService: BaseJSService, JSServiceHandler {
         } else if serviceName == JSServiceType.runtimeSendMessage.rawValue {
             let extensionId = params["extensionId"] as? String
             if let pandora = PDManager.shared.pandoras.first(where: { $0.id == extensionId }) {
-                let runner = PDManager.shared.makeRunner(pandora)
-                
-                // todo: senderid
-                let pdWebView = (webView as? PDWebView)
-                var senderId = ""
-                switch pdWebView?.type {
-                case .popup(let id):
-                    senderId = id
-                case .background(let id):
-                    senderId = id
-                case .content, .none:
-                    ()
+                let runners = PDManager.shared.findPandoraRunner(pandora)
+                runners.forEach {
+                    // todo: senderid
+                    let pdWebView = (webView as? PDWebView)
+                    var senderId = ""
+                    switch pdWebView?.type {
+                    case .popup(let id):
+                        senderId = id
+                    case .background(let id):
+                        senderId = id
+                    case .content:
+                        senderId = "\(webView?.identifier ?? 0)"
+                    case .none:
+                        ()
+                    }
+                    // todo: 是 param 还是 message
+                    let data: [String: Any] = ["param": params, "callback": callback ?? "", "senderId": senderId]
+                    let paramsStrBeforeFix = data.ext.toString()
+                    let paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
+                    let onMsgScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_RUNTIME_ONMESSAGE', \(paramsStr));";
+                    
+                    $0.evaluateJavaScript(onMsgScript, completionHandler: nil)
                 }
-                let data: [String: Any] = ["param": params, "callback": callback ?? "", "senderId": senderId]
-                let paramsStrBeforeFix = data.ext.toString()
-                let paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
-                let onInstalledScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_RUNTIME_ONMESSAGE', \(paramsStr));";
-                
-                runner.backgroundRunner?.evaluateJavaScript(onInstalledScript, completionHandler: nil)
             }
         } else if serviceName == JSServiceType.runtimeSendResponse.rawValue {
             let extensionId = params["extensionId"] as? String
             if let pandora = PDManager.shared.pandoras.first(where: { $0.id == extensionId }) {
-                let runner = PDManager.shared.makeRunner(pandora)
-                
-                let data: [String: Any] = ["param": params]
-                let paramsStrBeforeFix = data.ext.toString()
-                let paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
-                let onInstalledScript = "\(callback ?? "")(\(paramsStr));";
-                
-                runner.backgroundRunner?.evaluateJavaScript(onInstalledScript, completionHandler: nil)
+                let runners = PDManager.shared.findPandoraRunner(pandora)
+                runners.forEach {
+                    let data: [String: Any] = ["param": params]
+                    let paramsStrBeforeFix = data.ext.toString()
+                    let paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
+                    let sendResponseScript = "\(callback ?? "")(\(paramsStr));";
+                    
+                    $0.evaluateJavaScript(sendResponseScript, completionHandler: nil)
+                }
+            }
+        } else if serviceName == JSServiceType.runtimeOpenOptionsPage.rawValue {
+            let pdWebView = (webView as? PDWebView)
+            var senderId = ""
+            switch pdWebView?.type {
+            case .popup(let id):
+                senderId = id
+            case .background(let id):
+                senderId = id
+            case .content, .none:
+                ()
+            }
+            if senderId.count > 0,
+               let pandora = PDManager.shared.pandoras.first(where: { $0.id == senderId }),
+                let optionURL = pandora.optionPageFilePath {
+                // todo: open_in_tab
+                ui?.navigator?.openURL(OpenURLOptions(url: optionURL))
+                if let callback = callback {
+                    // todo: if error
+                    webView?.jsEngine?.callFunction(callback, params: nil, completion: nil)
+                }
             }
         }
     }
 }
 
 extension JSServiceType {
-    static let onPandoraInstalled = JSServiceType("runtime.onInstalled")
     static let runtimeSendMessage = JSServiceType("runtime.sendMessage")
     static let runtimeSendResponse = JSServiceType("runtime.sendResponse") // todo: 是不是可以合并这个 JSAPI
     static let runtimeGetPlatformInfo = JSServiceType("runtime.getPlatformInfo")
+    static let runtimeOpenOptionsPage = JSServiceType("runtime.openOptionsPage")
 }

@@ -18,17 +18,23 @@ class LocalStorageService: BaseJSService, JSServiceHandler {
         }
         if serviceName == JSServiceType.localStorageSet.rawValue {
             params.forEach { LocalStorage.shared.set($1, forKey: $0) }
+            if let callback = callback {
+                webView?.jsEngine?.callFunction(callback)
+            }
         } else if serviceName == JSServiceType.localStorageGet.rawValue {
             if let keys = params["keys"] as? [String], let callback = callback {
                 let obj = keys.compactMap { LocalStorage.shared.object(forKey: $0) }
-                webView?.jsEngine?.callFunction(callback, arguments: obj, completion: nil)
+                webView?.jsEngine?.callFunction(callback, params: ["result": obj], completion: nil)
             } else if let key = params["keys"] as? String, let callback = callback {
                 if let obj = LocalStorage.shared.object(forKey: key) {
-                    webView?.jsEngine?.callFunction(callback, arguments: obj, completion: nil)
+                    webView?.jsEngine?.callFunction(callback, params: ["result": obj], completion: nil)
                 }
             }
         } else if serviceName == JSServiceType.localStorageClear.rawValue {
             LocalStorage.shared.clear()
+            if let callback = callback {
+                webView?.jsEngine?.callFunction(callback)
+            }
         }
     }
 }
