@@ -78,7 +78,7 @@ extension TabsManagerViewController {
     func didClickAddBrowser() {
         let alert = UIAlertController(title: "URL", message: nil, preferredStyle: .alert)
         alert.addTextField { textField in
-            textField.text = "https://baidu.com"
+            textField.text = "https://chanjh.com"
         }
         alert.addAction(UIAlertAction(title: "ok", style: .default, handler: { [weak self] _ in
             if let url = URL(string: alert.textFields?.first?.text ?? "") {

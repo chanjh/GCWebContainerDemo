@@ -24,6 +24,22 @@ struct Pandora {
         return nil
     }
     
+    var backgrounds: [String]? {
+        if let worker = manifest.background?.worker,
+           let data = FileManager.default.contents(atPath: pdPath.appendingPathComponent(worker).relativePath),
+           let script = String(data: data, encoding: .utf8) {
+            return [script]
+        } else if let works = manifest.backgroundV2?.worker {
+            return works.compactMap {
+                if let data = FileManager.default.contents(atPath: pdPath.appendingPathComponent($0).relativePath) {
+                    return String(data: data, encoding: .utf8)
+                }
+                return nil
+            }
+        }
+        return nil
+    }
+    
     var popupFilePath: URL? {
         if let popup = manifest.action?["default_popup"] as? String,
            let filesInPath = (try? FileManager.default.contentsOfDirectory(atPath: pdPath.relativePath)),

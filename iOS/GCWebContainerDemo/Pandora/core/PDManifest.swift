@@ -13,6 +13,7 @@ struct PDManifest {
     let version: String
     let manifestVersion: Int
     let background: PDBackgroundInfo?
+    let backgroundV2: PDBackgroundInfoV2?
     let action: Dictionary<String, Any>?
     let contentScripts: Array<PDContentScriptInfo>?
     let raw: Dictionary<String, Any>?
@@ -31,6 +32,7 @@ struct PDManifest {
             self.version = version
             self.manifestVersion = manifestVersion
             self.background = PDBackgroundInfo(manifestContent["background"] as? Dictionary<String, Any>)
+            self.backgroundV2 = PDBackgroundInfoV2(manifestContent["background"] as? Dictionary<String, Any>)
             self.action = manifestContent["action"] as? Dictionary<String, Any>
             // options page
             if let opInfo = manifestContent["options_ui"] as? Dictionary<String, Any> {

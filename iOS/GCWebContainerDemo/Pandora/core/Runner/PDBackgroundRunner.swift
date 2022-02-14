@@ -9,18 +9,19 @@ import WebKit
 
 class PDBackgroundRunner: NSObject {
     private(set) var pandora: Pandora
-    private(set) var webView: PDWebView?
+    private(set) var webView: [PDWebView] = []
     private(set) weak var serviceConfig: PDServiceConfigImpl?
     
     init(pandora: Pandora) {
         self.pandora = pandora
     }
     
-    func run() -> PDWebView? {
+    func run() {
         if let backgroundScript = pandora.background {
             _runBackgroundScript(backgroundScript)
+        } else if let backgroundScripts = pandora.backgrounds {
+            backgroundScripts.forEach { _runBackgroundScript($0) }
         }
-        return webView
     }
     
     // todo: 判断是否符合运行条件
@@ -29,7 +30,7 @@ class PDBackgroundRunner: NSObject {
                                   type: .background(pandora.id ?? ""))
         let serviceConfig = PDServiceConfigImpl(bgWebView)
         self.serviceConfig = serviceConfig
-        self.webView = bgWebView
+        self.webView.append(bgWebView)
         bgWebView.model = serviceConfig
         bgWebView.ui = serviceConfig
         bgWebView.actionHandler.addObserver(self)
