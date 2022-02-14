@@ -41,9 +41,7 @@ struct Pandora {
     }
     
     var popupFilePath: URL? {
-        if let popup = manifest.action?["default_popup"] as? String,
-           let filesInPath = (try? FileManager.default.contentsOfDirectory(atPath: pdPath.relativePath)),
-           filesInPath.contains(where: { $0 == popup }) {
+        if let popup = manifest.action?["default_popup"] as? String {
             return URL(string: "file://" + pdPath.relativePath + "/" + popup)
         }
         return nil
