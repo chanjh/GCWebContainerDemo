@@ -18,6 +18,8 @@ class PDBackgroundRunner: NSObject {
     
     func run() {
         _prepareBackgroundWebView()
+        _injectManifest()
+        
         if let backgroundScript = pandora.background {
             _runBackgroundScript(backgroundScript)
         } else if let backgroundScripts = pandora.backgrounds {
@@ -39,12 +41,9 @@ class PDBackgroundRunner: NSObject {
         UIApplication.shared.keyWindow?.addSubview(bgWebView)
         // todo：不能只是单纯的 HTML
         if let path  = Bundle.main.path(forResource: "background", ofType: "html"),
-           let url = URL(string: "file://\(path)"),
-           let background = try? String(contentsOfFile: path)  {
-//            bgWebView.loadHTMLString(background, baseURL: nil)
+           let url = URL(string: "file://\(path)")  {
             bgWebView.loadFileURL(url, allowingReadAccessTo: url)
         }
-//        bgWebView.loadHTMLString("<html><head><script></script></head></html>", baseURL: nil)
     }
     
     // todo: 判断是否符合运行条件
@@ -54,15 +53,30 @@ class PDBackgroundRunner: NSObject {
                                       forMainFrameOnly: true)
         webView?.addUserScript(userScript: userScript)
     }
+    
+    private func _injectManifest() {
+        let data = ["type": "BACKGROUND", "id": pandora.id ?? "", "manifest": (pandora.manifest.raw ?? [:])] as [String : Any];
+        let injectInfoScript = "window.chrome.__loader__";
+        let paramsStrBeforeFix = data.ext.toString()
+        let paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
+        let script = injectInfoScript + "(\(paramsStr))"
+        _runBackgroundScript(script)
+    }
+    
+    
+    private func _onInstall() {
+        let onInstalledScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_RUNTIME_ONINSTALLED');"
+        _runBackgroundScript(onInstalledScript)
+    }
 }
 // todo: 和 pop runner 统一代码
 extension PDBackgroundRunner: GCWebViewActionObserver {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        let data = ["type": "BACKGROUND", "id": pandora.id ?? "", "manifest": (pandora.manifest.raw ?? [:])] as [String : Any];
-        let injectInfoScript = "window.chrome.__loader__";
-        (webView as? PDWebView)?.jsEngine?.callFunction(injectInfoScript, params: data as [String : Any], completion: nil)
-        
-        let onInstalledScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_RUNTIME_ONINSTALLED');";
-        webView.evaluateJavaScript(onInstalledScript, completionHandler: nil)
+//        let data = ["type": "BACKGROUND", "id": pandora.id ?? "", "manifest": (pandora.manifest.raw ?? [:])] as [String : Any];
+//        let injectInfoScript = "window.chrome.__loader__";
+//        (webView as? PDWebView)?.jsEngine?.callFunction(injectInfoScript, params: data as [String : Any], completion: nil)
+//
+//        let onInstalledScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_RUNTIME_ONINSTALLED');";
+//        webView.evaluateJavaScript(onInstalledScript, completionHandler: nil)
     }
 }
