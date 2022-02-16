@@ -9,7 +9,7 @@ import WebKit
 
 class PDBackgroundRunner: NSObject {
     private(set) var pandora: Pandora
-    private(set) var webView: [PDWebView] = []
+    private(set) var webView: PDWebView?
     private(set) weak var serviceConfig: PDServiceConfigImpl?
     
     init(pandora: Pandora) {
@@ -17,6 +17,7 @@ class PDBackgroundRunner: NSObject {
     }
     
     func run() {
+        _prepareBackgroundWebView()
         if let backgroundScript = pandora.background {
             _runBackgroundScript(backgroundScript)
         } else if let backgroundScripts = pandora.backgrounds {
@@ -24,24 +25,34 @@ class PDBackgroundRunner: NSObject {
         }
     }
     
-    // todo: 判断是否符合运行条件
-    private func _runBackgroundScript(_ script: String) {
+    private func _prepareBackgroundWebView() {
         let bgWebView = PDWebView(frame: CGRect(x: 0, y: 0, width: 1, height: 1),
                                   type: .background(pandora.id ?? ""))
         let serviceConfig = PDServiceConfigImpl(bgWebView)
         self.serviceConfig = serviceConfig
-        self.webView.append(bgWebView)
+        self.webView = bgWebView
         bgWebView.model = serviceConfig
         bgWebView.ui = serviceConfig
         bgWebView.actionHandler.addObserver(self)
         bgWebView.pd_addChromeBridge()
-        let userScript = WKUserScript(source: script,
-                                      injectionTime: .atDocumentStart,
-                                      forMainFrameOnly: true)
-        bgWebView.addUserScript(userScript: userScript)
         // todo
         UIApplication.shared.keyWindow?.addSubview(bgWebView)
-        bgWebView.loadHTMLString("<html></html>", baseURL: nil)
+        // todo：不能只是单纯的 HTML
+        if let path  = Bundle.main.path(forResource: "background", ofType: "html"),
+           let url = URL(string: "file://\(path)"),
+           let background = try? String(contentsOfFile: path)  {
+//            bgWebView.loadHTMLString(background, baseURL: nil)
+            bgWebView.loadFileURL(url, allowingReadAccessTo: url)
+        }
+//        bgWebView.loadHTMLString("<html><head><script></script></head></html>", baseURL: nil)
+    }
+    
+    // todo: 判断是否符合运行条件
+    private func _runBackgroundScript(_ script: String) {
+        let userScript = WKUserScript(source: script,
+                                      injectionTime: .atDocumentEnd,
+                                      forMainFrameOnly: true)
+        webView?.addUserScript(userScript: userScript)
     }
 }
 // todo: 和 pop runner 统一代码
