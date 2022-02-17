@@ -86,7 +86,7 @@ class PDManager {
         var res: [PDWebView] = []
         let bg = backgroundRunners.filter { $0.pandora.id == pandora.id }
         let pop = popupRunners.filter { $0.pandora.id == pandora.id }
-        bg.forEach { res.append(contentsOf: $0.webView) }
+        res.append(contentsOf: bg.compactMap({ $0.webView }))
         res.append(contentsOf: pop.compactMap({ $0.webView }))
         return res
     }
