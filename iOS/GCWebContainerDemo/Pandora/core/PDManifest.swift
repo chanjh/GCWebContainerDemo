@@ -18,6 +18,7 @@ struct PDManifest {
     let contentScripts: Array<PDContentScriptInfo>?
     let raw: Dictionary<String, Any>?
     let option: PDOptionsInfo?
+    let pageAction: PDActionInfo?
     
     init?(_ fileContent: String) {
         if let data = fileContent.data(using: .utf8),
@@ -44,6 +45,11 @@ struct PDManifest {
             }
             let contents = manifestContent["content_scripts"] as? [Dictionary<String, Any>]
             self.contentScripts = contents?.compactMap({ PDContentScriptInfo($0) })
+            if let pageActionDict = manifestContent["page_action"] as? Dictionary<String, Any> {
+                self.pageAction = PDActionInfo(pageActionDict)
+            } else {
+                self.pageAction = nil
+            }
             return
         }
         return nil
@@ -117,7 +123,13 @@ enum PDRunAtType: String {
 struct PDActionInfo {
     let title: String?
     let popup: String?
-    let icon: String?
+    let icon: Dictionary<String, Any>?
+    
+    init(_ pageAction: Dictionary<String, Any>) {
+        self.title = pageAction["default_title"] as? String
+        self.popup = pageAction["default_popup"] as? String
+        self.icon = pageAction["default_icon"] as? Dictionary<String, Any>
+    }
 }
 
 

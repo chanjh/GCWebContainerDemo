@@ -66,13 +66,19 @@ extension BrowserViewController: BrowserViewDelegate, BrowserMenuControllerDeleg
         let index = sender.tag
         let pandora = PDManager.shared.pandoras[index]
         
-        let popVC = PDPopUpViewController(pandora)
-        popVC.modalPresentationStyle = .popover
-        let pop = popVC.popoverPresentationController
-        pop?.permittedArrowDirections = .up
-        // todo
-        pop?.sourceView = navigationController?.navigationBar
-        present(popVC, animated: true, completion: nil)
+        if pandora.popupFilePath != nil {
+            let popVC = PDPopUpViewController(pandora)
+            popVC.modalPresentationStyle = .popover
+            let pop = popVC.popoverPresentationController
+            pop?.permittedArrowDirections = .up
+            // todo
+            pop?.sourceView = navigationController?.navigationBar
+            present(popVC, animated: true, completion: nil)
+        } else {
+            let onClickedScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_PAGEACTION_ONCLICKED');";
+            browserView.webView.evaluateJavaScript(onClickedScript, completionHandler: nil)
+        }
+        
     }
     
     // --- BrowserMenuControllerDelegate
