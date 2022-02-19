@@ -74,9 +74,14 @@ extension BrowserViewController: BrowserViewDelegate, BrowserMenuControllerDeleg
             // todo
             pop?.sourceView = navigationController?.navigationBar
             present(popVC, animated: true, completion: nil)
-        } else {
-            let onClickedScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_PAGEACTION_ONCLICKED');";
-            browserView.webView.evaluateJavaScript(onClickedScript, completionHandler: nil)
+        } else if let bgRunner = PDManager.shared.findBackgroundRunner(pandora) {
+            // todo 缺乏参数
+            let tabInfo = TabsManager.shared.tabInfo(browserView.webView)
+            let paramsStrBeforeFix = tabInfo.toMap().ext.toString()
+            let paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
+            let onClickedScript = "window.gc.bridge.eventCenter.publish(\"PD_EVENT_PAGEACTION_ONCLICKED\", \(paramsStr));";
+            
+            bgRunner.webView?.evaluateJavaScript(onClickedScript, completionHandler: nil)
         }
         
     }

@@ -11,6 +11,35 @@ enum TabStatus {
     
 }
 
+
+struct Tab {
+    var active: Bool? = nil
+    var audible: Bool? = nil
+    var autoDiscardable: Bool? = nil
+    var discarded: Bool? = nil
+    var favIconUrl: String? = nil
+    var groupId: Int? = nil
+    var height: Int? = nil
+    var highlighted: Bool? = nil
+    var id: Int? = nil
+    var incognito: Bool? = nil // todo, 不是可选
+    var index: Int? = nil // todo, 不是可选
+    var mutedInfo: Any? = nil; // todo
+    var openerTabId: Int? = nil
+    var pendingUrl: String? = nil
+    var pinned: Bool? = nil // todo, 不是可选
+    var sessionId: String? = nil
+    var status: TabStatus? = nil
+    var title: String? = nil
+    var url: String? = nil
+    var windowId: Int? = nil // todo, 不是可选
+    var width: Int? = nil
+    
+    func toMap() -> Dictionary<String, Any> {
+        return ["id": "\(id ?? 0)"];
+    }
+}
+
 class TabRemoveInfo: NSObject {
     let isWindowClosing: Bool;
     let windowId: Bool;
@@ -79,6 +108,12 @@ class TabsManager {
         let webView = BrowserManager.shared.makeBrowser(model: model, ui: ui)
         pool.append(webView)
         return webView
+    }
+    
+    func tabInfo(_ webView: GCWebView) -> Tab {
+        var tab = Tab()
+        tab.id = webView.identifier
+        return tab
     }
     
     func title(at index: Int) -> String? {
