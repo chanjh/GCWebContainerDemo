@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WebKit
 
 class TabsService: BaseJSService, JSServiceHandler {
     var handleServices: [JSServiceType] {
@@ -34,33 +35,39 @@ class TabsService: BaseJSService, JSServiceHandler {
         } else if serviceName == JSServiceType.queryTab.rawValue {
             
         } else if serviceName == JSServiceType.tabSendMessage.rawValue {
-            guard let tabId = params["tabId"] as? Int else {
-                return
-            }
-            
+            let tabId = params["tabId"] as? Int
             let runners = PDManager.shared.contentScriptRunners
-            runners.forEach {
-                if let id = $0.webView?.identifier, tabId == id {
-                    let message = params["message"]
-                    
-                    let pdWebView = (webView as? PDWebView)
-                    var senderId = ""
-                    switch pdWebView?.type {
-                    case .popup(let id):
-                        senderId = id
-                    case .background(let id):
-                        senderId = id
-                    case .content:
-                        senderId = "\(webView?.identifier ?? 0)"
-                    case .none:
-                        ()
-                    }
-                    let data: [String: Any] = ["param": message ?? {}, "callback": callback ?? "", "senderId": senderId]
-                    let paramsStrBeforeFix = data.ext.toString()
-                    let paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
-                    let onMsgScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_RUNTIME_ONMESSAGE', \(paramsStr));";
-                    
-                    $0.webView?.evaluateJavaScript(onMsgScript, completionHandler: nil)
+            runners.forEach { runner in
+                if let tabId = tabId,
+                    runner.webView?.identifier != tabId {
+                    return
+                }
+                let message = params["message"]
+                
+                let pdWebView = (webView as? PDWebView)
+                var senderId = ""
+                switch pdWebView?.type {
+                case .popup(let id):
+                    senderId = id
+                case .background(let id):
+                    senderId = id
+                case .content:
+                    senderId = "\(webView?.identifier ?? 0)"
+                case .none:
+                    ()
+                }
+                let data: [String: Any] = ["param": message ?? {}, "callback": callback ?? "", "senderId": senderId]
+                let paramsStrBeforeFix = data.ext.toString()
+                let paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
+                let onMsgScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_RUNTIME_ONMESSAGE', \(paramsStr));";
+                runner.pandoras.forEach {
+                    let contentWorld = WKContentWorld.world(name: $0.pdName)
+                    runner.webView?.evaluateJavaScript(onMsgScript,
+                                                       in: nil,
+                                                       in: contentWorld,
+                                                       completionHandler: { result in
+                        print(result)
+                    })
                 }
             }
         }

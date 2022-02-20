@@ -5,7 +5,7 @@
 //  Created by 陈嘉豪 on 2022/1/16.
 //
 
-import UIKit
+import WebKit
 import SnapKit
 
 class BrowserViewController: UIViewController {
@@ -80,7 +80,6 @@ extension BrowserViewController: BrowserViewDelegate, BrowserMenuControllerDeleg
             let paramsStrBeforeFix = tabInfo.toMap().ext.toString()
             let paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
             let onClickedScript = "window.gc.bridge.eventCenter.publish(\"PD_EVENT_PAGEACTION_ONCLICKED\", \(paramsStr));";
-            
             bgRunner.webView?.evaluateJavaScript(onClickedScript, completionHandler: nil)
         }
         

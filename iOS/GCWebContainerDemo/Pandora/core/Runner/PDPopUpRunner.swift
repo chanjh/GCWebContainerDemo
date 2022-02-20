@@ -38,7 +38,7 @@ extension PDPopUpRunner: GCWebViewActionObserver {
         let injectInfoScript = "window.chrome.__loader__";
         (webView as? PDWebView)?.jsEngine?.callFunction(injectInfoScript, params: data as [String : Any], completion: nil)
         
-        let onInstalledScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_RUNTIME_ONINSTALLED');";
-        webView.evaluateJavaScript(onInstalledScript, completionHandler: nil)
+//        let onInstalledScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_RUNTIME_ONINSTALLED');";
+//        webView.evaluateJavaScript(onInstalledScript, completionHandler: nil)
     }
 }

@@ -32,7 +32,6 @@ class JSEngine: NSObject {
             let paramsStrBeforeFix = params.ext.toString()
             paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
         }
-
         let script = function + "(\(paramsStr ?? ""))"
         callJsString(script, completionHandler: completion)
     }
