@@ -19,7 +19,7 @@ class PDContentRunner {
         PDManager.shared.loaders.forEach { loader in
             if let pandora = loader.pandora {
                 pandoras.append(pandora)
-                let contentWorld = WKContentWorld.world(name: pandora.pdName)
+                let contentWorld = WKContentWorld.world(name: pandora.id)
                 // - chrome.js
                 if let path  = Bundle.main.path(forResource: "chrome", ofType: "js"),
                    let chrome = try? String(contentsOfFile: path) {
@@ -56,12 +56,12 @@ class PDContentRunner {
     }
     
     private func _injectManifest(_ pandora: Pandora) {
-        let data = ["type": "CONTENT", "id": pandora.id ?? "", "manifest": (pandora.manifest.raw ?? [:])] as [String : Any];
+        let data = ["type": "CONTENT", "id": pandora.id, "manifest": (pandora.manifest.raw ?? [:])] as [String : Any];
         let injectInfoScript = "window.chrome.__loader__";
         let paramsStrBeforeFix = data.ext.toString()
         let paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
         let script = injectInfoScript + "(\(paramsStr))"
-        let contentWorld = WKContentWorld.world(name: pandora.pdName)
+        let contentWorld = WKContentWorld.world(name: pandora.id)
         let userScript = WKUserScript(source: script,
                                       injectionTime: .atDocumentEnd,
                                       forMainFrameOnly: true,

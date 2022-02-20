@@ -15,11 +15,11 @@ class BookmarkService: BaseJSService, JSServiceHandler {
                 .bookmarksUpdate]
     }
 
-    func handle(params: Any?, serviceName: String, callback: String?) {
-        guard let params = params as? [String: Any] else {
+    func handle(message: JSServiceMessageInfo) {
+        guard let params = message.params as? [String: Any] else {
             return
         }
-        if serviceName == JSServiceType.bookmarksCreate.rawValue {
+        if message.serviceName == JSServiceType.bookmarksCreate.rawValue {
             
         }
     }

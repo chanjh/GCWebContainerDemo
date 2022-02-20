@@ -32,6 +32,7 @@ export async function jsbridge(action: string, params?: {}, callback?: Function)
       }
       lock.unlock(arg[0])
       // 3. remove callback
+      console.log('delete callback:', callbackName);
       delete (window as any)[callbackName];
     }
   }

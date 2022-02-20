@@ -8,6 +8,23 @@
 
 import WebKit
 
+class JSServiceMessageInfo {
+    let contentWorld: WKContentWorld
+    let params: Any?
+    let serviceName: String
+    let callback: String?
+    
+    init (contentWorld: WKContentWorld,
+          params: Any?,
+          serviceName: String,
+          callback: String?) {
+        self.contentWorld = contentWorld
+        self.params = params
+        self.serviceName = serviceName
+        self.callback = callback
+    }
+}
+
 // JS --> Native
 class JSServiceManager: NSObject {
     weak var webView: WKWebView?
@@ -26,14 +43,14 @@ class JSServiceManager: NSObject {
         handlers.append(handler)
     }
 
-    func handle(message: String, _ params: [String: Any], callback: String?) {
+    func handle(message: JSServiceMessageInfo) {
         print("收到前端调用: \(message)")
         handerQueue.async {
-            let cmd = JSServiceType(rawValue: message)
+            let cmd = JSServiceType(rawValue: message.serviceName)
             self.handlers.forEach { (handler) in
                 if handler.handleServices.contains(cmd) {
                     DispatchQueue.main.async {
-                        handler.handle(params: params, serviceName: message, callback: callback)
+                        handler.handle(message: message)
                     }
                 }
             }
@@ -47,10 +64,14 @@ extension JSServiceManager: WKScriptMessageHandler {
         guard message.name == Self.scriptMessageName,
                 let body = message.body as? [String: Any],
             let method = body["action"] as? String,
-            let agrs = body["params"] as? [String: Any] else {
+            let args = body["params"] as? [String: Any] else {
                 // todo: error
                 return
         }
-        handle(message: method, agrs, callback: body[Self.kCallback] as? String)
+        let messageInfo = JSServiceMessageInfo(contentWorld: message.world,
+                                               params: args,
+                                               serviceName: method,
+                                               callback:body[Self.kCallback] as? String)
+        handle(message: messageInfo)
     }
 }

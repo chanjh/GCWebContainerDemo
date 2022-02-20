@@ -12,27 +12,27 @@ class LocalStorageService: BaseJSService, JSServiceHandler {
         return [.localStorageSet, .localStorageGet, .localStorageClear]
     }
 
-    func handle(params: Any?, serviceName: String, callback: String?) {
-        guard let params = params as? [String: Any] else {
+    func handle(message: JSServiceMessageInfo) {
+        guard let params = message.params as? [String: Any] else {
             return
         }
-        if serviceName == JSServiceType.localStorageSet.rawValue {
+        if message.serviceName == JSServiceType.localStorageSet.rawValue {
             params.forEach { LocalStorage.shared.set($1, forKey: $0) }
-            if let callback = callback {
+            if let callback = message.callback {
                 webView?.jsEngine?.callFunction(callback)
             }
-        } else if serviceName == JSServiceType.localStorageGet.rawValue {
-            if let keys = params["keys"] as? [String], let callback = callback {
+        } else if message.serviceName == JSServiceType.localStorageGet.rawValue {
+            if let keys = params["keys"] as? [String], let callback = message.callback {
                 let obj = keys.compactMap { LocalStorage.shared.object(forKey: $0) }
                 webView?.jsEngine?.callFunction(callback, params: ["result": obj], completion: nil)
-            } else if let key = params["keys"] as? String, let callback = callback {
+            } else if let key = params["keys"] as? String, let callback = message.callback {
                 if let obj = LocalStorage.shared.object(forKey: key) {
                     webView?.jsEngine?.callFunction(callback, params: ["result": obj], completion: nil)
                 }
             }
-        } else if serviceName == JSServiceType.localStorageClear.rawValue {
+        } else if message.serviceName == JSServiceType.localStorageClear.rawValue {
             LocalStorage.shared.clear()
-            if let callback = callback {
+            if let callback = message.callback {
                 webView?.jsEngine?.callFunction(callback)
             }
         }

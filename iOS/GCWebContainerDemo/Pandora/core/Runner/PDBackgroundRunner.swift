@@ -29,7 +29,7 @@ class PDBackgroundRunner: NSObject {
     
     private func _prepareBackgroundWebView() {
         let bgWebView = PDWebView(frame: CGRect(x: 0, y: 0, width: 1, height: 1),
-                                  type: .background(pandora.id ?? ""))
+                                  type: .background(pandora.id))
         let serviceConfig = PDServiceConfigImpl(bgWebView)
         self.serviceConfig = serviceConfig
         self.webView = bgWebView
@@ -55,7 +55,7 @@ class PDBackgroundRunner: NSObject {
     }
     
     private func _injectManifest() {
-        let data = ["type": "BACKGROUND", "id": pandora.id ?? "", "manifest": (pandora.manifest.raw ?? [:])] as [String : Any];
+        let data = ["type": "BACKGROUND", "id": pandora.id, "manifest": (pandora.manifest.raw ?? [:])] as [String : Any];
         let injectInfoScript = "window.chrome.__loader__";
         let paramsStrBeforeFix = data.ext.toString()
         let paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
