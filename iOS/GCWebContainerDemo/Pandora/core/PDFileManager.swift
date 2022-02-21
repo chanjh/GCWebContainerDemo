@@ -47,6 +47,8 @@ extension PDFileManager {
                                 progress: nil,
                                 fileOutputHandler: nil)) != nil) {
             if let pandora = PDManager.shared.loadPandora(path: destination, id: uuid) {
+                let runner = PDManager.shared.makeBackgroundRunner(pandora)
+                runner.run()
                 _didCompleteSetup(uuid: uuid, pandora: pandora, source: filePath.path)
             } else {
                 try? FileManager.default.removeItem(atPath: destination.path)

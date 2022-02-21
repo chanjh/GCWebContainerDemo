@@ -19,6 +19,7 @@ struct PDManifest {
     let raw: Dictionary<String, Any>?
     let option: PDOptionsInfo?
     let pageAction: PDActionInfo?
+    let browserAction: PDActionInfo?
     
     init?(_ fileContent: String) {
         if let data = fileContent.data(using: .utf8),
@@ -49,6 +50,11 @@ struct PDManifest {
                 self.pageAction = PDActionInfo(pageActionDict)
             } else {
                 self.pageAction = nil
+            }
+            if let browserActionDict = manifestContent["browser_action"] as? Dictionary<String, Any> {
+                self.browserAction = PDActionInfo(browserActionDict)
+            } else {
+                self.browserAction = nil
             }
             return
         }

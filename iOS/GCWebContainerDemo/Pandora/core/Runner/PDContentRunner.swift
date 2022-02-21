@@ -20,24 +20,16 @@ class PDContentRunner {
             if let pandora = loader.pandora {
                 pandoras.append(pandora)
                 let contentWorld = WKContentWorld.world(name: pandora.id)
-                // - chrome.js
-                if let path  = Bundle.main.path(forResource: "chrome", ofType: "js"),
-                   let chrome = try? String(contentsOfFile: path) {
-                    let userScript = WKUserScript(source: chrome,
-                                                  injectionTime: .atDocumentStart,
-                                                  forMainFrameOnly: true,
-                                                  in: contentWorld)
-                    
-                    webView?.addUserScript(userScript: userScript)
-                }
-                // - manifest info
-                _injectManifest(pandora)
                 // - webkit.messageHandler
                 if let jsManager = webView?.jsServiceManager {
                     webView?.configuration.userContentController.add(jsManager,
                                                                      contentWorld: contentWorld,
                                                                      name: JSServiceManager.scriptMessageName)
                 }
+                // - chrome.js
+                _injectChromeBridge(contentWorld)
+                // - manifest info
+                _injectManifest(pandora)
                 if let contentScripts = pandora.manifest.contentScripts {
                     contentScripts.forEach { scriptInfo in
                         scriptInfo.js?.forEach({ js in
@@ -63,9 +55,21 @@ class PDContentRunner {
         let script = injectInfoScript + "(\(paramsStr))"
         let contentWorld = WKContentWorld.world(name: pandora.id)
         let userScript = WKUserScript(source: script,
-                                      injectionTime: .atDocumentEnd,
+                                      injectionTime: .atDocumentStart,
                                       forMainFrameOnly: true,
                                       in: contentWorld)
         webView?.addUserScript(userScript: userScript)
+    }
+    
+    private func _injectChromeBridge(_ contentWorld: WKContentWorld) {
+        if let path  = Bundle.main.path(forResource: "chrome", ofType: "js"),
+           let chrome = try? String(contentsOfFile: path) {
+            let userScript = WKUserScript(source: chrome,
+                                          injectionTime: .atDocumentStart,
+                                          forMainFrameOnly: true,
+                                          in: contentWorld)
+            
+            webView?.addUserScript(userScript: userScript)
+        }
     }
 }

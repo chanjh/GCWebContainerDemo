@@ -44,7 +44,7 @@ class JSServiceManager: NSObject {
     }
 
     func handle(message: JSServiceMessageInfo) {
-        print("收到前端调用: \(message)")
+        print("收到前端调用: \(message.serviceName)")
         handerQueue.async {
             let cmd = JSServiceType(rawValue: message.serviceName)
             self.handlers.forEach { (handler) in
