@@ -5,7 +5,7 @@
 //  Created by 陈嘉豪 on 2022/1/2.
 //
 
-import Foundation
+import WebKit
 
 class RuntimeService: BaseJSService, JSServiceHandler {
     var handleServices: [JSServiceType] {
@@ -14,20 +14,34 @@ class RuntimeService: BaseJSService, JSServiceHandler {
                 .runtimeSendResponse,
                 .runtimeOpenOptionsPage]
     }
-    func handle(params: Any?, serviceName: String, callback: String?) {
-        guard let params = params as? [String: Any] else {
+    func handle(message: JSServiceMessageInfo) {
+        guard let params = message.params as? [String: Any] else {
             return
         }
-        if serviceName == JSServiceType.runtimeGetPlatformInfo.rawValue,
-            let callback = callback {
+        if message.serviceName == JSServiceType.runtimeGetPlatformInfo.rawValue,
+           let callback = message.callback {
             let platformInfo = [
                 "arch": "", // todo: https://developer.chrome.com/docs/extensions/reference/runtime/#type-PlatformOs
                 "nacl_arch": "",
                 "os": "mac", // NOTE: Return mac
             ]
             webView?.jsEngine?.callFunction(callback, params: platformInfo, completion: nil)
-        } else if serviceName == JSServiceType.runtimeSendMessage.rawValue {
-            let extensionId = params["extensionId"] as? String
+        } else if message.serviceName == JSServiceType.runtimeSendMessage.rawValue {
+            var extensionId = params["extensionId"] as? String
+            if extensionId == nil {
+                let pdWebView = (webView as? PDWebView)
+                switch pdWebView?.type {
+                case .popup(let id):
+                    extensionId = id
+                case .background(let id):
+                    extensionId = id
+                case .content:
+                    extensionId = message.contentWorld.name 
+                case .none :
+                    ()
+                }
+            }
+            
             if let pandora = PDManager.shared.pandoras.first(where: { $0.id == extensionId }) {
                 let runners = PDManager.shared.findPandoraRunner(pandora)
                 runners.forEach {
@@ -40,12 +54,12 @@ class RuntimeService: BaseJSService, JSServiceHandler {
                     case .background(let id):
                         senderId = id
                     case .content:
-                        senderId = "\(webView?.identifier ?? 0)"
+                        senderId = message.contentWorld.name ??  "\(webView?.identifier ?? 0)"
                     case .none:
                         ()
                     }
                     // todo: 是 param 还是 message
-                    let data: [String: Any] = ["param": params, "callback": callback ?? "", "senderId": senderId]
+                    let data: [String: Any] = ["param": params, "callback": message.callback ?? "", "senderId": senderId]
                     let paramsStrBeforeFix = data.ext.toString()
                     let paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
                     let onMsgScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_RUNTIME_ONMESSAGE', \(paramsStr));";
@@ -53,20 +67,42 @@ class RuntimeService: BaseJSService, JSServiceHandler {
                     $0.evaluateJavaScript(onMsgScript, completionHandler: nil)
                 }
             }
-        } else if serviceName == JSServiceType.runtimeSendResponse.rawValue {
+        } else if message.serviceName == JSServiceType.runtimeSendResponse.rawValue {
+            let sendResponseFn = {(param:  [String: Any],
+                                   webView: GCWebView?,
+                                   contentWorld: WKContentWorld?) -> Void in
+                guard let data: [String: Any] = params["response"] as? [String: Any] else {
+                    return
+                }
+                let paramsStrBeforeFix = data.ext.toString()
+                let paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
+                let sendResponseScript = "\(message.callback ?? "")(\(paramsStr));";
+                if let contentWorld = contentWorld {
+                    webView?.evaluateJavaScript(sendResponseScript,
+                                                in: nil,
+                                                in: contentWorld,
+                                                completionHandler: nil)
+                } else {
+                    webView?.evaluateJavaScript(sendResponseScript, completionHandler: nil)
+                }
+            }
             let extensionId = params["extensionId"] as? String
             if let pandora = PDManager.shared.pandoras.first(where: { $0.id == extensionId }) {
                 let runners = PDManager.shared.findPandoraRunner(pandora)
                 runners.forEach {
-                    let data: [String: Any] = ["param": params]
-                    let paramsStrBeforeFix = data.ext.toString()
-                    let paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
-                    let sendResponseScript = "\(callback ?? "")(\(paramsStr));";
-                    
-                    $0.evaluateJavaScript(sendResponseScript, completionHandler: nil)
+                    sendResponseFn(params, $0, nil)
                 }
             }
-        } else if serviceName == JSServiceType.runtimeOpenOptionsPage.rawValue {
+            PDManager.shared.contentScriptRunners.forEach { runner in
+                runner.pandoras.forEach { pd in
+                    if pd.id == extensionId {
+                        let contentWorld = WKContentWorld.world(name: pd.id)
+                        sendResponseFn(params, runner.webView, contentWorld)
+                    }
+                }
+            }
+            
+        } else if message.serviceName == JSServiceType.runtimeOpenOptionsPage.rawValue {
             let pdWebView = (webView as? PDWebView)
             var senderId = ""
             switch pdWebView?.type {
@@ -82,7 +118,7 @@ class RuntimeService: BaseJSService, JSServiceHandler {
                 let optionURL = pandora.optionPageFilePath {
                 // todo: open_in_tab
                 ui?.navigator?.openURL(OpenURLOptions(url: optionURL))
-                if let callback = callback {
+                if let callback = message.callback {
                     // todo: if error
                     webView?.jsEngine?.callFunction(callback, params: nil, completion: nil)
                 }

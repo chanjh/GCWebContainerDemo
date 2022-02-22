@@ -66,8 +66,8 @@ class PDLoader {
     }
     
     func fileContent(at fileName: String) -> String? {
-        if filesInPath.contains(where: { $0 == fileName }),
-           let data = FileManager.default.contents(atPath: path.relativePath + "/" + fileName){
+        let filePath = fileName.starts(with: "/") ? fileName : "/" + fileName
+        if let data = FileManager.default.contents(atPath: path.relativePath + filePath) {
             return String(data: data, encoding: .utf8)
         }
         return nil

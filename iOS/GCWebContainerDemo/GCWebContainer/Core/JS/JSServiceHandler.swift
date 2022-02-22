@@ -37,5 +37,5 @@ class BaseJSService: NSObject {
 
 protocol JSServiceHandler {
     var handleServices: [JSServiceType] { get }
-    func handle(params: Any?, serviceName: String, callback: String?)
+    func handle(message: JSServiceMessageInfo)
 }

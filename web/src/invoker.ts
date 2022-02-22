@@ -28,21 +28,18 @@ export async function jsbridge(action: string, params?: {}, callback?: Function)
       // 1. unlock
       // 2. send msg to wrapFunction on service
       if (callback) {
-        const res = await callback(arg[0])
-        lock.unlock(res);
-      } else {
-        lock.unlock(arg[0])
+        await callback(arg[0])
       }
+      lock.unlock(arg[0])
       // 3. remove callback
+      console.log('delete callback:', callbackName);
       delete (window as any)[callbackName];
     }
   }
   let lock = new Lock();
-  // return async function () {
   const callbackName = callbackFunc();
   console.log(callbackName);
   _initCallback(callbackName);
-  // const params = JSON.parse(JSON.stringify(arguments));
   // callback, need to be a function name but not a obj in window
   lock = new Lock();
   lock.lock();

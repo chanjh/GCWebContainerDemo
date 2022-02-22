@@ -11,8 +11,8 @@ struct Pandora {
     let pdName: String;
     let pdPath: URL;
     let manifest: PDManifest;
-    private var pdId: String?
-    var id: String? {
+    private var pdId: String
+    var id: String {
         return pdId
     }
     

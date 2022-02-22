@@ -23,7 +23,9 @@ class BrowserView: UIView {
         var items = [UIBarButtonItem(title: "Tabs", style: .plain, target: self, action: #selector(didClickTabs)),
                      UIBarButtonItem(title: "Menu", style: .plain, target: self, action: #selector(didClickMenu)),]
         PDManager.shared.pandoras.enumerated().forEach {
-            if $1.popupFilePath == nil {
+            if $1.popupFilePath == nil &&
+                $1.manifest.pageAction == nil &&
+                $1.manifest.browserAction == nil {
                 return
             }
             let item = UIBarButtonItem(title: $1.manifest.name,

@@ -5,7 +5,7 @@
 //  Created by 陈嘉豪 on 2022/1/16.
 //
 
-import UIKit
+import WebKit
 import SnapKit
 
 class BrowserViewController: UIViewController {
@@ -66,13 +66,25 @@ extension BrowserViewController: BrowserViewDelegate, BrowserMenuControllerDeleg
         let index = sender.tag
         let pandora = PDManager.shared.pandoras[index]
         
-        let popVC = PDPopUpViewController(pandora)
-        popVC.modalPresentationStyle = .popover
-        let pop = popVC.popoverPresentationController
-        pop?.permittedArrowDirections = .up
-        // todo
-        pop?.sourceView = navigationController?.navigationBar
-        present(popVC, animated: true, completion: nil)
+        if pandora.popupFilePath != nil {
+            let popVC = PDPopUpViewController(pandora)
+            popVC.modalPresentationStyle = .popover
+            let pop = popVC.popoverPresentationController
+            pop?.permittedArrowDirections = .up
+            // todo
+            pop?.sourceView = navigationController?.navigationBar
+            present(popVC, animated: true, completion: nil)
+        } else if let bgRunner = PDManager.shared.findBackgroundRunner(pandora) {
+            let manifest: PDManifest = bgRunner.pandora.manifest
+            let message = manifest.browserAction == nil ? "PAGEACTION": "BROWSERACTION"
+            // todo 缺乏参数
+            let tabInfo = TabsManager.shared.tabInfo(browserView.webView)
+            let paramsStrBeforeFix = tabInfo.toMap().ext.toString()
+            let paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
+            let onClickedScript = "window.gc.bridge.eventCenter.publish(\"PD_EVENT_\(message)_ONCLICKED\", \(paramsStr));";
+            bgRunner.webView?.evaluateJavaScript(onClickedScript, completionHandler: nil)
+        }
+        
     }
     
     // --- BrowserMenuControllerDelegate

@@ -19,7 +19,7 @@ class PDPopUpRunner: NSObject {
     func run() -> PDWebView {
         // todo 这里 UI model 是空
         let pageWebView = PDWebView(frame: .zero,
-                                    type: .popup(pandora.id ?? ""))
+                                    type: .popup(pandora.id))
         let serviceConfig = PDServiceConfigImpl(pageWebView)
         self.serviceConfig = serviceConfig
         self.webView = pageWebView
@@ -34,11 +34,11 @@ class PDPopUpRunner: NSObject {
 
 extension PDPopUpRunner: GCWebViewActionObserver {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        let data = ["type": "BACKGROUND", "id": pandora.id ?? "", "manifest": (pandora.manifest.raw ?? [:])] as [String : Any];
+        let data = ["type": "BACKGROUND", "id": pandora.id, "manifest": (pandora.manifest.raw ?? [:])] as [String : Any];
         let injectInfoScript = "window.chrome.__loader__";
         (webView as? PDWebView)?.jsEngine?.callFunction(injectInfoScript, params: data as [String : Any], completion: nil)
         
-        let onInstalledScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_RUNTIME_ONINSTALLED');";
-        webView.evaluateJavaScript(onInstalledScript, completionHandler: nil)
+//        let onInstalledScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_RUNTIME_ONINSTALLED');";
+//        webView.evaluateJavaScript(onInstalledScript, completionHandler: nil)
     }
 }
