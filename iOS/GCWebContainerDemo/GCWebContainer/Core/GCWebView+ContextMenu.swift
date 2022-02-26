@@ -15,6 +15,31 @@ extension GCWebView {
 }
 
 extension GCWebView {
+    typealias MenuAction = (GCWebView?) -> Swift.Void
+    public func makeMenuItem(uid: String,
+                             title: String,
+                             action: @escaping MenuAction) -> UIMenuItem? {
+        let targetClasses: [AnyClass] = [ type(of: self) ]
+        if let aSelector = _makeSelector(uid: uid, classes: targetClasses, block: action) {
+            return UIMenuItem(title: title, action: aSelector)
+        }
+        return nil
+    }
+    
+    private func _makeSelector(uid: String, classes: [AnyClass], block: MenuAction?) -> Selector? {
+        let selector = NSSelectorFromString(uid)
+        let block = { [weak self] () -> Swift.Void in block?(self) }
+        let castedBlock: AnyObject = unsafeBitCast(block as @convention(block) () -> Swift.Void, to: AnyObject.self)
+        let imp = imp_implementationWithBlock(castedBlock)
+        classes.forEach({ (cls) in
+            if class_addMethod(cls, selector, imp, UnsafeMutablePointer(mutating: "v")) {
+            } else { class_replaceMethod(cls, selector, imp, UnsafeMutablePointer(mutating: "v")) }
+        })
+        return selector
+    }
+}
+
+extension GCWebView {
     public var contextMenu: ContextMenu {
         set { objc_setAssociatedObject(self, &GCWebView.contextMenuKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
         get {
@@ -35,9 +60,8 @@ extension GCWebView {
             }
         }
         
-        func addMenu(_ menu: MenuItem) {
-            let item = UIMenuItem(title: menu.title, action: menu.action)
-            self.items.append(item)
+        func addMenu(_ menu: UIMenuItem) {
+            self.items.append(menu)
         }
         
         func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
