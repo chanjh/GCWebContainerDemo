@@ -18,9 +18,12 @@ class JSEngine: NSObject {
     
     // todo func(data) 会出错
     func callFunction(_ function: String,
-                      arguments: Any?,
+                      arguments: [String],
                       completion: ((_ info: Any?, _ error: Error?) -> Void)? = nil) {
-        let script = function + "(\(arguments ?? ""))"
+        var script = function + "("
+        arguments.forEach { script += "\($0)," }
+        script.removeLast()
+        script += ")"
         callJsString(script, completionHandler: completion)
     }
     

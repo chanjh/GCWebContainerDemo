@@ -75,8 +75,9 @@ fileprivate extension PDContextMenuManager {
             runners.forEach {
                 let infoStr = ["menuItemId": menu.senderId].ext.toString() ?? "{}"
                 let tabStr = tab.ext.toString() ?? "{}"
-                let onMsgScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_CONTEXTMENU_ONCLICKED', \(infoStr), \(tabStr));";                
-                $0.evaluateJavaScript(onMsgScript, completionHandler: nil)
+                $0.jsEngine?.eventCenter.publish("CONTEXTMENU_ONCLICKED",
+                                                 arguments: [infoStr, tabStr],
+                                                 completion: nil)
             }
         }
     }
