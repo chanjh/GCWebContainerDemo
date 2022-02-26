@@ -8,12 +8,28 @@
 import Foundation
 import ObjectiveC
 
-class BrowserManager {
+@objc protocol BrowserManagerObserver: NSObjectProtocol {
+    @objc optional func browserManager(_ browserManager: BrowserManager,
+                                       didCreate webView: GCWebView?)
+    @objc optional func browserManager(_ browserManager: BrowserManager,
+                                       didRemove webView: GCWebView?)
+}
+class BrowserManager: NSObject {
     static let shared = BrowserManager()
     
-    private var pool: [PDWebView] = [];
+    private(set) var observers: NSHashTable<BrowserManagerObserver> = NSHashTable(options: .weakMemory)
+    
+    private(set) var pool: [PDWebView] = [];
     
     var count: Int { return pool.count }
+    
+    func addObserver(_ observer: BrowserManagerObserver) {
+        observers.add(observer)
+    }
+    
+    func removeObserver(_ observer: BrowserManagerObserver) {
+        observers.remove(observer)
+    }
     
     func makeBrowser(model: WebContainerModelConfig? = nil,
                      ui: WebContainerUIConfig? = nil) -> PDWebView {
@@ -21,6 +37,7 @@ class BrowserManager {
         webView.identifier = Int(Int64.random(in: 0...9007199254740990))
         print("BrowserManager Create Browser \(webView.identifier ?? 0)")
         pool.append(webView)
+        observers.allObjects.forEach { $0.browserManager?(self, didCreate: webView) }
         return webView
     }
     
