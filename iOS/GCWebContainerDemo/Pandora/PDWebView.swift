@@ -56,6 +56,7 @@ class PDWebView: GCWebView {
         jsServiceManager?.register(handler: RuntimeService(self, ui: ui, model: model))
         jsServiceManager?.register(handler: LocalStorageService(self, ui: ui, model: model))
         jsServiceManager?.register(handler: BookmarkService(self, ui: ui, model: model))
+        jsServiceManager?.register(handler: ContextMenuService(self, ui: ui, model: model))
     }
 }
 

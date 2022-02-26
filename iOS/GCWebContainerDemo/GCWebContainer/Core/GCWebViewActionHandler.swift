@@ -13,6 +13,7 @@ import WebKit
 
 @objc protocol GCWebViewActionObserver: NSObjectProtocol {
     @objc optional func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!)
+    @objc optional func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void)
 }
 class GCWebViewActionHandler: NSObject {
     private weak var webView: GCWebView?
@@ -36,5 +37,21 @@ extension GCWebViewActionHandler: WKUIDelegate, WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  didFinish navigation: WKNavigation!) {
         observers.allObjects.forEach { $0.webView?(webView, didFinish: navigation) }
+    }
+    func webView(_ webView: WKWebView,
+                 decidePolicyFor navigationAction: WKNavigationAction,
+                 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+//        observers.allObjects.forEach { $0.webView?(webView,
+//                                                   decidePolicyFor: navigationAction,
+//                                                   decisionHandler: decisionHandler)}
+        
+        print("WebView decidePolicy for URL: \(navigationAction.request.url?.absoluteString ?? "")")
+        decisionHandler(.allow)
+    }
+    func webView(_ webView: WKWebView,
+                 decidePolicyFor navigationResponse: WKNavigationResponse,
+                 decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+        
+        decisionHandler(.allow)
     }
 }

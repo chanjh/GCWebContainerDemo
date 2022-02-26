@@ -33,6 +33,20 @@ class BaseJSService: NSObject {
         self.ui = ui
         self.model = model
     }
+    
+    func findSenderId(on message: JSServiceMessageInfo) -> String? {
+        let pdWebView = (self.webView as? PDWebView)
+        switch pdWebView?.type {
+        case .popup(let id):
+            return id
+        case .background(let id):
+            return id
+        case .content:
+            return message.contentWorld.name
+        case .none :
+            return nil
+        }
+    }
 }
 
 protocol JSServiceHandler {
