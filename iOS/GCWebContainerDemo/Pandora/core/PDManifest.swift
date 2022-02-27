@@ -20,6 +20,7 @@ struct PDManifest {
     let option: PDOptionsInfo?
     let pageAction: PDActionInfo?
     let browserAction: PDActionInfo?
+    let accessibleResource: PDWebAccessibleResource?
     
     init?(_ fileContent: String) {
         if let data = fileContent.data(using: .utf8),
@@ -56,6 +57,7 @@ struct PDManifest {
             } else {
                 self.browserAction = nil
             }
+            self.accessibleResource = PDWebAccessibleResource(manifestContent["web_accessible_resources"] as? Array<String>)
             return
         }
         return nil
@@ -155,4 +157,19 @@ struct PDOptionsInfo {
         }
         return nil
     }
+}
+
+// web_accessible_resources
+struct PDWebAccessibleResource {
+    let resourcesPath: Array<String>
+    init?(_ v2: Array<String>?) {
+        if let paths = v2 {
+            self.resourcesPath = paths
+        } else {
+            return nil
+        }
+    }
+    
+//    init(_ v3: Dictionary<String, Dictionary<String, Any>>) {
+//    }
 }

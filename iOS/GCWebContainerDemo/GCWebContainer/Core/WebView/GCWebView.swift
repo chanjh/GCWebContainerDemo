@@ -31,10 +31,14 @@ class GCWebView: WebView, GCWebViewInterface {
     
     init(frame: CGRect = .zero,
          model: WebContainerModelConfig? = nil,
-         ui: WebContainerUIConfig? = nil) {
+         ui: WebContainerUIConfig? = nil,
+         schemeHandler: Dictionary<String, WKURLSchemeHandler>? = nil) {
         let webViewConfiguration = WKWebViewConfiguration()
         let contentController = WKUserContentController()
         webViewConfiguration.userContentController = contentController
+        schemeHandler?.forEach({ (key, value) in
+            webViewConfiguration.setURLSchemeHandler(value, forURLScheme: key)
+        })
         super.init(frame: frame, configuration: webViewConfiguration)
         self.model = model
         self.ui = ui
