@@ -17,7 +17,6 @@ class JSEngine: NSObject {
         webView.actionHandler.addObserver(self)
     }
     
-    // todo func(data) 会出错
     func callFunction(_ function: String,
                       arguments: [String],
                       completion: ((_ info: Any?, _ error: Error?) -> Void)? = nil) {

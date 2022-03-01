@@ -27,37 +27,11 @@ class RuntimeService: BaseJSService, JSServiceHandler {
             ]
             webView?.jsEngine?.callFunction(callback, params: platformInfo, completion: nil)
         } else if message.serviceName == JSServiceType.runtimeSendMessage.rawValue {
-            var extensionId = params["extensionId"] as? String
-            if extensionId == nil {
-                let pdWebView = (webView as? PDWebView)
-                switch pdWebView?.type {
-                case .popup(let id):
-                    extensionId = id
-                case .background(let id):
-                    extensionId = id
-                case .content:
-                    extensionId = message.contentWorld.name 
-                case .none :
-                    ()
-                }
-            }
-            
+            let extensionId = params["extensionId"] as? String ?? findSenderId(on: message)
             if let pandora = PDManager.shared.pandoras.first(where: { $0.id == extensionId }) {
                 let runners = PDManager.shared.findPandoraRunner(pandora)
                 runners.forEach {
-                    // todo: senderid
-                    let pdWebView = (webView as? PDWebView)
-                    var senderId = ""
-                    switch pdWebView?.type {
-                    case .popup(let id):
-                        senderId = id
-                    case .background(let id):
-                        senderId = id
-                    case .content:
-                        senderId = message.contentWorld.name ??  "\(webView?.identifier ?? 0)"
-                    case .none:
-                        ()
-                    }
+                    let senderId = findSenderId(on: message) ?? ""
                     // todo: 是 param 还是 message
                     let data: [String: Any] = ["param": params, "callback": message.callback ?? "", "senderId": senderId]
                     let paramsStrBeforeFix = data.ext.toString()
@@ -103,17 +77,7 @@ class RuntimeService: BaseJSService, JSServiceHandler {
             }
             
         } else if message.serviceName == JSServiceType.runtimeOpenOptionsPage.rawValue {
-            let pdWebView = (webView as? PDWebView)
-            var senderId = ""
-            switch pdWebView?.type {
-            case .popup(let id):
-                senderId = id
-            case .background(let id):
-                senderId = id
-            case .content, .none:
-                ()
-            }
-            if senderId.count > 0,
+            if let senderId = findSenderId(on: message),
                let pandora = PDManager.shared.pandoras.first(where: { $0.id == senderId }),
                 let optionURL = pandora.optionPageFilePath {
                 // todo: open_in_tab

@@ -42,21 +42,9 @@ class TabsService: BaseJSService, JSServiceHandler {
                     runner.webView?.identifier != tabId {
                     return
                 }
-                let arguments = params["message"]
-                
-                let pdWebView = (webView as? PDWebView)
-                var senderId = ""
-                switch pdWebView?.type {
-                case .popup(let id):
-                    senderId = id
-                case .background(let id):
-                    senderId = id
-                case .content:
-                    senderId = "\(webView?.identifier ?? 0)"
-                case .none:
-                    ()
-                }
-                let data: [String: Any] = ["param": arguments ?? {}, "callback": message.callback ?? "", "senderId": senderId]
+                let arguments = params["message"] ?? {}
+                let senderId = findSenderId(on: message) ?? ""
+                let data: [String: Any] = ["param": arguments, "callback": message.callback ?? "", "senderId": senderId]
                 let paramsStrBeforeFix = data.ext.toString()
                 let paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
                 let onMsgScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_RUNTIME_ONMESSAGE', \(paramsStr));";
