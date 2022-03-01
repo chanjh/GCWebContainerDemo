@@ -6,7 +6,6 @@
 //
 
 import WebKit
-import MobileCoreServices
 import UniformTypeIdentifiers
 
 class PDURLSchemeHandler: NSObject, WKURLSchemeHandler {

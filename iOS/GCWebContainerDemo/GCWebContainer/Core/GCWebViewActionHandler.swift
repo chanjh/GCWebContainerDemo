@@ -51,7 +51,6 @@ extension GCWebViewActionHandler: WKUIDelegate, WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        
         decisionHandler(.allow)
     }
 }

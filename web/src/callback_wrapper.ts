@@ -9,12 +9,12 @@ export default async function wrapCallback(uid: string, fn: Function, callback?:
     return `${global}_${uid.replaceAll(".", "")}_callback_func_${random}`;
   }
   function _initCallback(callbackName: string) {
-    (window as any)[callbackName] = async function (...arg: any[]) {
+    (window as any)[callbackName] = function (...arg: any[]) {
       const { global } = window.gc._config;
       // 1. unlock
       // 2. send msg to wrapFunction on service
       if (callback) {
-        await callback(arg[0])
+        callback(arg[0])
       }
       lock.unlock(arg[0])
       // 3. remove callback
@@ -24,7 +24,7 @@ export default async function wrapCallback(uid: string, fn: Function, callback?:
   }
   let lock = new Lock();
   const callbackName = callbackFunc();
-  console.log(callbackName);
+  console.log(callbackName, uid);
   _initCallback(callbackName);
   // callback, need to be a function name but not a obj in window
   lock = new Lock();
