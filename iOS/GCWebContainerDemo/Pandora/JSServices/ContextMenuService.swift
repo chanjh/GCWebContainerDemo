@@ -24,7 +24,8 @@ class ContextMenuService: BaseJSService, JSServiceHandler {
         guard let params = message.params as? [String: Any] else {
             return
         }
-        let id = params["id"] as? String ?? UUID().uuidString
+        var id = params["id"] as? String ?? UUID().uuidString
+        id.removeAll { $0 == "-" }
         let title = params["title"] as? String ?? ""
         let onClick = params["onclickCallback"] as? String // 通过框架处理过的 callback 参数
         let selector = makeSelector(id: id, message: message, callback: onClick)

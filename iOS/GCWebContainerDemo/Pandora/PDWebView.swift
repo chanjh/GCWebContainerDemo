@@ -22,14 +22,22 @@ class PDWebView: GCWebView {
          model: WebContainerModelConfig? = nil,
          ui: WebContainerUIConfig? = nil) {
         self.type = type
-        super.init(frame: frame, model: model, ui: ui)
+        let schemeHandler: [String: WKURLSchemeHandler] = [PDURLSchemeHandler.scheme: PDURLSchemeHandler()]
+        super.init(frame: frame,
+                   model: model,
+                   ui: ui,
+                   schemeHandler: schemeHandler)
     }
     
     init(frame: CGRect = .zero,
          type: PDWebViewType = .content,
          serviceConfig: PDServiceConfigImpl) {
         self.type = type
-        super.init(frame: frame, model: serviceConfig, ui: serviceConfig)
+        let schemeHandler: [String: WKURLSchemeHandler] = [PDURLSchemeHandler.scheme: PDURLSchemeHandler()]
+        super.init(frame: frame,
+                   model: serviceConfig,
+                   ui: serviceConfig,
+                   schemeHandler: schemeHandler)
     }
     
     required init?(coder: NSCoder) {

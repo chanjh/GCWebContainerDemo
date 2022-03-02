@@ -19,21 +19,34 @@ class LocalStorageService: BaseJSService, JSServiceHandler {
         if message.serviceName == JSServiceType.localStorageSet.rawValue {
             params.forEach { LocalStorage.shared.set($1, forKey: $0) }
             if let callback = message.callback {
-                webView?.jsEngine?.callFunction(callback)
+                webView?.jsEngine?.callFunction(callback,
+                                                params: nil,
+                                                in: nil,
+                                                in: message.contentWorld,
+                                                completion: nil)
             }
         } else if message.serviceName == JSServiceType.localStorageGet.rawValue {
             if let keys = params["keys"] as? [String], let callback = message.callback {
-                let obj = keys.compactMap { LocalStorage.shared.object(forKey: $0) }
-                webView?.jsEngine?.callFunction(callback, params: ["result": obj], completion: nil)
+                var obj: [String: Any] = [:]
+                keys.forEach { obj[$0] = LocalStorage.shared.object(forKey: $0) }
+                webView?.jsEngine?.callFunction(callback, params: obj, in: nil, in: message.contentWorld, completion: nil)
             } else if let key = params["keys"] as? String, let callback = message.callback {
                 if let obj = LocalStorage.shared.object(forKey: key) {
-                    webView?.jsEngine?.callFunction(callback, params: ["result": obj], completion: nil)
+                    webView?.jsEngine?.callFunction(callback,
+                                                    params: [key: obj],
+                                                    in: nil,
+                                                    in: message.contentWorld,
+                                                    completion: nil)
                 }
             }
         } else if message.serviceName == JSServiceType.localStorageClear.rawValue {
             LocalStorage.shared.clear()
             if let callback = message.callback {
-                webView?.jsEngine?.callFunction(callback)
+                webView?.jsEngine?.callFunction(callback,
+                                                params: nil,
+                                                in: nil,
+                                                in: message.contentWorld,
+                                                completion: nil)
             }
         }
     }

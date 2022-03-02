@@ -11,7 +11,6 @@ enum TabStatus {
     
 }
 
-
 struct Tab {
     var active: Bool? = nil
     var audible: Bool? = nil
@@ -138,5 +137,6 @@ class TabsManager {
         observers.allObjects.forEach {
             $0.onRemoved(tabId: identifier, removeInfo: TabRemoveInfo(isWindowClosing: false, windowId: true))
         }
+        BrowserManager.shared.remove(identifier)
     }
 }

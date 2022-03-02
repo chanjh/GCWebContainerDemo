@@ -38,7 +38,8 @@ extension PDFileManager {
                                                           in: .userDomainMask,
                                                           appropriateFor: nil,
                                                           create: false)
-        let uuid = UUID().uuidString
+        var uuid = UUID().uuidString
+        uuid.removeAll { $0 == "-" }
         if let destination = URL(string: "\(document?.path ?? "")/\(unzipPath)/\(uuid)"),
            ((try? Zip.unzipFile(filePath,
                                 destination: destination,
