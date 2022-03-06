@@ -41,6 +41,8 @@ class BaseJSService: NSObject {
             return id
         case .background(let id):
             return id
+        case .browserAction(let id):
+            return id
         case .content:
             return message.contentWorld.name ?? "\(webView?.identifier ?? 0)"
         case .none :

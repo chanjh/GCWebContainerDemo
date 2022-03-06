@@ -69,7 +69,7 @@ class RuntimeService: BaseJSService, JSServiceHandler {
             }
             PDManager.shared.contentScriptRunners.forEach { runner in
                 runner.pandoras.forEach { pd in
-                    if pd.id == extensionId {
+                    if pd.id == extensionId, runner.webView?.url?.scheme != "file" {
                         let contentWorld = WKContentWorld.world(name: pd.id)
                         sendResponseFn(params, runner.webView, contentWorld)
                     }

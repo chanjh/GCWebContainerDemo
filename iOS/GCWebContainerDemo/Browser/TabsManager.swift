@@ -37,6 +37,10 @@ struct Tab {
     func toMap() -> Dictionary<String, Any> {
         return ["id": "\(id ?? 0)"];
     }
+    
+    init(id: Int? ) {
+        self.id = id
+    }
 }
 
 class TabRemoveInfo: NSObject {
@@ -109,8 +113,16 @@ class TabsManager {
         return webView
     }
     
+    func makeBrowserAction(model: WebContainerModelConfig? = nil,
+                           ui: WebContainerUIConfig? = nil,
+                           pdId: String) -> GCWebView {
+        let webView = BrowserManager.shared.makeBrowserActionBrowser(model: model, ui: ui, pdId: pdId)
+        pool.append(webView)
+        return webView
+    }
+    
     func tabInfo(_ webView: GCWebView) -> Tab {
-        var tab = Tab()
+        var tab = Tab(id: webView.identifier)
         tab.id = webView.identifier
         return tab
     }

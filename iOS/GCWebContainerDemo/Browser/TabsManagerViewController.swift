@@ -9,7 +9,7 @@ import SnapKit
 
 protocol TabsManagerViewControllerDelegate: NSObjectProtocol {
     func didSelectWebView(_ webView: GCWebView)
-    func didAddUrl(_ url: URL?)
+    func didAddUrl(_ url: URL?) -> Tab?
 }
 
 class TabsManagerViewController: UIViewController {

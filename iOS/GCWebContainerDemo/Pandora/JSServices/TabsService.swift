@@ -25,7 +25,13 @@ class TabsService: BaseJSService, JSServiceHandler {
         
         if message.serviceName == JSServiceType.createTab.rawValue,
            let url = URL(string: params["url"] as? String ?? "") {
-            (model as? BrowserModelConfig)?.tabManager.addTab(url)
+            if let tab = (model as? BrowserModelConfig)?.tabManager.addTab(url),
+                let callback = message.callback {
+                webView?.jsEngine?.callFunction(callback,
+                                                params: tab.toMap(),
+                                                in: nil,
+                                                in: message.contentWorld, completion: nil)
+            }
         } else if message.serviceName == JSServiceType.removeTab.rawValue {
             if let tabId = params["tabIds"] as? Int {
                 (model as? BrowserModelConfig)?.tabManager.removeTabs([tabId])

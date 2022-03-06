@@ -114,7 +114,7 @@ extension BrowserView: GCWebViewActionObserver {
 extension BrowserView: WebContainerNavigator {
     func openURL(_ options: OpenURLOptions) {
         if options.newTab {
-            addTab(options.url)
+            _ = addTab(options.url)
         }
     }
 }
@@ -133,12 +133,16 @@ extension BrowserView: WebContainerUIConfig,
         return self
     }
     
-    func addTab(_ url: URL?) {
-        let webView = TabsManager.shared.makeBrowser(model: self, ui: self)
+    func addTab(_ url: URL?) -> Tab? {
+        let makeBrowserAction = url?.scheme == PDURLSchemeHandler.scheme && PDManager.shared.pandoras.contains(where: { $0.id == url?.host })
+        let webView = makeBrowserAction ?
+        TabsManager.shared.makeBrowserAction(model: self, ui: self, pdId: (url?.host)!):
+        TabsManager.shared.makeBrowser(model: self, ui: self)
         reload(webView: webView)
         if let url = url {
             load(url: url)
         }
+        return Tab(id: webView.identifier)
     }
     
     func removeTabs(_ tabs: [Int]) {

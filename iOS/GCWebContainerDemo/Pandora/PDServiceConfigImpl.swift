@@ -15,11 +15,11 @@ class PDServiceConfigImpl: BrowerTabManagerInterface {
         self.pdWebView = webView
     }
     
-    func addTab(_ url: URL?) {
+    func addTab(_ url: URL?) -> Tab? {
         // todo
         let nav = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController
         let browser = nav?.topViewController as? BrowserViewController
-        browser?.didAddUrl(url)
+        return browser?.didAddUrl(url)
     }
     
     func removeTabs(_ tabs: [Int]) {
