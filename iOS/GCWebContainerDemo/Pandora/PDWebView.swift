@@ -9,6 +9,7 @@ import WebKit
 
 enum PDWebViewType {
     case content;
+    case browserAction(String);
     case background(String);
     case popup(String);
 }
@@ -22,22 +23,36 @@ class PDWebView: GCWebView {
          model: WebContainerModelConfig? = nil,
          ui: WebContainerUIConfig? = nil) {
         self.type = type
-        let schemeHandler: [String: WKURLSchemeHandler] = [PDURLSchemeHandler.scheme: PDURLSchemeHandler()]
         super.init(frame: frame,
                    model: model,
                    ui: ui,
-                   schemeHandler: schemeHandler)
+                   configuration: Self._makeWKWebConfig(type: type))
     }
     
     init(frame: CGRect = .zero,
          type: PDWebViewType = .content,
          serviceConfig: PDServiceConfigImpl) {
         self.type = type
-        let schemeHandler: [String: WKURLSchemeHandler] = [PDURLSchemeHandler.scheme: PDURLSchemeHandler()]
         super.init(frame: frame,
                    model: serviceConfig,
                    ui: serviceConfig,
-                   schemeHandler: schemeHandler)
+                   configuration: Self._makeWKWebConfig(type: type))
+    }
+    
+    private static func _makeWKWebConfig(type: PDWebViewType) -> WKWebViewConfiguration {
+        let webViewConfiguration = WKWebViewConfiguration()
+        let contentController = WKUserContentController()
+        webViewConfiguration.userContentController = contentController
+        if case .browserAction(_) = type {
+            // 支持跨域请求
+            webViewConfiguration.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
+            webViewConfiguration.setValue(true, forKey: "allowUniversalAccessFromFileURLs")
+        }
+        let schemeHandler: [String: WKURLSchemeHandler] = [PDURLSchemeHandler.scheme: PDURLSchemeHandler()]
+        schemeHandler.forEach({ (key, value) in
+            webViewConfiguration.setURLSchemeHandler(value, forURLScheme: key)
+        })
+        return webViewConfiguration
     }
     
     required init?(coder: NSCoder) {
@@ -48,7 +63,11 @@ class PDWebView: GCWebView {
         super.onInit()
         actionHandler.addObserver(self)
         _registerJSHandler()
-        _injectAllContentJS()
+        if case .browserAction(_) = type {
+            
+        } else {
+            _injectAllContentJS()
+        }
     }
     
     private func _injectAllContentJS() {

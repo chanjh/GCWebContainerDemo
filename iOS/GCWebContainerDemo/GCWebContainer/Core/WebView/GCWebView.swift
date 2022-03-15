@@ -32,14 +32,8 @@ class GCWebView: WebView, GCWebViewInterface {
     init(frame: CGRect = .zero,
          model: WebContainerModelConfig? = nil,
          ui: WebContainerUIConfig? = nil,
-         schemeHandler: Dictionary<String, WKURLSchemeHandler>? = nil) {
-        let webViewConfiguration = WKWebViewConfiguration()
-        let contentController = WKUserContentController()
-        webViewConfiguration.userContentController = contentController
-        schemeHandler?.forEach({ (key, value) in
-            webViewConfiguration.setURLSchemeHandler(value, forURLScheme: key)
-        })
-        super.init(frame: frame, configuration: webViewConfiguration)
+         configuration: WKWebViewConfiguration = WKWebViewConfiguration()) {
+        super.init(frame: frame, configuration: configuration)
         self.model = model
         self.ui = ui
         _initDelegates()
@@ -73,6 +67,23 @@ class GCWebView: WebView, GCWebViewInterface {
 extension GCWebView {
     override
     func load(_ request: URLRequest) -> WKNavigation? {
+        if let url = request.url,
+           url.scheme == PDURLSchemeHandler.scheme {
+            let document = try? FileManager.default.url(for: .documentDirectory,
+                                                           in: .userDomainMask,
+                                                           appropriateFor: nil,
+                                                           create: false)
+            let unzip = "file://\(document?.path ?? "")/\(PDFileManager.unzipPath)/"
+            let res = url.absoluteString.replacingOccurrences(of: "\(PDURLSchemeHandler.scheme)://", with: unzip, options: .literal, range: nil)
+            if let fileUrl = URL(string: res), let unzipUrl = URL(string: unzip),
+               let pandora = PDManager.shared.pandoras.first(where: { $0.id == url.host }) {
+                let runner = PDManager.shared.makeBrowserActionRunner(pandora: pandora,
+                                                                      webView: self as? PDWebView)
+                runner.run()
+                willLoadRequest()
+                return loadFileURL(fileUrl, allowingReadAccessTo: unzipUrl)
+            }
+        }
         willLoadRequest()
         return super.load(request)
     }

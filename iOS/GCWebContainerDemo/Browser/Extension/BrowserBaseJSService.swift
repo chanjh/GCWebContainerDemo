@@ -8,7 +8,7 @@
 import Foundation
 
 protocol BrowerTabManagerInterface {
-    func addTab(_ url: URL?)
+    func addTab(_ url: URL?) -> Tab?
     func removeTabs(_ tabs: [Int])
 }
 

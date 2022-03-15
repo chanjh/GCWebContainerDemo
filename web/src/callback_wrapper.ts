@@ -27,7 +27,6 @@ export default async function wrapCallback(uid: string, fn: Function, callback?:
   console.log(callbackName, uid);
   _initCallback(callbackName);
   // callback, need to be a function name but not a obj in window
-  lock = new Lock();
   lock.lock();
   fn(callbackName);
   return await lock.status

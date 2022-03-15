@@ -41,6 +41,16 @@ class BrowserManager: NSObject {
         return webView
     }
     
+    func makeBrowserActionBrowser(model: WebContainerModelConfig? = nil,
+                                  ui: WebContainerUIConfig? = nil,
+                                  pdId: String) -> PDWebView {
+        let webView = PDWebView(frame: .zero, type: .browserAction(pdId), model: model, ui: ui)
+        webView.identifier = Int(Int64.random(in: 0...9007199254740990))
+        print("BrowserManager Create Browser \(webView.identifier ?? 0)")
+        pool.append(webView)
+        observers.allObjects.forEach { $0.browserManager?(self, didCreate: webView) }
+        return webView
+    }
     func title(at index: Int) -> String? {
         return pool[index].url?.relativeString ?? "\(index)"
     }

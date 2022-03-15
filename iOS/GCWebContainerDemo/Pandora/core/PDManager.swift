@@ -20,6 +20,7 @@ class PDManager {
     private(set) var contentScriptRunners: [PDContentRunner] = [];
     private(set) var popupRunners: [PDPopUpRunner] = [];
     private(set) var backgroundRunners: [PDBackgroundRunner] = [];
+    private(set) var browserActionRunner: [PDBrowserActionRunner] = []
     
     func loadPandora(path: URL, id: String) -> Pandora? {
         let loader = PDLoader(path, id: id)
@@ -76,6 +77,13 @@ class PDManager {
         contentScriptRunners.append(runner)
         return runner
     }
+    
+    func makeBrowserActionRunner(pandora: Pandora, webView: PDWebView?) -> PDBrowserActionRunner {
+        let runner = PDBrowserActionRunner(pandora: pandora,
+                                           webView: webView)
+        browserActionRunner.append(runner)
+        return runner
+    }
 
     func findBackgroundRunner(_ pandora: Pandora) -> PDBackgroundRunner? {
         return backgroundRunners.first(where: { $0.pandora.id == pandora.id })
@@ -86,8 +94,10 @@ class PDManager {
         var res: [PDWebView] = []
         let bg = backgroundRunners.filter { $0.pandora.id == pandora.id }
         let pop = popupRunners.filter { $0.pandora.id == pandora.id }
+        let browserAction = browserActionRunner.filter { $0.pandora.id == pandora.id }
         res.append(contentsOf: bg.compactMap({ $0.webView }))
         res.append(contentsOf: pop.compactMap({ $0.webView }))
+        res.append(contentsOf: browserAction.compactMap({ $0.webView }))
         return res
     }
     

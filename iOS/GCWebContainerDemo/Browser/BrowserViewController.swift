@@ -96,12 +96,16 @@ extension BrowserViewController: BrowserViewDelegate, BrowserMenuControllerDeleg
         browserView.reload(webView: webView)
     }
     
-    func didAddUrl(_ url: URL?) {
-        let webView = TabsManager.shared.makeBrowser(model: browserView, ui: browserView)
+    func didAddUrl(_ url: URL?) -> Tab? {
+        let makeBrowserAction = url?.scheme == PDURLSchemeHandler.scheme && PDManager.shared.pandoras.contains(where: { $0.id == url?.host })
+        let webView = makeBrowserAction ?
+        TabsManager.shared.makeBrowserAction(model: browserView, ui: browserView, pdId: (url?.host)!):
+        TabsManager.shared.makeBrowser(model: browserView, ui: browserView)
         browserView.reload(webView: webView)
         if let url = url {        
             browserView.load(url: url)
         }
+        return Tab(id: webView.identifier)
     }
     
 //    func didSelectWebView(_ webView: GCWebView, url: URL?) {
