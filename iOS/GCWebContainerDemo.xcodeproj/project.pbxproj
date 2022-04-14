@@ -36,6 +36,7 @@
 		0D89505A27C9F94600C13F95 /* PDContextMenuManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D89505927C9F94600C13F95 /* PDContextMenuManager.swift */; };
 		0D89505D27CA8B4A00C13F95 /* PDWebView+JSEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D89505C27CA8B4A00C13F95 /* PDWebView+JSEngine.swift */; };
 		0D89505F27CB258E00C13F95 /* PDURLSchemeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D89505E27CB258E00C13F95 /* PDURLSchemeHandler.swift */; };
+		0D89506127D044CB00C13F95 /* PDBrowserActionRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D89506027D044CB00C13F95 /* PDBrowserActionRunner.swift */; };
 		0DA967E227B9DBAB0056E372 /* PDManifestV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA967E127B9DBAB0056E372 /* PDManifestV2.swift */; };
 		0DACA72D27B3403300C628FE /* PDPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DACA72C27B3403300C628FE /* PDPopUpViewController.swift */; };
 		0DACA72F27B4971200C628FE /* PDContentRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DACA72E27B4971200C628FE /* PDContentRunner.swift */; };
@@ -102,6 +103,7 @@
 		0D89505927C9F94600C13F95 /* PDContextMenuManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDContextMenuManager.swift; sourceTree = "<group>"; };
 		0D89505C27CA8B4A00C13F95 /* PDWebView+JSEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDWebView+JSEngine.swift"; sourceTree = "<group>"; };
 		0D89505E27CB258E00C13F95 /* PDURLSchemeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDURLSchemeHandler.swift; sourceTree = "<group>"; };
+		0D89506027D044CB00C13F95 /* PDBrowserActionRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDBrowserActionRunner.swift; sourceTree = "<group>"; };
 		0DA967E127B9DBAB0056E372 /* PDManifestV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDManifestV2.swift; sourceTree = "<group>"; };
 		0DACA72C27B3403300C628FE /* PDPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDPopUpViewController.swift; sourceTree = "<group>"; };
 		0DACA72E27B4971200C628FE /* PDContentRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDContentRunner.swift; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				0DACA73127B5487B00C628FE /* PDBackgroundRunner.swift */,
+				0D89506027D044CB00C13F95 /* PDBrowserActionRunner.swift */,
 				0DACA73327B5488F00C628FE /* PDPopUpRunner.swift */,
 				0DACA72E27B4971200C628FE /* PDContentRunner.swift */,
 			);
@@ -572,6 +575,7 @@
 				0DA967E227B9DBAB0056E372 /* PDManifestV2.swift in Sources */,
 				0DC52B4827A2247B00EC35AB /* TabsManager.swift in Sources */,
 				0D84542E2781974900E18BDE /* TabsService.swift in Sources */,
+				0D89506127D044CB00C13F95 /* PDBrowserActionRunner.swift in Sources */,
 				0D1F8620276DC73600D39CAF /* GCDemoHomeController.swift in Sources */,
 				0D1F8622276DC83300D39CAF /* SceneDelegate.swift in Sources */,
 				0DBE24F52786782900D9FC6F /* GCWebViewActionHandler.swift in Sources */,

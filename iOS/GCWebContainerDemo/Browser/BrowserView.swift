@@ -73,7 +73,7 @@ class BrowserView: UIView {
         }
         gcWebView?.snp.makeConstraints { make in
             make.top.equalTo(addressView.snp.bottom)
-            make.bottom.equalTo(toolBar.snp.bottom)
+            make.bottom.equalTo(toolBar.snp.top)
             make.left.right.equalToSuperview()
         }
     }
@@ -100,7 +100,7 @@ class BrowserView: UIView {
         
         gcWebView?.snp.makeConstraints { make in
             make.top.equalTo(addressView.snp.bottom)
-            make.bottom.equalTo(toolBar.snp.bottom)
+            make.bottom.equalTo(toolBar.snp.top)
             make.left.right.equalToSuperview()
         }
         addressView.text = gcWebView?.url?.relativeString

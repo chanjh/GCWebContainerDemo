@@ -56,10 +56,10 @@ class TabsService: BaseJSService, JSServiceHandler {
                 let onMsgScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_RUNTIME_ONMESSAGE', \(paramsStr));";
                 runner.pandoras.forEach {
                     let contentWorld = WKContentWorld.world(name: $0.id)
-                    runner.webView?.evaluateJavaScript(onMsgScript,
-                                                       in: nil,
-                                                       in: contentWorld,
-                                                       completionHandler: { result in
+                    runner.webView?.jsEngine?.callJsString(onMsgScript,
+                                                           in: nil,
+                                                           in: contentWorld,
+                                                           completionHandler: { result in
                         print(result)
                     })
                 }

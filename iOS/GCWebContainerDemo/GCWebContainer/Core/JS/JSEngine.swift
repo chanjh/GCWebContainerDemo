@@ -55,6 +55,18 @@ class JSEngine: NSObject {
     
     // MARK: -
     func callFunction(_ function: String,
+                      arguments: [String],
+                      in frame: WKFrameInfo? = nil,
+                      in contentWorld: WKContentWorld,
+                      completion: ((Result<Any, Error>) -> Void)? = nil) {
+        var script = function + "("
+        arguments.forEach { script += "\($0)," }
+        script.removeLast()
+        script += ")"
+        callJsString(script, in: frame, in: contentWorld, completionHandler: completion)
+    }
+    
+    func callFunction(_ function: String,
                       params: [String: Any]? = nil,
                       in frame: WKFrameInfo? = nil,
                       in contentWorld: WKContentWorld,
@@ -68,10 +80,10 @@ class JSEngine: NSObject {
         callJsString(script, in: frame, in: contentWorld, completionHandler: completion)
     }
     
-    private func callJsString(_ javaScriptString: String,
-                              in frame: WKFrameInfo? = nil,
-                              in contentWorld: WKContentWorld,
-                              completionHandler: ((Result<Any, Error>) -> Void)? = nil) {
+    func callJsString(_ javaScriptString: String,
+                      in frame: WKFrameInfo? = nil,
+                      in contentWorld: WKContentWorld,
+                      completionHandler: ((Result<Any, Error>) -> Void)? = nil) {
         let runJS = {
             self.webView.evaluateJavaScript(javaScriptString, in: frame, in: contentWorld) { result in
                 completionHandler?(result)
