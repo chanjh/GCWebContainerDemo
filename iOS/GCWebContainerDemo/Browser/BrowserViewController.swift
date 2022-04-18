@@ -11,6 +11,7 @@ import SnapKit
 class BrowserViewController: UIViewController {
     private var browserView: BrowserView
     private var url: URL?
+    private var pdDelegateImpl: PandoraDelegateImpl?
     
     init(url: URL? = nil) {
         self.url = url
@@ -21,6 +22,9 @@ class BrowserViewController: UIViewController {
             browserView.load(url: url)
         }
         super.init(nibName: nil, bundle: nil)
+        let pdImpl = PandoraDelegateImpl(self)
+        self.pdDelegateImpl = pdImpl
+        PDManager.shared.setPDDelegate(pdImpl)
         browserView.delegate = self
     }
     

@@ -12,7 +12,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        let home = BrowserViewController(url: URL(string: "https://qq.com"))
+        let home = BrowserViewController(url: URL(string: "https://sspai.com/post/39645"))
         let root = UINavigationController(rootViewController: home)
         let window = UIWindow(windowScene: windowScene)
         window.rootViewController = root

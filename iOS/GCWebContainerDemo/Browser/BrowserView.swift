@@ -112,21 +112,21 @@ extension BrowserView: GCWebViewActionObserver {
 }
 
 extension BrowserView: WebContainerNavigator {
-    func openURL(_ options: OpenURLOptions) {
+    func removeTab(_ options: GCTabInfo) {
+        
+    }
+    
+    func openURL(_ options: OpenURLOptions) -> GCTabInfo {
         if options.newTab {
             _ = addTab(options.url)
         }
+        return GCTabInfo(id: "")
     }
 }
 extension BrowserView: WebContainerUIConfig,
-                       BrowserModelConfig,
-                       BrowerTabManagerInterface {
+                       WebContainerModelConfig {
     var webView: GCWebView {
         return self.gcWebView!
-    }
-    
-    var tabManager: BrowerTabManagerInterface {
-        return self
     }
     
     var navigator: WebContainerNavigator? {

@@ -10,6 +10,7 @@ import Zip
 
 class PDManager {
     static let shared = PDManager();
+    private(set) var delegate: PandoraDelegate? = nil
     private var pandoraList: [Pandora] = [];
     
     var pandoras: [Pandora] {
@@ -21,6 +22,10 @@ class PDManager {
     private(set) var popupRunners: [PDPopUpRunner] = [];
     private(set) var backgroundRunners: [PDBackgroundRunner] = [];
     private(set) var browserActionRunner: [PDBrowserActionRunner] = []
+    
+    func setPDDelegate(_ delegate: PandoraDelegate) {
+        self.delegate = delegate
+    }
     
     func loadPandora(path: URL, id: String) -> Pandora? {
         let loader = PDLoader(path, id: id)
