@@ -101,7 +101,7 @@ extension PDWebView: GCWebViewActionObserver {
 
 extension GCWebView {
     func pd_addChromeBridge() {
-        if let path  = Bundle.main.path(forResource: "chrome", ofType: "js"),
+        if let path  = Bundle.main.path(forResource: "pandora", ofType: "js"),
            let chrome = try? String(contentsOfFile: path) {
             let userScript = WKUserScript(source: chrome,
                                           injectionTime: .atDocumentStart,
