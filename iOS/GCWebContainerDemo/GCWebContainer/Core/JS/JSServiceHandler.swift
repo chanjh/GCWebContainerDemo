@@ -13,13 +13,18 @@ protocol WebContainerUIConfig: AnyObject {
     var navigator: WebContainerNavigator? { get }
 }
 protocol WebContainerNavigator {
-    func openURL(_ options: OpenURLOptions)
+    func openURL(_ options: OpenURLOptions) -> GCTabInfo
+    func removeTab(_ options: GCTabInfo)
+}
+
+struct GCTabInfo {
+    let id: String
 }
 
 struct OpenURLOptions {
     let url: URL
-    let newTab: Bool = true
-    let popup: Bool = false
+    var newTab: Bool = true
+    var popup: Bool = false
 }
 
 class BaseJSService: NSObject {

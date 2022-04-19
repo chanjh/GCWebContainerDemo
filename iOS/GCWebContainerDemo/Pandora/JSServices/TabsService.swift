@@ -25,18 +25,22 @@ class TabsService: BaseJSService, JSServiceHandler {
         
         if message.serviceName == JSServiceType.createTab.rawValue,
            let url = URL(string: params["url"] as? String ?? "") {
-            if let tab = (model as? BrowserModelConfig)?.tabManager.addTab(url),
-                let callback = message.callback {
+            var option = OpenURLOptions(url: url)
+            option.newTab = true
+            if let tab = ui?.navigator?.openURL(option),
+               let callback = message.callback {
                 webView?.jsEngine?.callFunction(callback,
-                                                params: tab.toMap(),
+                                                params: ["id": "\(tab.id)"],
                                                 in: nil,
                                                 in: message.contentWorld, completion: nil)
             }
         } else if message.serviceName == JSServiceType.removeTab.rawValue {
             if let tabId = params["tabIds"] as? Int {
-                (model as? BrowserModelConfig)?.tabManager.removeTabs([tabId])
+                ui?.navigator?.removeTab(GCTabInfo(id: "\(tabId)"))
             } else if let tabIds = params["tabIds"] as? [Int] {
-                (model as? BrowserModelConfig)?.tabManager.removeTabs(tabIds)
+                tabIds.forEach { id in
+                    ui?.navigator?.removeTab(GCTabInfo(id: "\(id)"))
+                }
             }
         } else if message.serviceName == JSServiceType.queryTab.rawValue {
             
@@ -56,10 +60,10 @@ class TabsService: BaseJSService, JSServiceHandler {
                 let onMsgScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_RUNTIME_ONMESSAGE', \(paramsStr));";
                 runner.pandoras.forEach {
                     let contentWorld = WKContentWorld.world(name: $0.id)
-                    runner.webView?.evaluateJavaScript(onMsgScript,
-                                                       in: nil,
-                                                       in: contentWorld,
-                                                       completionHandler: { result in
+                    runner.webView?.jsEngine?.callJsString(onMsgScript,
+                                                           in: nil,
+                                                           in: contentWorld,
+                                                           completionHandler: { result in
                         print(result)
                     })
                 }

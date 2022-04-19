@@ -20,7 +20,6 @@
 		0D1F8646276F2CFE00D39CAF /* Pandora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F8645276F2CFE00D39CAF /* Pandora.swift */; };
 		0D1F8648276F2FF600D39CAF /* PDManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F8647276F2FF600D39CAF /* PDManifest.swift */; };
 		0D1F864A276F346B00D39CAF /* Extensions.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0D1F8649276F346B00D39CAF /* Extensions.bundle */; };
-		0D2D31EE2793C83500B84D80 /* chrome.js in Resources */ = {isa = PBXBuildFile; fileRef = 0D2D31ED2793C83500B84D80 /* chrome.js */; };
 		0D2D31F127945C6200B84D80 /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2D31F027945C6200B84D80 /* BrowserView.swift */; };
 		0D2D31F327945C7F00B84D80 /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2D31F227945C7F00B84D80 /* BrowserViewController.swift */; };
 		0D2D31F6279463C300B84D80 /* UIViewController+TopMost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2D31F5279463C300B84D80 /* UIViewController+TopMost.swift */; };
@@ -36,7 +35,11 @@
 		0D89505A27C9F94600C13F95 /* PDContextMenuManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D89505927C9F94600C13F95 /* PDContextMenuManager.swift */; };
 		0D89505D27CA8B4A00C13F95 /* PDWebView+JSEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D89505C27CA8B4A00C13F95 /* PDWebView+JSEngine.swift */; };
 		0D89505F27CB258E00C13F95 /* PDURLSchemeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D89505E27CB258E00C13F95 /* PDURLSchemeHandler.swift */; };
+		0D89506127D044CB00C13F95 /* PDBrowserActionRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D89506027D044CB00C13F95 /* PDBrowserActionRunner.swift */; };
 		0DA967E227B9DBAB0056E372 /* PDManifestV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA967E127B9DBAB0056E372 /* PDManifestV2.swift */; };
+		0DAAB495280CE46A00C0BB37 /* PandoraDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAAB494280CE46A00C0BB37 /* PandoraDelegate.swift */; };
+		0DAAB498280CEAB900C0BB37 /* PandoraDelegateImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAAB497280CEAB900C0BB37 /* PandoraDelegateImpl.swift */; };
+		0DAAB49E280DBF0100C0BB37 /* pandora.js in Resources */ = {isa = PBXBuildFile; fileRef = 0DAAB49D280DBF0100C0BB37 /* pandora.js */; };
 		0DACA72D27B3403300C628FE /* PDPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DACA72C27B3403300C628FE /* PDPopUpViewController.swift */; };
 		0DACA72F27B4971200C628FE /* PDContentRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DACA72E27B4971200C628FE /* PDContentRunner.swift */; };
 		0DACA73227B5487B00C628FE /* PDBackgroundRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DACA73127B5487B00C628FE /* PDBackgroundRunner.swift */; };
@@ -86,7 +89,6 @@
 		0D1F8645276F2CFE00D39CAF /* Pandora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pandora.swift; sourceTree = "<group>"; };
 		0D1F8647276F2FF600D39CAF /* PDManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDManifest.swift; sourceTree = "<group>"; };
 		0D1F8649276F346B00D39CAF /* Extensions.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Extensions.bundle; sourceTree = "<group>"; };
-		0D2D31ED2793C83500B84D80 /* chrome.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = chrome.js; path = ../../../../../../Pandora/web/build/chrome.js; sourceTree = "<group>"; };
 		0D2D31F027945C6200B84D80 /* BrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserView.swift; sourceTree = "<group>"; };
 		0D2D31F227945C7F00B84D80 /* BrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
 		0D2D31F5279463C300B84D80 /* UIViewController+TopMost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+TopMost.swift"; sourceTree = "<group>"; };
@@ -102,7 +104,11 @@
 		0D89505927C9F94600C13F95 /* PDContextMenuManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDContextMenuManager.swift; sourceTree = "<group>"; };
 		0D89505C27CA8B4A00C13F95 /* PDWebView+JSEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDWebView+JSEngine.swift"; sourceTree = "<group>"; };
 		0D89505E27CB258E00C13F95 /* PDURLSchemeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDURLSchemeHandler.swift; sourceTree = "<group>"; };
+		0D89506027D044CB00C13F95 /* PDBrowserActionRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDBrowserActionRunner.swift; sourceTree = "<group>"; };
 		0DA967E127B9DBAB0056E372 /* PDManifestV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDManifestV2.swift; sourceTree = "<group>"; };
+		0DAAB494280CE46A00C0BB37 /* PandoraDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PandoraDelegate.swift; sourceTree = "<group>"; };
+		0DAAB497280CEAB900C0BB37 /* PandoraDelegateImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PandoraDelegateImpl.swift; sourceTree = "<group>"; };
+		0DAAB49D280DBF0100C0BB37 /* pandora.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = pandora.js; path = ../../../../../Pandora/web/build/pandora.js; sourceTree = "<group>"; };
 		0DACA72C27B3403300C628FE /* PDPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDPopUpViewController.swift; sourceTree = "<group>"; };
 		0DACA72E27B4971200C628FE /* PDContentRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDContentRunner.swift; sourceTree = "<group>"; };
 		0DACA73127B5487B00C628FE /* PDBackgroundRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDBackgroundRunner.swift; sourceTree = "<group>"; };
@@ -133,7 +139,7 @@
 		0DD940E7275EE17D006865B6 /* ContextMenuService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextMenuService.swift; sourceTree = "<group>"; };
 		0DD940E927618691006865B6 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		0DD940ED2762401F006865B6 /* jsbridge.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsbridge.js; path = ../../../../../web/build/jsbridge.js; sourceTree = "<group>"; };
-		0DFC4CEC27BC815A001B73A0 /* background.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = background.html; path = ../../../../../web/build/background.html; sourceTree = "<group>"; };
+		0DFC4CEC27BC815A001B73A0 /* background.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = background.html; sourceTree = "<group>"; };
 		0DFC4CEE27BDD659001B73A0 /* GCWebView+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GCWebView+ContextMenu.swift"; sourceTree = "<group>"; };
 		8615C5107E5BE2A40D6A4391 /* Pods-GCWebContainerDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GCWebContainerDemo.release.xcconfig"; path = "Target Support Files/Pods-GCWebContainerDemo/Pods-GCWebContainerDemo.release.xcconfig"; sourceTree = "<group>"; };
 		B4A451F770A9FC2F4D81C871 /* Pods_GCWebContainerDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GCWebContainerDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -168,12 +174,15 @@
 		0D1F863E276F2BE900D39CAF /* Pandora */ = {
 			isa = PBXGroup;
 			children = (
+				0DAAB499280DBDCE00C0BB37 /* Resources */,
 				0D89505B27C9FD5F00C13F95 /* ContextMenu */,
 				0DFE60A1278496E200ACD945 /* JSServices */,
 				0DFE60A0278496CE00ACD945 /* core */,
+				0D1F8649276F346B00D39CAF /* Extensions.bundle */,
 				0DBE24F22786703E00D9FC6F /* PDWebView.swift */,
 				0D89505C27CA8B4A00C13F95 /* PDWebView+JSEngine.swift */,
 				0D2D31FE2798E88700B84D80 /* PDServiceConfigImpl.swift */,
+				0DAAB494280CE46A00C0BB37 /* PandoraDelegate.swift */,
 				0D89505E27CB258E00C13F95 /* PDURLSchemeHandler.swift */,
 				0D830A2B27AD2C600017EFF0 /* LocalStorage.swift */,
 				0DACA72C27B3403300C628FE /* PDPopUpViewController.swift */,
@@ -187,6 +196,7 @@
 				0D2D31FD27964F2800B84D80 /* Extension */,
 				0D2D31F027945C6200B84D80 /* BrowserView.swift */,
 				0D2D31F227945C7F00B84D80 /* BrowserViewController.swift */,
+				0DAAB497280CEAB900C0BB37 /* PandoraDelegateImpl.swift */,
 				0D2D31F72794F92D00B84D80 /* TabsManagerViewController.swift */,
 				0D1F8629276DD75600D39CAF /* BrowserManager.swift */,
 				0DC52B4727A2247B00EC35AB /* TabsManager.swift */,
@@ -220,10 +230,31 @@
 			path = ContextMenu;
 			sourceTree = "<group>";
 		};
+		0DAAB496280CE97C00C0BB37 /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				0D2D31F4279463A500B84D80 /* Extension */,
+				0D1F8628276DD73600D39CAF /* Pages */,
+				0D1F861D276CE22400D39CAF /* AppDelegate.swift */,
+				0D1F8621276DC83300D39CAF /* SceneDelegate.swift */,
+			);
+			path = Demo;
+			sourceTree = "<group>";
+		};
+		0DAAB499280DBDCE00C0BB37 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0DAAB49D280DBF0100C0BB37 /* pandora.js */,
+				0DFC4CEC27BC815A001B73A0 /* background.html */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		0DACA73027B5486200C628FE /* Runner */ = {
 			isa = PBXGroup;
 			children = (
 				0DACA73127B5487B00C628FE /* PDBackgroundRunner.swift */,
+				0D89506027D044CB00C13F95 /* PDBrowserActionRunner.swift */,
 				0DACA73327B5488F00C628FE /* PDPopUpRunner.swift */,
 				0DACA72E27B4971200C628FE /* PDContentRunner.swift */,
 			);
@@ -251,19 +282,15 @@
 		0DD940B2275EDEBE006865B6 /* GCWebContainerDemo */ = {
 			isa = PBXGroup;
 			children = (
+				0DAAB496280CE97C00C0BB37 /* Demo */,
 				0D2D31EF279433A400B84D80 /* Browser */,
 				0D1F863E276F2BE900D39CAF /* Pandora */,
-				0D1F8623276DC88200D39CAF /* Info.plist */,
 				0DD940D1275EDF00006865B6 /* GCWebContainer */,
-				0D1F8628276DD73600D39CAF /* Pages */,
-				0D2D31F4279463A500B84D80 /* Extension */,
+				0DD940B9275EDEC0006865B6 /* Preview Content */,
 				0DD940B3275EDEBE006865B6 /* GCWebContainerDemoApp.swift */,
 				0DD940B5275EDEBE006865B6 /* ContentView.swift */,
-				0D1F861D276CE22400D39CAF /* AppDelegate.swift */,
-				0D1F8621276DC83300D39CAF /* SceneDelegate.swift */,
+				0D1F8623276DC88200D39CAF /* Info.plist */,
 				0DD940B7275EDEC0006865B6 /* Assets.xcassets */,
-				0DD940B9275EDEC0006865B6 /* Preview Content */,
-				0D1F8649276F346B00D39CAF /* Extensions.bundle */,
 			);
 			path = GCWebContainerDemo;
 			sourceTree = "<group>";
@@ -358,9 +385,7 @@
 		0DD940EC27624010006865B6 /* javascript */ = {
 			isa = PBXGroup;
 			children = (
-				0DFC4CEC27BC815A001B73A0 /* background.html */,
 				0DD940ED2762401F006865B6 /* jsbridge.js */,
-				0D2D31ED2793C83500B84D80 /* chrome.js */,
 			);
 			path = javascript;
 			sourceTree = "<group>";
@@ -470,9 +495,9 @@
 			files = (
 				0DD940BB275EDEC0006865B6 /* Preview Assets.xcassets in Resources */,
 				0D1F864A276F346B00D39CAF /* Extensions.bundle in Resources */,
-				0D2D31EE2793C83500B84D80 /* chrome.js in Resources */,
 				0DD940B8275EDEC0006865B6 /* Assets.xcassets in Resources */,
 				0DFC4CED27BC815A001B73A0 /* background.html in Resources */,
+				0DAAB49E280DBF0100C0BB37 /* pandora.js in Resources */,
 				0DD940EE2762401F006865B6 /* jsbridge.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -535,6 +560,7 @@
 				0DACA72F27B4971200C628FE /* PDContentRunner.swift in Sources */,
 				0DFC4CEF27BDD659001B73A0 /* GCWebView+ContextMenu.swift in Sources */,
 				0D2D31F82794F92D00B84D80 /* TabsManagerViewController.swift in Sources */,
+				0DAAB495280CE46A00C0BB37 /* PandoraDelegate.swift in Sources */,
 				0D89505F27CB258E00C13F95 /* PDURLSchemeHandler.swift in Sources */,
 				0DBE24F32786703E00D9FC6F /* PDWebView.swift in Sources */,
 				0D1F8644276F2C5100D39CAF /* PDManager.swift in Sources */,
@@ -559,6 +585,7 @@
 				0DD940B6275EDEBE006865B6 /* ContentView.swift in Sources */,
 				0D1F862A276DD75600D39CAF /* BrowserManager.swift in Sources */,
 				0DD940DA275EDF88006865B6 /* String+base64.swift in Sources */,
+				0DAAB498280CEAB900C0BB37 /* PandoraDelegateImpl.swift in Sources */,
 				0D1F862C276DE0EE00D39CAF /* BrowserMenuController.swift in Sources */,
 				0DACA72D27B3403300C628FE /* PDPopUpViewController.swift in Sources */,
 				0D830A2A27AD287E0017EFF0 /* LocalStorageService.swift in Sources */,
@@ -572,6 +599,7 @@
 				0DA967E227B9DBAB0056E372 /* PDManifestV2.swift in Sources */,
 				0DC52B4827A2247B00EC35AB /* TabsManager.swift in Sources */,
 				0D84542E2781974900E18BDE /* TabsService.swift in Sources */,
+				0D89506127D044CB00C13F95 /* PDBrowserActionRunner.swift in Sources */,
 				0D1F8620276DC73600D39CAF /* GCDemoHomeController.swift in Sources */,
 				0D1F8622276DC83300D39CAF /* SceneDelegate.swift in Sources */,
 				0DBE24F52786782900D9FC6F /* GCWebViewActionHandler.swift in Sources */,

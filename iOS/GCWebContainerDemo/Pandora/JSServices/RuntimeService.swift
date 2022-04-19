@@ -45,19 +45,20 @@ class RuntimeService: BaseJSService, JSServiceHandler {
             let sendResponseFn = {(param:  [String: Any],
                                    webView: GCWebView?,
                                    contentWorld: WKContentWorld?) -> Void in
-                guard let data: [String: Any] = params["response"] as? [String: Any] else {
+                guard let data: [String: Any] = params["response"] as? [String: Any],
+                      let callback = message.callback else {
                     return
                 }
-                let paramsStrBeforeFix = data.ext.toString()
-                let paramsStr = JSServiceUtil.fixUnicodeCtrlCharacters(paramsStrBeforeFix ?? "")
-                let sendResponseScript = "\(message.callback ?? "")(\(paramsStr));";
                 if let contentWorld = contentWorld {
-                    webView?.evaluateJavaScript(sendResponseScript,
-                                                in: nil,
-                                                in: contentWorld,
-                                                completionHandler: nil)
+                    webView?.jsEngine?.callFunction(callback,
+                                                    params: data,
+                                                    in: nil,
+                                                    in: contentWorld,
+                                                    completion: nil)
                 } else {
-                    webView?.evaluateJavaScript(sendResponseScript, completionHandler: nil)
+                    webView?.jsEngine?.callFunction(callback,
+                                                    params: data,
+                                                    completion: nil)
                 }
             }
             let extensionId = params["extensionId"] as? String

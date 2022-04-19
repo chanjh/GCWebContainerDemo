@@ -7,13 +7,13 @@
 
 import Foundation
 
-protocol BrowerTabManagerInterface {
-    func addTab(_ url: URL?) -> Tab?
-    func removeTabs(_ tabs: [Int])
-}
+//protocol BrowerTabManagerInterface {
+//    func addTab(_ url: URL?) -> Tab?
+//    func removeTabs(_ tabs: [Int])
+//}
 
 protocol BrowserModelConfig: WebContainerModelConfig {
-    var tabManager: BrowerTabManagerInterface { get }
+//    var tabManager: BrowerTabManagerInterface { get }
 }
 
 class BrowserBaseJSService: BaseJSService {
