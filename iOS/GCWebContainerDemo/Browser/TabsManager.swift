@@ -92,7 +92,7 @@ struct TabMutedInfo {
 class TabsManager {
     static let shared = TabsManager()
     
-    private var pool: [GCWebView] = [];
+    private var pool: [PDWebView] = [];
     
     var count: Int { return pool.count }
     
@@ -107,7 +107,7 @@ class TabsManager {
     }
     
     func makeBrowser(model: WebContainerModelConfig? = nil,
-                     ui: WebContainerUIConfig? = nil) -> GCWebView {
+                     ui: WebContainerUIConfig? = nil) -> PDWebView {
         let webView = BrowserManager.shared.makeBrowser(model: model, ui: ui)
         pool.append(webView)
         return webView
@@ -115,7 +115,7 @@ class TabsManager {
     
     func makeBrowserAction(model: WebContainerModelConfig? = nil,
                            ui: WebContainerUIConfig? = nil,
-                           pdId: String) -> GCWebView {
+                           pdId: String) -> PDWebView {
         let webView = BrowserManager.shared.makeBrowserActionBrowser(model: model, ui: ui, pdId: pdId)
         pool.append(webView)
         return webView
@@ -131,11 +131,11 @@ class TabsManager {
         return pool[index].url?.relativeString ?? "\(index)"
     }
     
-    func browser(at index: Int) -> GCWebView? {
+    func browser(at index: Int) -> PDWebView? {
         return pool[index]
     }
     
-    func browser(for identifier: Int) -> GCWebView? {
+    func browser(for identifier: Int) -> PDWebView? {
         return pool.first { $0.identifier == identifier }
     }
     

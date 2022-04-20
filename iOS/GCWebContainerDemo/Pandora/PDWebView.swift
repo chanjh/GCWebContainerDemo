@@ -70,6 +70,16 @@ class PDWebView: GCWebView {
         }
     }
     
+    func pd_addChromeBridge() {
+        if let path  = Bundle.main.path(forResource: "pandora", ofType: "js"),
+           let chrome = try? String(contentsOfFile: path) {
+            let userScript = WKUserScript(source: chrome,
+                                          injectionTime: .atDocumentStart,
+                                          forMainFrameOnly: true)
+            configuration.userContentController.addUserScript(userScript)
+        }
+    }
+    
     private func _injectAllContentJS() {
 //        pd_addChromeBridge()
         if case .content = type {
@@ -87,6 +97,31 @@ class PDWebView: GCWebView {
     }
 }
 
+extension PDWebView {
+    override
+    func load(_ request: URLRequest) -> WKNavigation? {
+        if let url = request.url,
+           url.scheme == PDURLSchemeHandler.scheme {
+            let document = try? FileManager.default.url(for: .documentDirectory,
+                                                           in: .userDomainMask,
+                                                           appropriateFor: nil,
+                                                           create: false)
+            let unzip = "file://\(document?.path ?? "")/\(PDFileManager.unzipPath)/"
+            let res = url.absoluteString.replacingOccurrences(of: "\(PDURLSchemeHandler.scheme)://", with: unzip, options: .literal, range: nil)
+            if let fileUrl = URL(string: res), let unzipUrl = URL(string: unzip),
+               let pandora = PDManager.shared.pandoras.first(where: { $0.id == url.host }) {
+                let runner = PDManager.shared.makeBrowserActionRunner(pandora: pandora,
+                                                                      webView: self)
+                runner.run()
+                willLoadRequest()
+                return loadFileURL(fileUrl, allowingReadAccessTo: unzipUrl)
+            }
+        }
+        willLoadRequest()
+        return super.load(request)
+    }
+}
+
 extension PDWebView: GCWebViewActionObserver {
     // todo
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -98,18 +133,3 @@ extension PDWebView: GCWebViewActionObserver {
 //        bgRunner?.evaluateJavaScript(onInstalledScript, completionHandler: nil)
     }
 }
-
-extension GCWebView {
-    func pd_addChromeBridge() {
-        if let path  = Bundle.main.path(forResource: "pandora", ofType: "js"),
-           let chrome = try? String(contentsOfFile: path) {
-            let userScript = WKUserScript(source: chrome,
-                                          injectionTime: .atDocumentStart,
-                                          forMainFrameOnly: true)
-            configuration.userContentController.addUserScript(userScript)
-        }
-    }
-}
-
-// todo: 这里需要感知一些生命周期
-// 注入 contant js

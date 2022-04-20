@@ -96,7 +96,7 @@ extension BrowserViewController: BrowserViewDelegate, BrowserMenuControllerDeleg
         
     }
     // --- TabsManagerViewControllerDelegate
-    func didSelectWebView(_ webView: GCWebView) {
+    func didSelectWebView(_ webView: PDWebView) {
         browserView.reload(webView: webView)
     }
     

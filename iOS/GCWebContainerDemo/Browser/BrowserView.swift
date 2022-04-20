@@ -16,7 +16,7 @@ protocol BrowserViewToolBarDelegate: NSObject {
 protocol BrowserViewDelegate: BrowserViewToolBarDelegate {}
 
 class BrowserView: UIView {
-    var gcWebView: GCWebView?
+    var gcWebView: PDWebView?
     weak var delegate: BrowserViewDelegate?
     lazy var toolBar: UIToolbar = {
         let tool = UIToolbar()
@@ -45,7 +45,7 @@ class BrowserView: UIView {
         textField.delegate = self
         return textField
     }()
-    init(_ webView: GCWebView? = nil) {
+    init(_ webView: PDWebView? = nil) {
         self.gcWebView = webView
         super.init(frame: .zero)
         webView?.browserView = self
@@ -89,7 +89,7 @@ class BrowserView: UIView {
         addressView.text = url.relativeString
     }
     
-    func reload(webView: GCWebView) {
+    func reload(webView: PDWebView) {
         gcWebView?.removeFromSuperview()
         self.gcWebView = webView
         webView.browserView = self
