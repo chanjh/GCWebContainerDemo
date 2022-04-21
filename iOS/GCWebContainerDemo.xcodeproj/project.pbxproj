@@ -40,6 +40,7 @@
 		0DAAB495280CE46A00C0BB37 /* PandoraDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAAB494280CE46A00C0BB37 /* PandoraDelegate.swift */; };
 		0DAAB498280CEAB900C0BB37 /* PandoraDelegateImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAAB497280CEAB900C0BB37 /* PandoraDelegateImpl.swift */; };
 		0DAAB49E280DBF0100C0BB37 /* pandora.js in Resources */ = {isa = PBXBuildFile; fileRef = 0DAAB49D280DBF0100C0BB37 /* pandora.js */; };
+		0DAAB4C32810D9CA00C0BB37 /* PDBaseJSService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAAB4C22810D9CA00C0BB37 /* PDBaseJSService.swift */; };
 		0DACA72D27B3403300C628FE /* PDPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DACA72C27B3403300C628FE /* PDPopUpViewController.swift */; };
 		0DACA72F27B4971200C628FE /* PDContentRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DACA72E27B4971200C628FE /* PDContentRunner.swift */; };
 		0DACA73227B5487B00C628FE /* PDBackgroundRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DACA73127B5487B00C628FE /* PDBackgroundRunner.swift */; };
@@ -109,6 +110,7 @@
 		0DAAB494280CE46A00C0BB37 /* PandoraDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PandoraDelegate.swift; sourceTree = "<group>"; };
 		0DAAB497280CEAB900C0BB37 /* PandoraDelegateImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PandoraDelegateImpl.swift; sourceTree = "<group>"; };
 		0DAAB49D280DBF0100C0BB37 /* pandora.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = pandora.js; path = ../../../../../Pandora/web/build/pandora.js; sourceTree = "<group>"; };
+		0DAAB4C22810D9CA00C0BB37 /* PDBaseJSService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDBaseJSService.swift; sourceTree = "<group>"; };
 		0DACA72C27B3403300C628FE /* PDPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDPopUpViewController.swift; sourceTree = "<group>"; };
 		0DACA72E27B4971200C628FE /* PDContentRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDContentRunner.swift; sourceTree = "<group>"; };
 		0DACA73127B5487B00C628FE /* PDBackgroundRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDBackgroundRunner.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				0D2D31FE2798E88700B84D80 /* PDServiceConfigImpl.swift */,
 				0DAAB494280CE46A00C0BB37 /* PandoraDelegate.swift */,
 				0D89505E27CB258E00C13F95 /* PDURLSchemeHandler.swift */,
+				0DAAB4C22810D9CA00C0BB37 /* PDBaseJSService.swift */,
 				0D830A2B27AD2C600017EFF0 /* LocalStorage.swift */,
 				0DACA72C27B3403300C628FE /* PDPopUpViewController.swift */,
 			);
@@ -591,6 +594,7 @@
 				0D830A2A27AD287E0017EFF0 /* LocalStorageService.swift in Sources */,
 				0DACA73427B5488F00C628FE /* PDPopUpRunner.swift in Sources */,
 				0DD940E0275EDF9F006865B6 /* ThreadSafe.swift in Sources */,
+				0DAAB4C32810D9CA00C0BB37 /* PDBaseJSService.swift in Sources */,
 				0DD940E5275EE12D006865B6 /* JSServiceType.swift in Sources */,
 				0DD940E8275EE17D006865B6 /* ContextMenuService.swift in Sources */,
 				0D8454302781982100E18BDE /* RuntimeService.swift in Sources */,

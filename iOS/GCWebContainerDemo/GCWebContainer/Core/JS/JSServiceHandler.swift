@@ -40,19 +40,7 @@ class BaseJSService: NSObject {
     }
     
     func findSenderId(on message: JSServiceMessageInfo) -> String? {
-        let pdWebView = (self.webView as? PDWebView)
-        switch pdWebView?.type {
-        case .popup(let id):
-            return id
-        case .background(let id):
-            return id
-        case .browserAction(let id):
-            return id
-        case .content:
-            return message.contentWorld.name ?? "\(webView?.identifier ?? 0)"
-        case .none :
-            return nil
-        }
+        return message.contentWorld.name ?? "\(webView?.identifier ?? 0)"
     }
 }
 

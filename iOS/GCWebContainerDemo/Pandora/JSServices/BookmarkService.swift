@@ -7,7 +7,7 @@
 
 import Foundation
 
-class BookmarkService: BaseJSService, JSServiceHandler {
+class BookmarkService: PDBaseJSService, JSServiceHandler {
     var handleServices: [JSServiceType] {
         return [.bookmarksCreate,
                 .bookmarksGetTree,

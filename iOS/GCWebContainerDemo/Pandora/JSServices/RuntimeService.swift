@@ -7,7 +7,7 @@
 
 import WebKit
 
-class RuntimeService: BaseJSService, JSServiceHandler {
+class RuntimeService: PDBaseJSService, JSServiceHandler {
     var handleServices: [JSServiceType] {
         return [.runtimeGetPlatformInfo,
                 .runtimeSendMessage,
@@ -82,7 +82,7 @@ class RuntimeService: BaseJSService, JSServiceHandler {
                let pandora = PDManager.shared.pandoras.first(where: { $0.id == senderId }),
                 let optionURL = pandora.optionPageFilePath {
                 // todo: open_in_tab
-                ui?.navigator?.openURL(OpenURLOptions(url: optionURL))
+                _ = ui?.navigator?.openURL(OpenURLOptions(url: optionURL))
                 if let callback = message.callback {
                     // todo: if error
                     webView?.jsEngine?.callFunction(callback, params: nil, completion: nil)

@@ -11,7 +11,7 @@ enum TabStatus {
     
 }
 
-struct Tab {
+class Tab {
     var active: Bool? = nil
     var audible: Bool? = nil
     var autoDiscardable: Bool? = nil
@@ -33,6 +33,7 @@ struct Tab {
     var url: String? = nil
     var windowId: Int? = nil // todo, 不是可选
     var width: Int? = nil
+    weak var webView: PDWebView?
     
     func toMap() -> Dictionary<String, Any> {
         return ["id": "\(id ?? 0)"];
@@ -107,22 +108,15 @@ class TabsManager {
     }
     
     func makeBrowser(model: WebContainerModelConfig? = nil,
-                     ui: WebContainerUIConfig? = nil) -> PDWebView {
-        let webView = BrowserManager.shared.makeBrowser(model: model, ui: ui)
-        pool.append(webView)
-        return webView
-    }
-    
-    func makeBrowserAction(model: WebContainerModelConfig? = nil,
-                           ui: WebContainerUIConfig? = nil,
-                           pdId: String) -> PDWebView {
-        let webView = BrowserManager.shared.makeBrowserActionBrowser(model: model, ui: ui, pdId: pdId)
+                     ui: WebContainerUIConfig? = nil,
+                     for url: URL?) -> PDWebView {
+        let webView = BrowserManager.shared.makeBrowser(model: model, ui: ui, for: url)
         pool.append(webView)
         return webView
     }
     
     func tabInfo(_ webView: GCWebView) -> Tab {
-        var tab = Tab(id: webView.identifier)
+        let tab = Tab(id: webView.identifier)
         tab.id = webView.identifier
         return tab
     }

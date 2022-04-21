@@ -7,7 +7,7 @@
 
 import Foundation
 
-class LocalStorageService: BaseJSService, JSServiceHandler {
+class LocalStorageService: PDBaseJSService, JSServiceHandler {
     var handleServices: [JSServiceType] {
         return [.localStorageSet, .localStorageGet, .localStorageClear]
     }

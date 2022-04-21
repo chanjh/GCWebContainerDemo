@@ -16,7 +16,7 @@ class BrowserViewController: UIViewController {
     init(url: URL? = nil) {
         self.url = url
         self.browserView = BrowserView()
-        let webView = TabsManager.shared.makeBrowser(model: browserView, ui: browserView)
+        let webView = TabsManager.shared.makeBrowser(model: browserView, ui: browserView, for: url)
         browserView.reload(webView: webView)
         if let url = url {        
             browserView.load(url: url)
@@ -101,10 +101,7 @@ extension BrowserViewController: BrowserViewDelegate, BrowserMenuControllerDeleg
     }
     
     func didAddUrl(_ url: URL?) -> Tab? {
-        let makeBrowserAction = url?.scheme == PDURLSchemeHandler.scheme && PDManager.shared.pandoras.contains(where: { $0.id == url?.host })
-        let webView = makeBrowserAction ?
-        TabsManager.shared.makeBrowserAction(model: browserView, ui: browserView, pdId: (url?.host)!):
-        TabsManager.shared.makeBrowser(model: browserView, ui: browserView)
+        let webView = TabsManager.shared.makeBrowser(model: browserView, ui: browserView, for: url)
         browserView.reload(webView: webView)
         if let url = url {        
             browserView.load(url: url)
@@ -142,7 +139,7 @@ extension BrowserViewController: TabsManagerListerner {
            if let web = TabsManager.shared.browser(at: 0) {
                browserView.reload(webView: web)
            } else {
-               let web = TabsManager.shared.makeBrowser(model: browserView, ui: browserView)
+               let web = TabsManager.shared.makeBrowser(model: browserView, ui: browserView, for: nil)
                browserView.reload(webView: web)
            }
         }

@@ -134,10 +134,7 @@ extension BrowserView: WebContainerUIConfig,
     }
     
     func addTab(_ url: URL?) -> Tab? {
-        let makeBrowserAction = url?.scheme == PDURLSchemeHandler.scheme && PDManager.shared.pandoras.contains(where: { $0.id == url?.host })
-        let webView = makeBrowserAction ?
-        TabsManager.shared.makeBrowserAction(model: self, ui: self, pdId: (url?.host)!):
-        TabsManager.shared.makeBrowser(model: self, ui: self)
+        let webView = TabsManager.shared.makeBrowser(model: self, ui: self, for: url)
         reload(webView: webView)
         if let url = url {
             load(url: url)
