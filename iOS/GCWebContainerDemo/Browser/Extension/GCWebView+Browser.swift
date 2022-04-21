@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+@_exported import GCWebContainer
 extension GCWebView {
     var browserView: BrowserView? {
         get {

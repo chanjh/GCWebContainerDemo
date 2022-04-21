@@ -9,7 +9,7 @@ import Foundation
 
 extension JSEngine {
     
-    public var eventCenter: EventCenter {
+    var eventCenter: EventCenter {
         set { objc_setAssociatedObject(self, &JSEngine.eventCenterKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
         get {
             guard let value = objc_getAssociatedObject(self, &JSEngine.eventCenterKey) as? EventCenter else {
