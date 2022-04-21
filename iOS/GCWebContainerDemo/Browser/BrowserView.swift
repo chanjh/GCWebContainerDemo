@@ -16,7 +16,7 @@ protocol BrowserViewToolBarDelegate: NSObject {
 protocol BrowserViewDelegate: BrowserViewToolBarDelegate {}
 
 class BrowserView: UIView {
-    var gcWebView: GCWebView?
+    var gcWebView: PDWebView?
     weak var delegate: BrowserViewDelegate?
     lazy var toolBar: UIToolbar = {
         let tool = UIToolbar()
@@ -45,7 +45,7 @@ class BrowserView: UIView {
         textField.delegate = self
         return textField
     }()
-    init(_ webView: GCWebView? = nil) {
+    init(_ webView: PDWebView? = nil) {
         self.gcWebView = webView
         super.init(frame: .zero)
         webView?.browserView = self
@@ -89,7 +89,7 @@ class BrowserView: UIView {
         addressView.text = url.relativeString
     }
     
-    func reload(webView: GCWebView) {
+    func reload(webView: PDWebView) {
         gcWebView?.removeFromSuperview()
         self.gcWebView = webView
         webView.browserView = self
@@ -134,10 +134,7 @@ extension BrowserView: WebContainerUIConfig,
     }
     
     func addTab(_ url: URL?) -> Tab? {
-        let makeBrowserAction = url?.scheme == PDURLSchemeHandler.scheme && PDManager.shared.pandoras.contains(where: { $0.id == url?.host })
-        let webView = makeBrowserAction ?
-        TabsManager.shared.makeBrowserAction(model: self, ui: self, pdId: (url?.host)!):
-        TabsManager.shared.makeBrowser(model: self, ui: self)
+        let webView = TabsManager.shared.makeBrowser(model: self, ui: self, for: url)
         reload(webView: webView)
         if let url = url {
             load(url: url)

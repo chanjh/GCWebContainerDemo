@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ContextMenuService: BaseJSService, JSServiceHandler {
+class ContextMenuService: PDBaseJSService, JSServiceHandler {
     var handleServices: [JSServiceType] {
         return [.setContextMenu, .clearContextMenu]
     }

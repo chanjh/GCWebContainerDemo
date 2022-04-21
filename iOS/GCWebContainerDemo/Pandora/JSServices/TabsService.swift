@@ -8,7 +8,7 @@
 import UIKit
 import WebKit
 
-class TabsService: BaseJSService, JSServiceHandler {
+class TabsService: PDBaseJSService, JSServiceHandler {
     var handleServices: [JSServiceType] {
         return [.createTab, .removeTab, .queryTab, .tabSendMessage]
     }

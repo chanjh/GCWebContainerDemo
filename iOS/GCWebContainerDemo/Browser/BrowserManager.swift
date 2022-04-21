@@ -32,7 +32,17 @@ class BrowserManager: NSObject {
     }
     
     func makeBrowser(model: WebContainerModelConfig? = nil,
-                     ui: WebContainerUIConfig? = nil) -> PDWebView {
+                     ui: WebContainerUIConfig? = nil,
+                     for url: URL? = nil) -> PDWebView {
+        let makeBrowserAction = url?.scheme == PDURLSchemeHandler.scheme && PDManager.shared.pandoras.contains(where: { $0.id == url?.host })
+        if makeBrowserAction {
+            return makeBrowserActionBrowser(model: model, ui: ui, pdId: (url?.host)!)
+        }
+        return makeContentBrowser(model: model, ui: ui)
+    }
+    
+    private func makeContentBrowser(model: WebContainerModelConfig? = nil,
+                                    ui: WebContainerUIConfig? = nil) -> PDWebView {
         let webView = PDWebView(frame: .zero, type: .content, model: model, ui: ui)
         webView.identifier = Int(Int64.random(in: 0...9007199254740990))
         print("BrowserManager Create Browser \(webView.identifier ?? 0)")
@@ -41,7 +51,7 @@ class BrowserManager: NSObject {
         return webView
     }
     
-    func makeBrowserActionBrowser(model: WebContainerModelConfig? = nil,
+    private func makeBrowserActionBrowser(model: WebContainerModelConfig? = nil,
                                   ui: WebContainerUIConfig? = nil,
                                   pdId: String) -> PDWebView {
         let webView = PDWebView(frame: .zero, type: .browserAction(pdId), model: model, ui: ui)
@@ -68,17 +78,5 @@ class BrowserManager: NSObject {
     }
     func remove(_ identifier: Int) {
         pool.removeAll { $0.identifier == identifier }
-    }
-}
-
-private var kGCWebViewIDKey: UInt8 = 0
-extension GCWebView {
-    var identifier: Int? {
-        get {
-            return objc_getAssociatedObject(self, &kGCWebViewIDKey) as? Int
-        }
-        set(newValue) {
-            objc_setAssociatedObject(self, &kGCWebViewIDKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-        }
     }
 }

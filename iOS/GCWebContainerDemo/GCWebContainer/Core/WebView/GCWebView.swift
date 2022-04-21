@@ -65,31 +65,6 @@ class GCWebView: WebView, GCWebViewInterface {
 }
 
 extension GCWebView {
-    override
-    func load(_ request: URLRequest) -> WKNavigation? {
-        if let url = request.url,
-           url.scheme == PDURLSchemeHandler.scheme {
-            let document = try? FileManager.default.url(for: .documentDirectory,
-                                                           in: .userDomainMask,
-                                                           appropriateFor: nil,
-                                                           create: false)
-            let unzip = "file://\(document?.path ?? "")/\(PDFileManager.unzipPath)/"
-            let res = url.absoluteString.replacingOccurrences(of: "\(PDURLSchemeHandler.scheme)://", with: unzip, options: .literal, range: nil)
-            if let fileUrl = URL(string: res), let unzipUrl = URL(string: unzip),
-               let pandora = PDManager.shared.pandoras.first(where: { $0.id == url.host }) {
-                let runner = PDManager.shared.makeBrowserActionRunner(pandora: pandora,
-                                                                      webView: self as? PDWebView)
-                runner.run()
-                willLoadRequest()
-                return loadFileURL(fileUrl, allowingReadAccessTo: unzipUrl)
-            }
-        }
-        willLoadRequest()
-        return super.load(request)
-    }
-}
-
-extension GCWebView {
     private func _onAddModelConfig(_ model: WebContainerModelConfig?) {
         guard let model = model else { return }
         _model = model
@@ -108,5 +83,17 @@ extension GCWebView {
                 jsService.ui = ui
             }
         })
+    }
+}
+
+private var kGCWebViewIDKey: UInt8 = 0
+extension GCWebView {
+    var identifier: Int? {
+        get {
+            return objc_getAssociatedObject(self, &kGCWebViewIDKey) as? Int
+        }
+        set(newValue) {
+            objc_setAssociatedObject(self, &kGCWebViewIDKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
     }
 }
