@@ -80,15 +80,3 @@ class BrowserManager: NSObject {
         pool.removeAll { $0.identifier == identifier }
     }
 }
-
-private var kGCWebViewIDKey: UInt8 = 0
-extension GCWebView {
-    var identifier: Int? {
-        get {
-            return objc_getAssociatedObject(self, &kGCWebViewIDKey) as? Int
-        }
-        set(newValue) {
-            objc_setAssociatedObject(self, &kGCWebViewIDKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-        }
-    }
-}
