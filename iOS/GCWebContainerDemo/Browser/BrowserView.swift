@@ -6,6 +6,8 @@
 //
 
 import SnapKit
+@_exported import GCWebContainer
+@_exported import Pandora
 
 protocol BrowserViewToolBarDelegate: NSObject {
     func didClickTabs();

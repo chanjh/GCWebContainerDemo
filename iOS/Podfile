@@ -6,4 +6,5 @@ target 'GCWebContainerDemo' do
   pod 'SnapKit', '~> 5.0.0'
   pod 'Tiercel'
   pod 'GCWebContainer', :path=>'../../GCWebContainer'
+  pod 'Pandora', :path=>'../../Pandora/ios'
 end
