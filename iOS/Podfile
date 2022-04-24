@@ -7,4 +7,5 @@ target 'GCWebContainerDemo' do
   pod 'Tiercel'
   pod 'GCWebContainer', :path=>'../../GCWebContainer'
   pod 'Pandora', :path=>'../../Pandora/ios'
+  pod 'BrowserKit', :path=>'../../BrowserKit'
 end

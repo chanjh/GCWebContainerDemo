@@ -7,6 +7,9 @@
 
 import Foundation
 import UIKit
+@_exported import GCWebContainer
+@_exported import Pandora
+@_exported import BrowserKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

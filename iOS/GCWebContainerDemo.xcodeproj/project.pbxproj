@@ -12,18 +12,7 @@
 		0D1F8622276DC83300D39CAF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F8621276DC83300D39CAF /* SceneDelegate.swift */; };
 		0D1F8625276DD3BB00D39CAF /* GCMultiTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F8624276DD3BB00D39CAF /* GCMultiTabController.swift */; };
 		0D1F8627276DD51A00D39CAF /* GCBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F8626276DD51A00D39CAF /* GCBrowserViewController.swift */; };
-		0D1F862A276DD75600D39CAF /* BrowserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F8629276DD75600D39CAF /* BrowserManager.swift */; };
-		0D1F862C276DE0EE00D39CAF /* BrowserMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F862B276DE0EE00D39CAF /* BrowserMenuController.swift */; };
-		0D1F862E276E39C000D39CAF /* BookmarksManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F862D276E39C000D39CAF /* BookmarksManager.swift */; };
-		0D2D31F127945C6200B84D80 /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2D31F027945C6200B84D80 /* BrowserView.swift */; };
-		0D2D31F327945C7F00B84D80 /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2D31F227945C7F00B84D80 /* BrowserViewController.swift */; };
 		0D2D31F6279463C300B84D80 /* UIViewController+TopMost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2D31F5279463C300B84D80 /* UIViewController+TopMost.swift */; };
-		0D2D31F82794F92D00B84D80 /* TabsManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2D31F72794F92D00B84D80 /* TabsManagerViewController.swift */; };
-		0D2D31FA2796488000B84D80 /* GCWebView+Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2D31F92796488000B84D80 /* GCWebView+Browser.swift */; };
-		0D2D31FC27964E9700B84D80 /* BrowserBaseJSService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2D31FB27964E9700B84D80 /* BrowserBaseJSService.swift */; };
-		0DAAB498280CEAB900C0BB37 /* PandoraDelegateImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAAB497280CEAB900C0BB37 /* PandoraDelegateImpl.swift */; };
-		0DC52B4827A2247B00EC35AB /* TabsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC52B4727A2247B00EC35AB /* TabsManager.swift */; };
-		0DCBC5312783CB6B00DF5A0E /* GCExtensionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCBC5302783CB6B00DF5A0E /* GCExtensionController.swift */; };
 		0DD940B4275EDEBE006865B6 /* GCWebContainerDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD940B3275EDEBE006865B6 /* GCWebContainerDemoApp.swift */; };
 		0DD940B6275EDEBE006865B6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD940B5275EDEBE006865B6 /* ContentView.swift */; };
 		0DD940B8275EDEC0006865B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DD940B7275EDEC0006865B6 /* Assets.xcassets */; };
@@ -39,18 +28,7 @@
 		0D1F8623276DC88200D39CAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0D1F8624276DD3BB00D39CAF /* GCMultiTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCMultiTabController.swift; sourceTree = "<group>"; };
 		0D1F8626276DD51A00D39CAF /* GCBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCBrowserViewController.swift; sourceTree = "<group>"; };
-		0D1F8629276DD75600D39CAF /* BrowserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserManager.swift; sourceTree = "<group>"; };
-		0D1F862B276DE0EE00D39CAF /* BrowserMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserMenuController.swift; sourceTree = "<group>"; };
-		0D1F862D276E39C000D39CAF /* BookmarksManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksManager.swift; sourceTree = "<group>"; };
-		0D2D31F027945C6200B84D80 /* BrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserView.swift; sourceTree = "<group>"; };
-		0D2D31F227945C7F00B84D80 /* BrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
 		0D2D31F5279463C300B84D80 /* UIViewController+TopMost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+TopMost.swift"; sourceTree = "<group>"; };
-		0D2D31F72794F92D00B84D80 /* TabsManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsManagerViewController.swift; sourceTree = "<group>"; };
-		0D2D31F92796488000B84D80 /* GCWebView+Browser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GCWebView+Browser.swift"; sourceTree = "<group>"; };
-		0D2D31FB27964E9700B84D80 /* BrowserBaseJSService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserBaseJSService.swift; sourceTree = "<group>"; };
-		0DAAB497280CEAB900C0BB37 /* PandoraDelegateImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PandoraDelegateImpl.swift; sourceTree = "<group>"; };
-		0DC52B4727A2247B00EC35AB /* TabsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsManager.swift; sourceTree = "<group>"; };
-		0DCBC5302783CB6B00DF5A0E /* GCExtensionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCExtensionController.swift; sourceTree = "<group>"; };
 		0DD940B0275EDEBE006865B6 /* GCWebContainerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GCWebContainerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DD940B3275EDEBE006865B6 /* GCWebContainerDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCWebContainerDemoApp.swift; sourceTree = "<group>"; };
 		0DD940B5275EDEBE006865B6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -79,42 +57,16 @@
 			children = (
 				0D1F861F276DC73600D39CAF /* GCDemoHomeController.swift */,
 				0D1F8624276DD3BB00D39CAF /* GCMultiTabController.swift */,
-				0DCBC5302783CB6B00DF5A0E /* GCExtensionController.swift */,
 				0D1F8626276DD51A00D39CAF /* GCBrowserViewController.swift */,
-				0D1F862B276DE0EE00D39CAF /* BrowserMenuController.swift */,
 				0DD940E927618691006865B6 /* WebViewController.swift */,
 			);
 			path = Pages;
-			sourceTree = "<group>";
-		};
-		0D2D31EF279433A400B84D80 /* Browser */ = {
-			isa = PBXGroup;
-			children = (
-				0D2D31FD27964F2800B84D80 /* Extension */,
-				0D2D31F027945C6200B84D80 /* BrowserView.swift */,
-				0D2D31F227945C7F00B84D80 /* BrowserViewController.swift */,
-				0DAAB497280CEAB900C0BB37 /* PandoraDelegateImpl.swift */,
-				0D2D31F72794F92D00B84D80 /* TabsManagerViewController.swift */,
-				0D1F8629276DD75600D39CAF /* BrowserManager.swift */,
-				0DC52B4727A2247B00EC35AB /* TabsManager.swift */,
-				0D1F862D276E39C000D39CAF /* BookmarksManager.swift */,
-			);
-			path = Browser;
 			sourceTree = "<group>";
 		};
 		0D2D31F4279463A500B84D80 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
 				0D2D31F5279463C300B84D80 /* UIViewController+TopMost.swift */,
-			);
-			path = Extension;
-			sourceTree = "<group>";
-		};
-		0D2D31FD27964F2800B84D80 /* Extension */ = {
-			isa = PBXGroup;
-			children = (
-				0D2D31F92796488000B84D80 /* GCWebView+Browser.swift */,
-				0D2D31FB27964E9700B84D80 /* BrowserBaseJSService.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -152,7 +104,6 @@
 			isa = PBXGroup;
 			children = (
 				0DAAB496280CE97C00C0BB37 /* Demo */,
-				0D2D31EF279433A400B84D80 /* Browser */,
 				0DD940B9275EDEC0006865B6 /* Preview Content */,
 				0DD940B3275EDEBE006865B6 /* GCWebContainerDemoApp.swift */,
 				0DD940B5275EDEBE006865B6 /* ContentView.swift */,
@@ -302,23 +253,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D2D31F6279463C300B84D80 /* UIViewController+TopMost.swift in Sources */,
-				0D2D31F82794F92D00B84D80 /* TabsManagerViewController.swift in Sources */,
-				0DCBC5312783CB6B00DF5A0E /* GCExtensionController.swift in Sources */,
-				0D2D31FC27964E9700B84D80 /* BrowserBaseJSService.swift in Sources */,
-				0D1F862E276E39C000D39CAF /* BookmarksManager.swift in Sources */,
 				0D1F8625276DD3BB00D39CAF /* GCMultiTabController.swift in Sources */,
-				0D2D31F127945C6200B84D80 /* BrowserView.swift in Sources */,
 				0D1F8627276DD51A00D39CAF /* GCBrowserViewController.swift in Sources */,
-				0D2D31F327945C7F00B84D80 /* BrowserViewController.swift in Sources */,
 				0DD940B6275EDEBE006865B6 /* ContentView.swift in Sources */,
-				0D1F862A276DD75600D39CAF /* BrowserManager.swift in Sources */,
-				0DAAB498280CEAB900C0BB37 /* PandoraDelegateImpl.swift in Sources */,
-				0D1F862C276DE0EE00D39CAF /* BrowserMenuController.swift in Sources */,
 				0DD940B4275EDEBE006865B6 /* GCWebContainerDemoApp.swift in Sources */,
-				0DC52B4827A2247B00EC35AB /* TabsManager.swift in Sources */,
 				0D1F8620276DC73600D39CAF /* GCDemoHomeController.swift in Sources */,
 				0D1F8622276DC83300D39CAF /* SceneDelegate.swift in Sources */,
-				0D2D31FA2796488000B84D80 /* GCWebView+Browser.swift in Sources */,
 				0D1F861E276CE22400D39CAF /* AppDelegate.swift in Sources */,
 				0DD940EA27618691006865B6 /* WebViewController.swift in Sources */,
 			);
