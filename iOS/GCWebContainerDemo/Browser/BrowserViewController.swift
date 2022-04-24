@@ -125,7 +125,7 @@ extension BrowserViewController: BrowserViewDelegate, BrowserMenuControllerDeleg
 //    }
 }
 
-extension BrowserViewController: TabsManagerListerner {
+extension BrowserViewController: PDTabsEventListerner {
     func onActivated(tabId: Int) {
 
     }

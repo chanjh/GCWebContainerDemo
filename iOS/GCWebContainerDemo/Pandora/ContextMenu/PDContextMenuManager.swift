@@ -12,9 +12,11 @@ class PDContextMenuManager: NSObject {
     
     private var contextMenu: [MenuItem] = []
     
+    var tabsManager: IPandoraTabsManager? { PDManager.shared.delegate?.tabsManager }
+    
     override init() {
         super.init()
-        BrowserManager.shared.addObserver(self)
+        tabsManager?.addObserver(self)
     }
 
     func addMenu(id: String,
@@ -30,7 +32,7 @@ class PDContextMenuManager: NSObject {
             PDContextMenuManager.shared.onMenuClicked(in: browser, at: menu)
         }
         self.contextMenu.append(menu)
-        BrowserManager.shared.pool.forEach {
+        tabsManager?.pool.forEach {
             if let uiMenu = $0.makeMenuItem(uid: id,
                                             title: title,
                                             action: fn) {
@@ -40,10 +42,18 @@ class PDContextMenuManager: NSObject {
     }
 }
 
-extension PDContextMenuManager: BrowserManagerObserver {
-    @objc
-    func browserManager(_ browserManager: BrowserManager,
-                        didCreate webView: GCWebView?) {
+extension PDContextMenuManager: PDTabsEventListerner {
+    func onActivated(tabId: Int) {
+    }
+    
+    func onRemoved(tabId: Int, removeInfo: TabRemoveInfo) {
+    }
+    
+    func onUpdated(tabId: Int, changeInfo: TabChangeInfo) {
+        if (!(changeInfo.audible ?? false)) {
+            return
+        }
+        let webView: PDWebView? = tabsManager?.webView(in: tabId)
         contextMenu.forEach { menu in
             let fn: GCWebView.MenuAction = { browser in
                 menu.action(browser)
@@ -56,13 +66,8 @@ extension PDContextMenuManager: BrowserManagerObserver {
             }
         }
     }
-    
-    @objc
-    func browserManager(_ browserManager: BrowserManager,
-                        didRemove webView: GCWebView?) {
-        
-    }
 }
+
 
 fileprivate extension PDContextMenuManager {
     func onMenuClicked(in browser: GCWebView?, at menu: MenuItem) {

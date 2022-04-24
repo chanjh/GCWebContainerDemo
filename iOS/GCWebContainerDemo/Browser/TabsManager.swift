@@ -7,103 +7,21 @@
 
 import Foundation
 
-enum TabStatus {
-    
-}
-
-class Tab {
-    var active: Bool? = nil
-    var audible: Bool? = nil
-    var autoDiscardable: Bool? = nil
-    var discarded: Bool? = nil
-    var favIconUrl: String? = nil
-    var groupId: Int? = nil
-    var height: Int? = nil
-    var highlighted: Bool? = nil
-    var id: Int? = nil
-    var incognito: Bool? = nil // todo, 不是可选
-    var index: Int? = nil // todo, 不是可选
-    var mutedInfo: Any? = nil; // todo
-    var openerTabId: Int? = nil
-    var pendingUrl: String? = nil
-    var pinned: Bool? = nil // todo, 不是可选
-    var sessionId: String? = nil
-    var status: TabStatus? = nil
-    var title: String? = nil
-    var url: String? = nil
-    var windowId: Int? = nil // todo, 不是可选
-    var width: Int? = nil
-    weak var webView: PDWebView?
-    
-    func toMap() -> Dictionary<String, Any> {
-        return ["id": "\(id ?? 0)"];
-    }
-    
-    init(id: Int? ) {
-        self.id = id
-    }
-}
-
-class TabRemoveInfo: NSObject {
-    let isWindowClosing: Bool;
-    let windowId: Bool;
-    init(isWindowClosing: Bool, windowId: Bool) {
-        self.isWindowClosing = isWindowClosing
-        self.windowId = windowId
-        super.init()
-    }
-    func toString() -> String {
-        return "{}"
-    }
-}
-class TabChangeInfo: NSObject {
-    let audible: Bool? = nil
-    let autoDiscardable: Bool? = nil
-    let discarded: Bool? = nil
-    let favIconUrl: String? = nil
-    let groupId: Int? = nil
-    let mutedInfo: TabMutedInfo? = nil
-    let pinned: Bool? = nil
-    let status: TabStatus? = nil
-    let title: String? = nil
-    let url: String? = nil
-    override init() { }
-}
-
-struct TabMutedInfo {
-    enum Reason {
-        case user;
-        case capture;
-        case `extension`;
-    }
-    let extensionId: String?
-    let muted: Bool
-    let reason: Reason?
-}
-
-@objc protocol TabsManagerListerner: NSObjectProtocol {
-    // Fires when the active tab in a window changes
-    func onActivated(tabId: Int);
-    // Fired when a tab is updated.
-    func onUpdated(tabId: Int, changeInfo: TabChangeInfo);
-    // Fired when a tab is closed.
-    func onRemoved(tabId: Int, removeInfo: TabRemoveInfo);
-}
 
 class TabsManager {
     static let shared = TabsManager()
     
-    private var pool: [PDWebView] = [];
+    public private(set) var pool: [PDWebView] = [];
     
     var count: Int { return pool.count }
     
-    private var observers: NSHashTable<TabsManagerListerner> = NSHashTable(options: .weakMemory)
+    private var observers: NSHashTable<PDTabsEventListerner> = NSHashTable(options: .weakMemory)
     
-    func addObserver(_ observer: TabsManagerListerner) {
+    func addObserver(_ observer: PDTabsEventListerner) {
         observers.add(observer)
     }
     
-    func removeObserver(_ observer: TabsManagerListerner) {
+    func removeObserver(_ observer: PDTabsEventListerner) {
         observers.remove(observer)
     }
     

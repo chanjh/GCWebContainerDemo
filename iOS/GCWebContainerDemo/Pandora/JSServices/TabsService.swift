@@ -15,7 +15,7 @@ class TabsService: PDBaseJSService, JSServiceHandler {
     
     override init(_ webView: GCWebView, ui: WebContainerUIConfig?, model: WebContainerModelConfig?) {
         super.init(webView, ui: ui, model: model)
-        TabsManager.shared.addObserver(self)
+        PDManager.shared.delegate?.tabsManager?.addObserver(self)
     }
     
     func handle(message: JSServiceMessageInfo) {
@@ -72,7 +72,7 @@ class TabsService: PDBaseJSService, JSServiceHandler {
     }
 }
 
-extension TabsService: TabsManagerListerner {
+extension TabsService: PDTabsEventListerner {
     func onActivated(tabId: Int) {
         
     }
@@ -82,7 +82,7 @@ extension TabsService: TabsManagerListerner {
     func onRemoved(tabId: Int, removeInfo: TabRemoveInfo) {
         let params = "{tabId: \(tabId), removeInfo: \(removeInfo.toString())}"
         let onRemovedScript = "window.gc.bridge.eventCenter.publish('PD_EVENT_TABS_ONREMOVED', \(params));";
-        webView?.evaluateJavaScript(onRemovedScript, completionHandler: nil)        
+        webView?.evaluateJavaScript(onRemovedScript, completionHandler: nil)
     }
 }
 
